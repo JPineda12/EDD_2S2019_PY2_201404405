@@ -9,9 +9,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jdk.nashorn.internal.objects.NativeArray;
 import proyecto2.Objetos.Usuario;
 
 /**
@@ -21,9 +23,12 @@ import proyecto2.Objetos.Usuario;
 public class TablaHash {
     Object[] arreglo;
     int size;
-    
+    double factorCarga;
+    int numElementos;
     public TablaHash(){
         size = 8;
+        factorCarga = 0.0;
+        int numElementos = 0;
         arreglo = new Object[8];
         Arrays.fill(arreglo,null);
     }
@@ -33,21 +38,15 @@ public class TablaHash {
         for(int i = 0; i<nombre.length(); i++){
             valor += nombre.charAt(i);
         }
-        System.out.println("Valor nombre: "+valor);
-        int indice = valor%7;
+        int indice = valor%(size-1);
         
         return indice;
     }
     private int resolverColision(int indice){
         int n = 1;
         int posInicial = indice;
-        System.out.println("Usando Exploracion Cuadratica");
-        System.out.println("------------------------------");
         indice = exploracionCuadratica(indice, 1, posInicial, false);
         if(indice == -1){
-            System.out.println("------------------------------------------");
-            System.out.println("Cambiando estrategia a: Exploracion Lineal");
-            System.out.println("------------------------------------------");
             indice = exploracionLineal(indice, 1, posInicial, false);
         }
         if(indice == -1){
@@ -67,9 +66,7 @@ public class TablaHash {
             indice = indice - size;
             flag = true;
         }
-        System.out.println("New Index calculated: "+indice);
         if(arreglo[indice] != null){
-            System.out.println("Not availabe... Re-Calculating....");
             indice = exploracionCuadratica(indice, i+1, posInicial, flag);
         }
         return indice;
@@ -83,9 +80,7 @@ public class TablaHash {
             indice = indice - size;
             flag = true;
         }
-        System.out.println("New Index Calculated: "+indice);
         if(arreglo[indice] != null){
-            System.out.println("Not available... Re-Calculating....");
             indice = exploracionLineal(indice, i+1, posInicial, flag);
         }
         return indice;
@@ -99,7 +94,6 @@ public class TablaHash {
             indice = indice - size;
             flag = true;
         }
-        System.out.println("Searching in index: "+indice);
         if(arreglo[indice] != null){
             Usuario us = (Usuario) arreglo[indice];
             if(us.getUsername().equals(nombre)){
@@ -118,7 +112,7 @@ public class TablaHash {
             indice = indice - size;
             flag = true;
         }
-        System.out.println("New Index Calculated: "+indice);
+
         if(arreglo[indice] != null){
             Usuario us = (Usuario) arreglo[indice];
             if(us.getUsername().equals(nombre)){
@@ -134,19 +128,42 @@ public class TablaHash {
         if(!contains(user.getUsername())){
             int indice = funcionHash(user.getUsername());
             if(arreglo[indice] != null){
-                System.out.print("Indice: "+indice);
-                System.out.println(" not available... Re-calculando indice");
                 indice = resolverColision(indice);
             }
             if(indice == -1){
                 return false;
             }
             arreglo[indice] = user;
-            System.out.println("Usuario insertado en el indice "+indice);
+
+            numElementos++;
+            if(calcularCarga() >= 75.0){
+                Object[] temp = arreglo;
+                size = proximoNumeroPrimo(size-1);
+                //Se asigna el nuevo tamaño al arreglo
+                arreglo = new Object[size+1];
+                Arrays.fill(arreglo,null);
+                numElementos = 0;
+                //Se insertan los datos nuevamente (para que calcule un nuevo hash)
+                for (Object temp1 : temp) {
+                    Usuario aux = (Usuario) temp1;
+                    if(aux != null){
+                        insertar(aux);
+                    }
+                }             
+            }
             return true;
         }
         return false;
     }
+    public int proximoNumeroPrimo(int sizeActual){
+        BigInteger b = new BigInteger(String.valueOf(size));
+        long res = Long.parseLong(b.nextProbablePrime().toString());
+        return (int)res;
+    }
+    public double calcularCarga(){
+        return (numElementos * 100) / size;
+    }
+    
     
     public boolean contains(String nombre){
         return buscarPorNombre(nombre) != null;
@@ -158,26 +175,21 @@ public class TablaHash {
         if(arreglo[index] != null){
             us = (Usuario) arreglo[index];
             if(us.getUsername().equals(nombre)){
-                System.out.println("Se encuentra en el index: "+index);
                 return us;
             }else{
                 index = buscarExpCuadratica(nombre,index, 1, index, false);
                 if(index == -2){
-                    System.out.println("El usuario: "+nombre+" NO EXISTE cuad");
                     return null;
                 }
                 if(index == -1){
                     index = buscarExpLineal(nombre, index,1, index, false);
-                    if (index == -1) {
-                        System.out.println("El usuario: " + nombre + " NO EXISTE :/lin");
+                    if (index == -1 || index == -2) {
                         return null;
                     }
                 }
-                System.out.println("Se encuentra en el index: "+index);
                 return (Usuario)arreglo[index];
             }  
         }
-        System.out.println("El usuario: "+nombre+" NO existe.");
         return null;
     }
     

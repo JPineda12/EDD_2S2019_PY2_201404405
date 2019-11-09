@@ -17,20 +17,22 @@ public class EDDProyecto2 {
         f.show();
         TablaHash tab = new TablaHash();
         
-        tab.insertar(new Usuario("Admin", "12", "what"));        
-        tab.insertar(new Usuario("a", "juan", "what"));
-        tab.insertar(new Usuario("Juan", "juan", "what"));
-        tab.insertar(new Usuario("Pal", "juan", "what"));
-        tab.insertar(new Usuario("Pal2a", "juan", "what"));
-        tab.insertar(new Usuario("Juan", "juan", "what"));
-        
-       Usuario us = ((Usuario)tab.buscarPorNombre("a"));
-        if(us != null){
-            System.out.println("User: "+us.getUsername());
-            System.out.println("Pass: "+us.getPassword());
-        }
+       tab.insertar(new Usuario("Brandon Alvarez", "12", "what"));        
+       tab.insertar(new Usuario("Antonio Gramajo", "juan", "what"));
+       tab.insertar(new Usuario("Abel Gutierrez", "juan", "what"));
+       tab.insertar(new Usuario("Alumno c", "juan", "what"));
+       tab.insertar(new Usuario("Jimmy Garcia", "juan", "what"));
+       tab.insertar(new Usuario("Jose Lopez", "juan", "what"));
+       tab.insertar(new Usuario("Maite Gomez", "juan", "what"));
+       tab.insertar(new Usuario("Nery Galvez", "juan", "what"));
+       tab.insertar(new Usuario("Alumno b", "juan", "what"));
+       tab.insertar(new Usuario("Fernando Hernandez", "juan", "what"));
+       tab.insertar(new Usuario("Joel Perez", "juan", "what"));
+       tab.insertar(new Usuario("Juan Perez", "juan", "what"));
+       tab.insertar(new Usuario("Alan Hurtarte", "juan", "what"));
+       tab.insertar(new Usuario("Alumno a", "juan", "what"));
         tab.graficar();
-        tab.imprimir();
+        //tab.imprimir();
         
     }
     
