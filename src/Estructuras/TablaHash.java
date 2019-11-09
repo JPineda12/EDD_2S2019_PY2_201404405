@@ -5,7 +5,13 @@
  */
 package Estructuras;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import proyecto2.Objetos.Usuario;
 
 /**
@@ -186,5 +192,62 @@ public class TablaHash {
             }
         }
     }
-    
+    public void graficar(){
+        File archivo = new File("Reports/UsersHashTable.dot");
+        try {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo))) {
+                writer.write(llenarDot());
+                
+            }
+            
+            ProcessBuilder publicar;
+            publicar = new ProcessBuilder("dot", "-Tpng", "-o", "Reports/UsersHashTable.png", "Reports/UsersHashTable.dot");
+            publicar.redirectErrorStream(true);
+            publicar.start();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(TablaHash.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    private String llenarDot(){
+        String cadena = "";
+        cadena += "digraph G {\n";
+        cadena += "     rankdir = LR;\n";
+        cadena += "	graph[ranksep = \"0.02\"];\n";
+        cadena += "     node [shape=record,height=.1];\n";
+        cadena += "     node[style = \"filled\"];\n";
+        cadena += "     sep=0;\n";
+        cadena += "     nodesep=0\n";
+        /*EMPIEZA CREACION DE INDICES DE LA TABLA
+        /*Ejemplo de nodo:
+        **       indice1[label =  "6)"];
+        */
+        for(int i=1; i<=size; i++){
+            cadena += "     indice"+(size-i)+"[label= \""+(size-i)+")\"];\n";
+        }
+        //TERMINA CREACION DE INDICES DE LA TABLA
+        
+        
+        /*EMPIEZA CREACION DE NODOS Y ENLACES DE LA TABLA HASH
+        ** Ejemplo:
+        ** node1 [label = "{Nombre: Pal Password: Pinguine Timestamp: 15/05/10} " width = 10];
+        ** node0:f0-> node1[style=invis];
+        */
+        for(int i=0; i<size; i++){
+            if(arreglo[i] != null){
+                Usuario us = (Usuario) arreglo[i];
+                cadena += "     node"+(i+1)+"[label = \"";
+                cadena += "{Nombre: "+us.getUsername()+"  Password: "+us.getPassword();
+                cadena += "  Timestamp: "+us.getTimestamp()+"}\" width = 10];\n";
+                //Agregando enlace con node0
+                cadena += "     indice"+i+"->node"+(i+1)+" [style=invis];\n";
+            }else{
+               //cadena += " node"+(i+1)+"[label =\""; 
+            }
+        }
+        //ARCHIVO FINALIZADO
+        cadena += "}";
+        return cadena;
+    }
 }

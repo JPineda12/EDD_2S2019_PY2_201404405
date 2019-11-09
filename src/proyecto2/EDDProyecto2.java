@@ -15,7 +15,7 @@ public class EDDProyecto2 {
         LoginFrame f = new LoginFrame();
         f.setLocationRelativeTo(null);
         f.show();
-      /*  TablaHash tab = new TablaHash();
+        TablaHash tab = new TablaHash();
         
         tab.insertar(new Usuario("Admin", "12", "what"));        
         tab.insertar(new Usuario("a", "juan", "what"));
@@ -23,14 +23,15 @@ public class EDDProyecto2 {
         tab.insertar(new Usuario("Pal", "juan", "what"));
         tab.insertar(new Usuario("Pal2a", "juan", "what"));
         tab.insertar(new Usuario("Juan", "juan", "what"));
-        tab.imprimir();
         
        Usuario us = ((Usuario)tab.buscarPorNombre("a"));
         if(us != null){
             System.out.println("User: "+us.getUsername());
             System.out.println("Pass: "+us.getPassword());
         }
-        tab.insertar(new Usuario("Palom2a", "juan", "what"));*/
-        }
+        tab.graficar();
+        tab.imprimir();
+        
+    }
     
 }

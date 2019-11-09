@@ -1,0 +1,26 @@
+digraph G {
+     rankdir = LR;
+	graph[ranksep = "0.02"];
+     node [shape=record,height=.1];
+     node[style = "filled"];
+     sep=0;
+     nodesep=0
+     indice7[label= "7)"];
+     indice6[label= "6)"];
+     indice5[label= "5)"];
+     indice4[label= "4)"];
+     indice3[label= "3)"];
+     indice2[label= "2)"];
+     indice1[label= "1)"];
+     indice0[label= "0)"];
+     node3[label = "{Nombre: Pal2a  Password: juan  Timestamp: what}" width = 10];
+     indice2->node3 [style=invis];
+     node4[label = "{Nombre: Juan  Password: juan  Timestamp: what}" width = 10];
+     indice3->node4 [style=invis];
+     node6[label = "{Nombre: Pal  Password: juan  Timestamp: what}" width = 10];
+     indice5->node6 [style=invis];
+     node7[label = "{Nombre: Admin  Password: 12  Timestamp: what}" width = 10];
+     indice6->node7 [style=invis];
+     node8[label = "{Nombre: a  Password: juan  Timestamp: what}" width = 10];
+     indice7->node8 [style=invis];
+}
