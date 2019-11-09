@@ -5,22 +5,35 @@
  */
 package Interfaz;
 
+import Estructuras.TablaHash;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import static java.lang.System.in;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import proyecto2.Objetos.Usuario;
 
 
 public class LoginFrame extends javax.swing.JFrame {
 
     boolean editedOnce;
     boolean editedOncepwd;
+    TablaHash users;
     public LoginFrame() {
         initComponents();
         editedOnce = false;
         editedOncepwd = false;
+        users = new TablaHash();
+        users.insertar(new Usuario("Admin", "Admin", "00"));
+    }
+    public LoginFrame(TablaHash users){
+        this.users = users;
+        initComponents();
+        editedOnce = false;
+        editedOncepwd = false;
+        users.imprimir();
     }
 
     class jPanelGradient extends JPanel{
@@ -211,16 +224,18 @@ public class LoginFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String user = jTextField1.getText();
         String pass = jPasswordField1.getText();
-        if(checkUser(user)){
-            if(checkPass(pass)){
-                System.out.println("Sexo");
+        Usuario us = checkUser(user);
+        if(us != null){
+            if(checkPass(us,pass)){
+                     JOptionPane.showMessageDialog(null, "Ok Nigga"
+                        , "Logged in", JOptionPane.ERROR_MESSAGE);
             }else{
                 JOptionPane.showMessageDialog(null, "Incorrect User or Password"
                         , "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         else{
-            JOptionPane.showMessageDialog(null, "Incorrect User or Password"
+            JOptionPane.showMessageDialog(null, "Incorrect User"
                     , "Error", JOptionPane.ERROR_MESSAGE);
         }
         jTextField1.setText("");
@@ -229,11 +244,12 @@ public class LoginFrame extends javax.swing.JFrame {
         editedOncepwd = true;
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private boolean checkUser(String user){
-        return user.equals("Admin");
+    private Usuario checkUser(String user){
+        return users.buscarPorNombre(user);
+        
     }
-    private boolean checkPass(String pass){
-        return pass.equals("Admin");
+    private boolean checkPass(Usuario us, String pass){
+        return us.getPassword().equals(pass);
     }
     private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
        
@@ -270,7 +286,7 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jPasswordField1FocusLost
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        RegisterForm reg = new RegisterForm();
+        RegisterForm reg = new RegisterForm(users);
         reg.show();
         reg.setLocationRelativeTo(null);
         this.dispose();

@@ -5,12 +5,14 @@
  */
 package Interfaz;
 
+import Estructuras.TablaHash;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import proyecto2.Objetos.Usuario;
 
 
 public class RegisterForm extends javax.swing.JFrame {
@@ -18,11 +20,19 @@ public class RegisterForm extends javax.swing.JFrame {
     boolean editedOnce;
     boolean editedOncepwd;
     boolean editedConfirm;
+    TablaHash users;
     public RegisterForm() {
         initComponents();
         editedOnce = false;
         editedOncepwd = false;
         editedConfirm = false;
+    }
+    public RegisterForm(TablaHash users){
+        this.users = users;
+        initComponents();
+        editedOnce = false;
+        editedOncepwd = false;
+        editedConfirm = false;        
     }
 
     class jPanelGradient extends JPanel{
@@ -243,14 +253,20 @@ public class RegisterForm extends javax.swing.JFrame {
         if(checkUser(user)){
             if(pass.length() >= 8){
                 if(checkPass(pass, confirmPass)){
+                    boolean success = users.insertar(new Usuario(user, pass, "time"));
+                    if(success){
                     JOptionPane.showMessageDialog(null, "Registered New User!"
-                            , "Error", JOptionPane.ERROR_MESSAGE);
+                            , "Registered", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
-                    LoginFrame log = new LoginFrame();
+                    LoginFrame log = new LoginFrame(users);
                     log.show();
                     log.setLocationRelativeTo(null);
                     JOptionPane.showMessageDialog(null, "User: " + user + " created!",
                             "New User", JOptionPane.INFORMATION_MESSAGE);
+                    }else{
+                            JOptionPane.showMessageDialog(null, "User "+user+" already exist"
+                            , "Error", JOptionPane.ERROR_MESSAGE);  
+                    }
                 }else{
                     JOptionPane.showMessageDialog(null, "Passwords does NOT match"
                             , "Error", JOptionPane.ERROR_MESSAGE);
