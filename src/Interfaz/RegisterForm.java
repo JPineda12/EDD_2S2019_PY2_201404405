@@ -10,6 +10,10 @@ import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import proyecto2.Objetos.Usuario;
@@ -245,15 +249,35 @@ public class RegisterForm extends javax.swing.JFrame {
     private void userTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_userTextFieldActionPerformed
-
+    
+    private String encriptPass(String pass) throws NoSuchAlgorithmException{
+        MessageDigest md= MessageDigest.getInstance("SHA-256");
+        md.update(pass.getBytes());
+        byte[] digest = md.digest();
+        StringBuilder sh = new StringBuilder();
+        for(byte b: digest){
+            sh.append(String.format("%02x", b & 0xff));
+        }
+        System.out.println("Hash: "+sh.toString());
+        return sh.toString();
+    }
+    
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         String user = userTextField.getText();
-        String pass = pwdTextField.getText();
-        String confirmPass = confirmPwdTextField.getText();
+        String pass = "";
+        String confirmPass = "";
+        try {
+            pass = encriptPass(pwdTextField.getText());
+            confirmPass = encriptPass(confirmPwdTextField.getText());
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
         if(checkUser(user)){
             if(pass.length() >= 8){
                 if(checkPass(pass, confirmPass)){
-                    boolean success = users.insertar(new Usuario(user, pass, "time"));
+                    boolean success = users.insertar(new Usuario(user, pass, "time",1));
                     if(success){
                     JOptionPane.showMessageDialog(null, "Registered New User!"
                             , "Registered", JOptionPane.INFORMATION_MESSAGE);

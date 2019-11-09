@@ -11,11 +11,13 @@ public class Usuario {
     private final String username;
     private String password;
     private final String timestamp;
+    private final int rol;
 
-    public Usuario(String username, String password, String timestamp) {
+    public Usuario(String username, String password, String timestamp, int rol) {
         this.username = username;
         this.password = password;
         this.timestamp = timestamp;
+        this.rol = rol;
     }
 
     public String getUsername() {
@@ -25,7 +27,11 @@ public class Usuario {
     public String getPassword() {
         return password;
     }
-
+    
+    public int getRol(){
+        return rol;
+    }
+    
     public void setPassword(String password) {
         this.password = password;
     }    

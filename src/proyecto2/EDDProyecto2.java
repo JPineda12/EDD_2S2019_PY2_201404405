@@ -15,7 +15,7 @@ public class EDDProyecto2 {
         LoginFrame f = new LoginFrame();
         f.setLocationRelativeTo(null);
         f.show();
-        TablaHash tab = new TablaHash();
+        /*TablaHash tab = new TablaHash();
         
        tab.insertar(new Usuario("Brandon Alvarez", "12", "what"));        
        tab.insertar(new Usuario("Antonio Gramajo", "juan", "what"));
@@ -31,7 +31,7 @@ public class EDDProyecto2 {
        tab.insertar(new Usuario("Juan Perez", "juan", "what"));
        tab.insertar(new Usuario("Alan Hurtarte", "juan", "what"));
        tab.insertar(new Usuario("Alumno a", "juan", "what"));
-        tab.graficar();
+        tab.graficar();*/
         //tab.imprimir();
         
     }

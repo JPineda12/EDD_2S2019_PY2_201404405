@@ -10,10 +10,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jdk.nashorn.internal.objects.NativeArray;
 import proyecto2.Objetos.Usuario;
 
 /**
@@ -28,7 +29,7 @@ public class TablaHash {
     public TablaHash(){
         size = 8;
         factorCarga = 0.0;
-        int numElementos = 0;
+        numElementos = 0;
         arreglo = new Object[8];
         Arrays.fill(arreglo,null);
     }
@@ -42,6 +43,7 @@ public class TablaHash {
         
         return indice;
     }
+    
     private int resolverColision(int indice){
         int n = 1;
         int posInicial = indice;
@@ -155,7 +157,8 @@ public class TablaHash {
         }
         return false;
     }
-    public int proximoNumeroPrimo(int sizeActual){
+
+    private int proximoNumeroPrimo(int sizeActual){
         BigInteger b = new BigInteger(String.valueOf(size));
         long res = Long.parseLong(b.nextProbablePrime().toString());
         return (int)res;

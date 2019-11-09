@@ -11,6 +11,10 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import static java.lang.System.in;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import proyecto2.Objetos.Usuario;
@@ -26,7 +30,13 @@ public class LoginFrame extends javax.swing.JFrame {
         editedOnce = false;
         editedOncepwd = false;
         users = new TablaHash();
-        users.insertar(new Usuario("Admin", "Admin", "00"));
+        String pass = "Admin";
+        try {
+            pass = encriptPass(pass);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        users.insertar(new Usuario("Admin", pass, "00",0));
     }
     public LoginFrame(TablaHash users){
         this.users = users;
@@ -292,6 +302,17 @@ public class LoginFrame extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+        private String encriptPass(String pass) throws NoSuchAlgorithmException{
+        MessageDigest md= MessageDigest.getInstance("SHA-256");
+        md.update(pass.getBytes());
+        byte[] digest = md.digest();
+        StringBuilder sh = new StringBuilder();
+        for(byte b: digest){
+            sh.append(String.format("%02x", b & 0xff));
+        }
+        System.out.println("Hash: "+sh.toString());
+        return sh.toString();
+    }
     /**
      * @param args the command line arguments
      */
