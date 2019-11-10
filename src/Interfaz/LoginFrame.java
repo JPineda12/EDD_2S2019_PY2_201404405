@@ -36,7 +36,7 @@ public class LoginFrame extends javax.swing.JFrame {
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        users.insertar(new Usuario("Admin", pass, "00",0));
+        users.insertar(new Usuario("Admin", pass, "00",true));
     }
     public LoginFrame(TablaHash users){
         this.users = users;
@@ -44,6 +44,8 @@ public class LoginFrame extends javax.swing.JFrame {
         editedOnce = false;
         editedOncepwd = false;
         users.imprimir();
+        this.setLocationRelativeTo(null);
+
     }
 
     class jPanelGradient extends JPanel{
@@ -239,6 +241,9 @@ public class LoginFrame extends javax.swing.JFrame {
             if(checkPass(us,pass)){
                      JOptionPane.showMessageDialog(null, "Ok Nigga"
                         , "Logged in", JOptionPane.ERROR_MESSAGE);
+                     Principal p = new Principal(user,us.getRol(), users);
+                     p.setVisible(true);
+                     this.setVisible(false);
             }else{
                 JOptionPane.showMessageDialog(null, "Incorrect User or Password"
                         , "Error", JOptionPane.ERROR_MESSAGE);
@@ -259,6 +264,11 @@ public class LoginFrame extends javax.swing.JFrame {
         
     }
     private boolean checkPass(Usuario us, String pass){
+        try {
+            pass = encriptPass(pass);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return us.getPassword().equals(pass);
     }
     private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked

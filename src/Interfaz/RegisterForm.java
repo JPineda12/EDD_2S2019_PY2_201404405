@@ -30,13 +30,16 @@ public class RegisterForm extends javax.swing.JFrame {
         editedOnce = false;
         editedOncepwd = false;
         editedConfirm = false;
+        this.setLocationRelativeTo(null);
     }
     public RegisterForm(TablaHash users){
         this.users = users;
         initComponents();
         editedOnce = false;
         editedOncepwd = false;
-        editedConfirm = false;        
+        editedConfirm = false;    
+        this.setLocationRelativeTo(null);
+
     }
 
     class jPanelGradient extends JPanel{
@@ -277,7 +280,7 @@ public class RegisterForm extends javax.swing.JFrame {
         if(checkUser(user)){
             if(pass.length() >= 8){
                 if(checkPass(pass, confirmPass)){
-                    boolean success = users.insertar(new Usuario(user, pass, "time",1));
+                    boolean success = users.insertar(new Usuario(user, pass, "time",false));
                     if(success){
                     JOptionPane.showMessageDialog(null, "Registered New User!"
                             , "Registered", JOptionPane.INFORMATION_MESSAGE);

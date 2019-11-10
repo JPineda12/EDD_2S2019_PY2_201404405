@@ -11,9 +11,9 @@ public class Usuario {
     private final String username;
     private String password;
     private final String timestamp;
-    private final int rol;
+    private final boolean rol;
 
-    public Usuario(String username, String password, String timestamp, int rol) {
+    public Usuario(String username, String password, String timestamp, boolean rol) {
         this.username = username;
         this.password = password;
         this.timestamp = timestamp;
@@ -28,7 +28,7 @@ public class Usuario {
         return password;
     }
     
-    public int getRol(){
+    public boolean getRol(){
         return rol;
     }
     

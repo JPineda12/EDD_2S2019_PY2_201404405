@@ -7,16 +7,19 @@ package proyecto2;
 
 import Estructuras.TablaHash;
 import Interfaz.LoginFrame;
+import Interfaz.Principal;
 import proyecto2.Objetos.Usuario;
 
 public class EDDProyecto2 {
 
     public static void main(String[] args) {
+       /*Principal p = new Principal("paloma");
+       p.show();*/
         LoginFrame f = new LoginFrame();
         f.setLocationRelativeTo(null);
-        f.show();
-        /*TablaHash tab = new TablaHash();
-        
+        f.setVisible(true);
+       /* TablaHash tab = new TablaHash();
+       
        tab.insertar(new Usuario("Brandon Alvarez", "12", "what"));        
        tab.insertar(new Usuario("Antonio Gramajo", "juan", "what"));
        tab.insertar(new Usuario("Abel Gutierrez", "juan", "what"));
