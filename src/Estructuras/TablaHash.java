@@ -30,7 +30,7 @@ public class TablaHash {
         size = 8;
         factorCarga = 0.0;
         numElementos = 0;
-        arreglo = new Object[8];
+        arreglo = new Object[size];
         Arrays.fill(arreglo,null);
     }
     
@@ -54,7 +54,7 @@ public class TablaHash {
         if(indice == -1){
             System.out.println("\n---------------------------------------------");
             System.out.println("No se pudo encontrar ninguun indice disponible");
-            System.out.println("Cancelando insercion...");
+            System.out.println("Cancelando insercion ...");
         }
         return indice;
     }
@@ -133,6 +133,7 @@ public class TablaHash {
                 indice = resolverColision(indice);
             }
             if(indice == -1){
+                System.out.println(":( --> "+user.getUsername());
                 return false;
             }
             arreglo[indice] = user;
@@ -140,7 +141,7 @@ public class TablaHash {
             numElementos++;
             if(calcularCarga() >= 75.0){
                 Object[] temp = arreglo;
-                size = proximoNumeroPrimo(size-1);
+                size = proximoNumeroPrimo(size);
                 //Se asigna el nuevo tamaño al arreglo
                 arreglo = new Object[size+1];
                 Arrays.fill(arreglo,null);
@@ -159,7 +160,7 @@ public class TablaHash {
     }
 
     private int proximoNumeroPrimo(int sizeActual){
-        BigInteger b = new BigInteger(String.valueOf(size));
+        BigInteger b = new BigInteger(String.valueOf(sizeActual));
         long res = Long.parseLong(b.nextProbablePrime().toString());
         return (int)res;
     }

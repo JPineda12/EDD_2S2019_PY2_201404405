@@ -13,11 +13,20 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import proyecto2.Objetos.Usuario;
 
 /**
  *
@@ -425,9 +434,69 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_folderModifyBtActionPerformed
 
     private void bulkLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bulkLoadActionPerformed
-        // TODO add your handling code here:
+        JFileChooser choose = new JFileChooser(".");
+        BufferedReader br = null;
+        int f = choose.showOpenDialog(null);
+        if(f == JFileChooser.APPROVE_OPTION){
+            System.out.println("Insert: "+choose.getSelectedFile().getAbsolutePath());
+            //labelUsername.setText(choose.getSelectedFile());
+            String line = "";
+            int n = 0;
+            boolean userIsFirst = false;
+            String csvFile = choose.getSelectedFile().getAbsolutePath();
+            try {
+                br = new BufferedReader(new FileReader(csvFile));
+                String name = "";
+                String pass = "";
+                String usuario[] = null;
+                while((line = br.readLine()) != null){
+                    usuario = line.split(",");
+                    if(n == 0){
+                        
+                        if("usuario".equals(usuario[0].toLowerCase())){
+                            userIsFirst = true;                           
+                        }else if("password".equals(usuario[0].toLowerCase())){
+                            userIsFirst = false;
+                        }else{
+                            break;
+                        }
+                    }else if(n > 0){
+                        if(userIsFirst){
+                            name = usuario[0];
+                            pass = usuario[1];
+                            System.out.println(name);;
+                        }else{
+                            name = usuario[1];
+                            pass = usuario[0];
+                            
+                        }
+                        if(!users.contains(name)){
+                            if(isLongEnough(pass)){
+                                users.insertar(new Usuario(name, pass, "-", false));
+                            }else{
+                                System.out.println("User: "+name+" has a "
+                                        + "password < 8");
+                            }
+                        }else{
+                            System.out.println("User "+name+" already exists!");
+                        }
+                        
+                    }
+                    n++;
+                }
+                
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        users.imprimir();
     }//GEN-LAST:event_bulkLoadActionPerformed
 
+    private boolean isLongEnough(String pass){
+        return pass.length() >= 8;
+    }
     private void logOutBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutBtActionPerformed
         int opt = JOptionPane.showConfirmDialog(this, "Log out?");
         if(opt == 0){

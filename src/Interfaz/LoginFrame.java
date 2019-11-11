@@ -31,11 +31,6 @@ public class LoginFrame extends javax.swing.JFrame {
         editedOncepwd = false;
         users = new TablaHash();
         String pass = "Admin";
-        try {
-            pass = encriptPass(pass);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
         users.insertar(new Usuario("Admin", pass, "00",true));
     }
     public LoginFrame(TablaHash users){

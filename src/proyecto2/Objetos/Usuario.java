@@ -5,6 +5,11 @@
  */
 package proyecto2.Objetos;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class Usuario {
     
@@ -15,7 +20,11 @@ public class Usuario {
 
     public Usuario(String username, String password, String timestamp, boolean rol) {
         this.username = username;
-        this.password = password;
+        try {
+            this.password = encriptPass(password);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.timestamp = timestamp;
         this.rol = rol;
     }
@@ -28,6 +37,17 @@ public class Usuario {
         return password;
     }
     
+    public String encriptPass(String password) throws NoSuchAlgorithmException{
+        MessageDigest md= MessageDigest.getInstance("SHA-256");
+        md.update(password.getBytes());
+        byte[] digest = md.digest();
+        StringBuilder sh = new StringBuilder();
+        for(byte b: digest){
+            sh.append(String.format("%02x", b & 0xff));
+        }
+        System.out.println("Hash: "+sh.toString());
+        return sh.toString();
+    }
     public boolean getRol(){
         return rol;
     }
