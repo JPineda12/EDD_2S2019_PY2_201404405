@@ -9,16 +9,16 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import java.sql.Timestamp;
 
 public class Usuario {
     
     private final String username;
     private String password;
-    private final String timestamp;
+    private final Timestamp timestamp;
     private final boolean rol;
 
-    public Usuario(String username, String password, String timestamp, boolean rol) {
+    public Usuario(String username, String password, Timestamp timestamp, boolean rol) {
         this.username = username;
         try {
             this.password = encriptPass(password);
@@ -57,7 +57,7 @@ public class Usuario {
     }    
 
     public String getTimestamp() {
-        return timestamp;
+        return timestamp.toString();
     }
     
 }

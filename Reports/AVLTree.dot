@@ -2,26 +2,47 @@ digraph AVLTree {
     rankdir=TB;
     graph [pad=".25", ranksep="1.0", nodesep="1"];
     node [shape=record, style = rounded, color = forestgreen];
-    node [width = 3, height = 1.0, fixedsize="true"];
+    node [width = 4, height = 1.5, fixedsize="true"];
     //Nodes and links creation
-     ndDedo[label="<left> | Nombre: Dedo\nContenido: I like turtles\nBf: 1\nAltura: 3| <right>"];
-     //Links ndDedo
-     ndDedo:left->ndCacao
-     ndDedo:right->ndInfancia
-     ndCacao[label="<left> | Nombre: Cacao\nContenido: nena is sleeping\nBf: -1\nAltura: 1| <right>"];
-     //Links ndCacao
-     ndCacao:left->ndAsnaeb
-     ndAsnaeb[label="<left> | Nombre: Asnaeb\nContenido: lol que cosas verdad\nBf: 0\nAltura: 0| <right>"];
-     //Links ndAsnaeb
-     ndInfancia[label="<left> | Nombre: Infancia\nContenido: verdad que si\nBf: 1\nAltura: 2| <right>"];
-     //Links ndInfancia
-     ndInfancia:left->ndImpressive
-     ndInfancia:right->ndTolteca
-     ndImpressive[label="<left> | Nombre: Impressive\nContenido: Weird thinking\nBf: 0\nAltura: 0| <right>"];
-     //Links ndImpressive
-     ndTolteca[label="<left> | Nombre: Tolteca\nContenido: Rambutanes are mine\nBf: 1\nAltura: 1| <right>"];
-     //Links ndTolteca
-     ndTolteca:right->ndignorant
-     ndignorant[label="<left> | Nombre: ignorant\nContenido: This is some stuff\nBf: 0\nAltura: 0| <right>"];
-     //Links ndignorant
+     ndchuchitor[label="<left> | Nombre: chuchito.r\nContenido: “give me cookie please”\nBf: 1\nAltura: 4\nTimestamp: 2019-11-11 12:55:01.557\nPropietario: breSt12 | <right>"];
+     //Links ndchuchitor
+     ndchuchitor:left->ndMainpy
+     ndchuchitor:right->ndrandomjava
+     ndMainpy[label="<left> | Nombre: Main.py\nContenido: “Esto es una cadena”\nBf: 1\nAltura: 2\nTimestamp: 2019-11-11 12:55:01.551\nPropietario: breSt12 | <right>"];
+     //Links ndMainpy
+     ndMainpy:left->ndJuanexe
+     ndMainpy:right->ndNsyncexe
+     ndJuanexe[label="<left> | Nombre: Juan.exe\nContenido: “Weird stuff”\nBf: 0\nAltura: 0\nTimestamp: 2019-11-11 12:55:01.555\nPropietario: breSt12 | <right>"];
+     //Links ndJuanexe
+     ndNsyncexe[label="<left> | Nombre: Nsync.exe\nContenido: “lol music “\nBf: 0\nAltura: 1\nTimestamp: 2019-11-11 12:55:01.559\nPropietario: breSt12 | <right>"];
+     //Links ndNsyncexe
+     ndNsyncexe:left->ndMusicthis
+     ndNsyncexe:right->ndasnaebsa
+     ndMusicthis[label="<left> | Nombre: Music.this\nContenido: “Lmao Crazy nigg”\nBf: 0\nAltura: 0\nTimestamp: 2019-11-11 12:55:01.556\nPropietario: breSt12 | <right>"];
+     //Links ndMusicthis
+     ndasnaebsa[label="<left> | Nombre: asnaeb.sa\nContenido: “saaaaandorms”\nBf: 0\nAltura: 0\nTimestamp: 2019-11-11 12:55:01.559\nPropietario: breSt12 | <right>"];
+     //Links ndasnaebsa
+     ndrandomjava[label="<left> | Nombre: random.java\nContenido: “Lol string bro”\nBf: -1\nAltura: 3\nTimestamp: 2019-11-11 12:55:01.556\nPropietario: breSt12 | <right>"];
+     //Links ndrandomjava
+     ndrandomjava:left->ndnenaexe
+     ndrandomjava:right->ndwmp3
+     ndnenaexe[label="<left> | Nombre: nena.exe\nContenido: “what should I put here haha”\nBf: -1\nAltura: 2\nTimestamp: 2019-11-11 12:55:01.557\nPropietario: breSt12 | <right>"];
+     //Links ndnenaexe
+     ndnenaexe:left->ndjugaes
+     ndnenaexe:right->ndpiernagh
+     ndjugaes[label="<left> | Nombre: juga.es\nContenido: “bet on me”\nBf: 0\nAltura: 1\nTimestamp: 2019-11-11 12:55:01.559\nPropietario: breSt12 | <right>"];
+     //Links ndjugaes
+     ndjugaes:left->ndjamonthis
+     ndjugaes:right->ndlelelepy
+     ndjamonthis[label="<left> | Nombre: jamon.this\nContenido: “this is some good jam”\nBf: 0\nAltura: 0\nTimestamp: 2019-11-11 12:55:01.56\nPropietario: breSt12 | <right>"];
+     //Links ndjamonthis
+     ndlelelepy[label="<left> | Nombre: lelele.py\nContenido: “hahaha”\nBf: 0\nAltura: 0\nTimestamp: 2019-11-11 12:55:01.558\nPropietario: breSt12 | <right>"];
+     //Links ndlelelepy
+     ndpiernagh[label="<left> | Nombre: pierna.gh\nContenido: “I want a bag”\nBf: 0\nAltura: 0\nTimestamp: 2019-11-11 12:55:01.558\nPropietario: breSt12 | <right>"];
+     //Links ndpiernagh
+     ndwmp3[label="<left> | Nombre: w.mp3\nContenido: “rodolfjasr”\nBf: -1\nAltura: 1\nTimestamp: 2019-11-11 12:55:01.556\nPropietario: breSt12 | <right>"];
+     //Links ndwmp3
+     ndwmp3:left->ndtextext
+     ndtextext[label="<left> | Nombre: tex.text\nContenido: “incress”\nBf: 0\nAltura: 0\nTimestamp: 2019-11-11 12:55:01.557\nPropietario: breSt12 | <right>"];
+     //Links ndtextext
 }

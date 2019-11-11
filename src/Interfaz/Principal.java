@@ -5,6 +5,8 @@
  */
 package Interfaz;
 
+import Estructuras.ArbolAVL;
+import Estructuras.Nodos.AVLNode;
 import Estructuras.TablaHash;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -18,6 +20,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
@@ -26,6 +29,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import proyecto2.Objetos.ArchivoObj;
 import proyecto2.Objetos.Usuario;
 
 /**
@@ -38,10 +42,14 @@ public class Principal extends javax.swing.JFrame {
     int contx, conty;
     GridBagConstraints c;
     TablaHash users;
-    public Principal(String username, Boolean admin, TablaHash users) {
+    ArbolAVL files;
+    String currentUser;
+    public Principal(String username, Boolean admin, TablaHash users, ArbolAVL files) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.users = users;
+        this.files = files;
+        this.currentUser = username;
         contx = 0;
         conty = 0;
         c = new GridBagConstraints();
@@ -81,9 +89,9 @@ public class Principal extends javax.swing.JFrame {
         FileDelBt = new rsbuttom.RSButtonMetro();
         fileModifyBt = new rsbuttom.RSButtonMetro();
         panelAdmin = new javax.swing.JPanel();
+        UsersBulkLoad = new rsbuttom.RSButtonMetro();
         jLabel6 = new javax.swing.JLabel();
-        bulkLoad = new rsbuttom.RSButtonMetro();
-        bulkLoad1 = new rsbuttom.RSButtonMetro();
+        filesBulkload = new rsbuttom.RSButtonMetro();
         panelPrincipal = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -293,39 +301,19 @@ public class Principal extends javax.swing.JFrame {
 
         panelAdmin.setBackground(new java.awt.Color(183, 183, 183));
 
-        jLabel6.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(58, 58, 58));
-        jLabel6.setText("ADMINISTRADOR");
-
-        bulkLoad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/importcsv.png"))); // NOI18N
-        bulkLoad.setText("USERS LOAD");
-        bulkLoad.setColorNormal(new java.awt.Color(183, 183, 183));
-        bulkLoad.setColorTextHover(new java.awt.Color(58, 58, 58));
-        bulkLoad.setColorTextNormal(new java.awt.Color(58, 58, 58));
-        bulkLoad.setColorTextPressed(new java.awt.Color(58, 58, 58));
-        bulkLoad.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        bulkLoad.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        bulkLoad.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        bulkLoad.setIconTextGap(25);
-        bulkLoad.addActionListener(new java.awt.event.ActionListener() {
+        UsersBulkLoad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/importcsv.png"))); // NOI18N
+        UsersBulkLoad.setText("USERS LOAD");
+        UsersBulkLoad.setColorNormal(new java.awt.Color(183, 183, 183));
+        UsersBulkLoad.setColorTextHover(new java.awt.Color(58, 58, 58));
+        UsersBulkLoad.setColorTextNormal(new java.awt.Color(58, 58, 58));
+        UsersBulkLoad.setColorTextPressed(new java.awt.Color(58, 58, 58));
+        UsersBulkLoad.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        UsersBulkLoad.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        UsersBulkLoad.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        UsersBulkLoad.setIconTextGap(25);
+        UsersBulkLoad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bulkLoadActionPerformed(evt);
-            }
-        });
-
-        bulkLoad1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/importcsv.png"))); // NOI18N
-        bulkLoad1.setText("FILES LOAD");
-        bulkLoad1.setColorNormal(new java.awt.Color(183, 183, 183));
-        bulkLoad1.setColorTextHover(new java.awt.Color(58, 58, 58));
-        bulkLoad1.setColorTextNormal(new java.awt.Color(58, 58, 58));
-        bulkLoad1.setColorTextPressed(new java.awt.Color(58, 58, 58));
-        bulkLoad1.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        bulkLoad1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        bulkLoad1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        bulkLoad1.setIconTextGap(25);
-        bulkLoad1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bulkLoad1ActionPerformed(evt);
+                UsersBulkLoadActionPerformed(evt);
             }
         });
 
@@ -334,26 +322,40 @@ public class Principal extends javax.swing.JFrame {
         panelAdminLayout.setHorizontalGroup(
             panelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAdminLayout.createSequentialGroup()
-                .addGroup(panelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bulkLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelAdminLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel6))
-                    .addComponent(bulkLoad1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addComponent(UsersBulkLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelAdminLayout.setVerticalGroup(
             panelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAdminLayout.createSequentialGroup()
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bulkLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                .addComponent(bulkLoad1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap()
+                .addComponent(UsersBulkLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelMenu.add(panelAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 490, 190, 160));
+        panelMenu.add(panelAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 190, 90));
+
+        jLabel6.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(58, 58, 58));
+        jLabel6.setText("BULK LOAD");
+        panelMenu.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 480, -1, 33));
+
+        filesBulkload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/importcsv.png"))); // NOI18N
+        filesBulkload.setText("FILES LOAD");
+        filesBulkload.setColorNormal(new java.awt.Color(183, 183, 183));
+        filesBulkload.setColorTextHover(new java.awt.Color(58, 58, 58));
+        filesBulkload.setColorTextNormal(new java.awt.Color(58, 58, 58));
+        filesBulkload.setColorTextPressed(new java.awt.Color(58, 58, 58));
+        filesBulkload.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        filesBulkload.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        filesBulkload.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        filesBulkload.setIconTextGap(25);
+        filesBulkload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filesBulkloadActionPerformed(evt);
+            }
+        });
+        panelMenu.add(filesBulkload, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 510, 174, 50));
 
         panelPrincipal.setForeground(new java.awt.Color(51, 57, 59));
         panelPrincipal.setPreferredSize(new java.awt.Dimension(514, 514));
@@ -453,7 +455,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_folderModifyBtActionPerformed
 
-    private void bulkLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bulkLoadActionPerformed
+    private void UsersBulkLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsersBulkLoadActionPerformed
         JFileChooser choose = new JFileChooser(".");
         BufferedReader br = null;
         int f = choose.showOpenDialog(null);
@@ -492,7 +494,8 @@ public class Principal extends javax.swing.JFrame {
                         }
                         if(!users.contains(name)){
                             if(isLongEnough(pass)){
-                                users.insertar(new Usuario(name, pass, "-", false));
+                                Timestamp time = new Timestamp(System.currentTimeMillis());
+                                users.insertar(new Usuario(name, pass, time, false));
                             }else{
                                 System.out.println("User: "+name+" has a "
                                         + "password < 8");
@@ -512,7 +515,8 @@ public class Principal extends javax.swing.JFrame {
             }
         }
         users.imprimir();
-    }//GEN-LAST:event_bulkLoadActionPerformed
+        users.graficar();
+    }//GEN-LAST:event_UsersBulkLoadActionPerformed
 
     private boolean isLongEnough(String pass){
         return pass.length() >= 8;
@@ -526,10 +530,76 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_logOutBtActionPerformed
 
-    private void bulkLoad1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bulkLoad1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bulkLoad1ActionPerformed
+    private void filesBulkloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filesBulkloadActionPerformed
+        JFileChooser choose = new JFileChooser(".");
+        BufferedReader br = null;
+        Timestamp time;
+        int f = choose.showOpenDialog(null);
+        if(f == JFileChooser.APPROVE_OPTION){
+            System.out.println("Insert: "+choose.getSelectedFile().getAbsolutePath());
+            //labelUsername.setText(choose.getSelectedFile());
+            String line = "";
+            int n = 0;
+            boolean fileIsFirst = false;
+            String csvFile = choose.getSelectedFile().getAbsolutePath();
+            try {
+                br = new BufferedReader(new FileReader(csvFile));
+                String name = "";
+                String content = "";
+                String file[] = null;
+                while((line = br.readLine()) != null){
+                    file = line.split(",");
+                    if(n == 0){
+                        System.out.println(file[0].toLowerCase());
+                        if("archivo".equals(file[0].toLowerCase())){
+                            System.out.println("Yes");
+                            fileIsFirst = true;                           
+                        }else if("contenido".equals(file[0].toLowerCase())){
+                            fileIsFirst = false;
+                        }else{
+                            System.out.println("Breaking up :'(");
+                            break;
+                        }
+                    }else if(n > 0){
+                        if(fileIsFirst){
+                            name = file[0];
+                            content = file[1];
+                            System.out.println(name);;
+                        }else{
+                            name = file[1];
+                            content = file[0];
+                            
+                        }
+                        time = new Timestamp(System.currentTimeMillis());
+                        AVLNode node = new AVLNode(new ArchivoObj(name, content, time.toString(), currentUser));
+                        if(!files.contains(node)){
+                            if(isContentString(content)){
+                                files.insert(new ArchivoObj(name, content, time.toString(), currentUser));
+                                System.out.println("inserted: "+name);
+                            }else{
+                                System.out.println("File: "+name+" has a "
+                                        + "content that is not a String!");
+                            }
+                        }else{
+                            System.out.println("file "+name+" already exists!");
+                        }
+                        
+                    }
+                    n++;
+                }
+                
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        files.generateGraph();
+    }//GEN-LAST:event_filesBulkloadActionPerformed
 
+    private boolean isContentString(String content){
+        return content.contains("");
+    }
     /**
      * @param args the command line arguments
      */
@@ -560,18 +630,18 @@ public class Principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal("User",false, null).setVisible(true);
+                new Principal("User",false, null,null).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rsbuttom.RSButtonMetro FileDelBt;
+    private rsbuttom.RSButtonMetro UsersBulkLoad;
     private javax.swing.JButton btMenu;
-    private rsbuttom.RSButtonMetro bulkLoad;
-    private rsbuttom.RSButtonMetro bulkLoad1;
     private rsbuttom.RSButtonMetro fileCreateBt;
     private rsbuttom.RSButtonMetro fileModifyBt;
+    private rsbuttom.RSButtonMetro filesBulkload;
     private rsbuttom.RSButtonMetro folderCreateBt;
     private rsbuttom.RSButtonMetro folderDelBt;
     private rsbuttom.RSButtonMetro folderModifyBt;

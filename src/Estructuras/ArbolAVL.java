@@ -10,6 +10,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import proyecto2.Objetos.ArchivoObj;
@@ -40,6 +41,13 @@ public class ArbolAVL {
     
     public boolean isEmpty(){
         return treeSize() == 0;
+    }
+    
+    public boolean contains(String cadena){
+        Timestamp time = new Timestamp(System.currentTimeMillis());
+        ArchivoObj f = new ArchivoObj("cadena", "who knows", time.toString(), "none");
+        AVLNode temp = new AVLNode(time);
+        return contains(temp);
     }
     
     public boolean contains (AVLNode node){
@@ -269,7 +277,7 @@ public class ArbolAVL {
         cadena += "    rankdir=TB;\n";
         cadena += "    graph [pad=\".25\", ranksep=\"1.0\", nodesep=\"1\"];\n";
         cadena += "    node [shape=record, style = rounded, color = forestgreen];\n";
-        cadena += "    node [width = 3, height = 1.0, fixedsize=\"true\"];\n";
+        cadena += "    node [width = 4, height = 1.5, fixedsize=\"true\"];\n";
         cadena += "";
         
         cadena += "    //Nodes and links creation\n";
@@ -283,19 +291,20 @@ public class ArbolAVL {
         String cadena = "";
         if(node != null){
             ArchivoObj arch = (ArchivoObj)node.getHoja();
-            cadena += "     nd"+arch.getNombre()+"[label=\"<left> | Nombre: "+arch.getNombre();
-            cadena += "\\nContenido: "+arch.getContenido()+"\\nBf: "+node.getBf();
-            cadena += "\\nAltura: "+node.getHeight()+"| <right>\"];\n";
-            cadena += "     //Links nd"+arch.getNombre()+"\n";
+            cadena += "     nd"+arch.getNombre().replace(".", "")+"[label=\"<left> | Nombre: "+arch.getNombre();
+            cadena += "\\nContenido: "+arch.getContenido().replace("\"", "\\\"")+"\\nBf: "+node.getBf();
+            cadena += "\\nAltura: "+node.getHeight()+"\\nTimestamp: "+arch.getTimestamp();
+            cadena += "\\nPropietario: "+arch.getPropietario()+" | <right>\"];\n";
+            cadena += "     //Links nd"+arch.getNombre().replace(".", "")+"\n";
             ArchivoObj aux;
             if(node.getLeft() != null){
                 aux = (ArchivoObj)node.getLeft().getHoja();
-                cadena += "     nd"+arch.getNombre()+":left->nd"+aux.getNombre();
+                cadena += "     nd"+arch.getNombre().replace(".", "")+":left->nd"+aux.getNombre().replace(".", "");
                 cadena += "\n";
             }
             if(node.getRight() != null){
                 aux = (ArchivoObj)node.getRight().getHoja();
-                cadena += "     nd"+arch.getNombre()+":right->nd"+aux.getNombre();
+                cadena += "     nd"+arch.getNombre().replace(".", "")+":right->nd"+aux.getNombre().replace(".", "");
                 cadena += "\n"; 
             }
 

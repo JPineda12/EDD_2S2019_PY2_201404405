@@ -12,6 +12,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -270,7 +271,7 @@ public class RegisterForm extends javax.swing.JFrame {
         String pass = "";
         String confirmPass = "";
         try {
-            pass = encriptPass(pwdTextField.getText());
+            pass = pwdTextField.getText();
             confirmPass = encriptPass(confirmPwdTextField.getText());
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -280,7 +281,8 @@ public class RegisterForm extends javax.swing.JFrame {
         if(checkUser(user)){
             if(pass.length() >= 8){
                 if(checkPass(pass, confirmPass)){
-                    boolean success = users.insertar(new Usuario(user, pass, "time",false));
+                    Timestamp time = new Timestamp(System.currentTimeMillis());
+                    boolean success = users.insertar(new Usuario(user, pass, time,false));
                     if(success){
                     JOptionPane.showMessageDialog(null, "Registered New User!"
                             , "Registered", JOptionPane.INFORMATION_MESSAGE);
@@ -313,7 +315,7 @@ public class RegisterForm extends javax.swing.JFrame {
             }
         }
         else{
-            JOptionPane.showMessageDialog(null, "User Already Exists!"
+            JOptionPane.showMessageDialog(null, "Invalid User!"
                     , "Error", JOptionPane.ERROR_MESSAGE);
             userTextField.setText("");
             pwdTextField.setText("");
@@ -325,9 +327,14 @@ public class RegisterForm extends javax.swing.JFrame {
     }//GEN-LAST:event_registerButtonActionPerformed
 
     private boolean checkUser(String user){
-        return !user.equals("Admin");
+        return !user.contains(" ");
     }
     private boolean checkPass(String pass, String confirmPass){
+        try {
+            pass = encriptPass(pass);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return pass.equals(confirmPass);
     }
     private void userTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTextFieldMouseClicked

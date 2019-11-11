@@ -5,6 +5,8 @@
  */
 package proyecto2.Objetos;
 
+import java.sql.Timestamp;
+
 /**
  *
  * @author brest12
@@ -13,10 +15,14 @@ public class ArchivoObj {
     
     private String nombre;
     private String contenido;
+    private final String timestamp;
+    private final String propietario;
 
-    public ArchivoObj(String nombre, String contenido) {
+    public ArchivoObj(String nombre, String contenido, String timestamp, String propietario) {
         this.nombre = nombre;
         this.contenido = contenido;
+        this.timestamp = timestamp;
+        this.propietario = propietario;
     }
 
     public String getNombre() {
@@ -33,6 +39,14 @@ public class ArchivoObj {
 
     public void setContenido(String contenido) {
         this.contenido = contenido;
+    }
+    
+    public String getTimestamp(){
+        return timestamp;
+    }
+    
+    public String getPropietario(){
+        return propietario;
     }
     
 }

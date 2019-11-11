@@ -5,6 +5,7 @@
  */
 package Interfaz;
 
+import Estructuras.ArbolAVL;
 import Estructuras.TablaHash;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -13,6 +14,7 @@ import java.awt.Graphics2D;
 import static java.lang.System.in;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -25,13 +27,15 @@ public class LoginFrame extends javax.swing.JFrame {
     boolean editedOnce;
     boolean editedOncepwd;
     TablaHash users;
+    ArbolAVL files;
     public LoginFrame() {
         initComponents();
         editedOnce = false;
         editedOncepwd = false;
         users = new TablaHash();
         String pass = "Admin";
-        users.insertar(new Usuario("Admin", pass, "00",true));
+        Timestamp time = new Timestamp(System.currentTimeMillis());
+        users.insertar(new Usuario("Admin", pass, time,true));
     }
     public LoginFrame(TablaHash users){
         this.users = users;
@@ -234,11 +238,12 @@ public class LoginFrame extends javax.swing.JFrame {
         Usuario us = checkUser(user);
         if(us != null){
             if(checkPass(us,pass)){
-                     JOptionPane.showMessageDialog(null, "Ok Nigga"
-                        , "Logged in", JOptionPane.ERROR_MESSAGE);
-                     Principal p = new Principal(user,us.getRol(), users);
-                     p.setVisible(true);
-                     this.setVisible(false);
+                files = new ArbolAVL();
+                JOptionPane.showMessageDialog(null, "Logged In!",
+                         "Success", JOptionPane.INFORMATION_MESSAGE);
+                Principal p = new Principal(user, us.getRol(), users, files);
+                p.setVisible(true);
+                this.setVisible(false);
             }else{
                 JOptionPane.showMessageDialog(null, "Incorrect User or Password"
                         , "Error", JOptionPane.ERROR_MESSAGE);
