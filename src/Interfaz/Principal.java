@@ -83,6 +83,7 @@ public class Principal extends javax.swing.JFrame {
         panelAdmin = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         bulkLoad = new rsbuttom.RSButtonMetro();
+        bulkLoad1 = new rsbuttom.RSButtonMetro();
         panelPrincipal = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -297,7 +298,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel6.setText("ADMINISTRADOR");
 
         bulkLoad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/importcsv.png"))); // NOI18N
-        bulkLoad.setText("BULK LOAD");
+        bulkLoad.setText("USERS LOAD");
         bulkLoad.setColorNormal(new java.awt.Color(183, 183, 183));
         bulkLoad.setColorTextHover(new java.awt.Color(58, 58, 58));
         bulkLoad.setColorTextNormal(new java.awt.Color(58, 58, 58));
@@ -312,6 +313,22 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        bulkLoad1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/importcsv.png"))); // NOI18N
+        bulkLoad1.setText("FILES LOAD");
+        bulkLoad1.setColorNormal(new java.awt.Color(183, 183, 183));
+        bulkLoad1.setColorTextHover(new java.awt.Color(58, 58, 58));
+        bulkLoad1.setColorTextNormal(new java.awt.Color(58, 58, 58));
+        bulkLoad1.setColorTextPressed(new java.awt.Color(58, 58, 58));
+        bulkLoad1.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        bulkLoad1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        bulkLoad1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        bulkLoad1.setIconTextGap(25);
+        bulkLoad1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bulkLoad1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelAdminLayout = new javax.swing.GroupLayout(panelAdmin);
         panelAdmin.setLayout(panelAdminLayout);
         panelAdminLayout.setHorizontalGroup(
@@ -321,19 +338,22 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(bulkLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelAdminLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel6)))
+                        .addComponent(jLabel6))
+                    .addComponent(bulkLoad1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         panelAdminLayout.setVerticalGroup(
             panelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAdminLayout.createSequentialGroup()
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bulkLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addComponent(bulkLoad1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        panelMenu.add(panelAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 490, 190, 120));
+        panelMenu.add(panelAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 490, 190, 160));
 
         panelPrincipal.setForeground(new java.awt.Color(51, 57, 59));
         panelPrincipal.setPreferredSize(new java.awt.Dimension(514, 514));
@@ -353,9 +373,9 @@ public class Principal extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
+                    .addComponent(panelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(panelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -506,6 +526,10 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_logOutBtActionPerformed
 
+    private void bulkLoad1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bulkLoad1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bulkLoad1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -545,6 +569,7 @@ public class Principal extends javax.swing.JFrame {
     private rsbuttom.RSButtonMetro FileDelBt;
     private javax.swing.JButton btMenu;
     private rsbuttom.RSButtonMetro bulkLoad;
+    private rsbuttom.RSButtonMetro bulkLoad1;
     private rsbuttom.RSButtonMetro fileCreateBt;
     private rsbuttom.RSButtonMetro fileModifyBt;
     private rsbuttom.RSButtonMetro folderCreateBt;

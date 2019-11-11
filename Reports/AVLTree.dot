@@ -1,0 +1,27 @@
+digraph AVLTree {
+    rankdir=TB;
+    graph [pad=".25", ranksep="1.0", nodesep="1"];
+    node [shape=record, style = rounded, color = forestgreen];
+    node [width = 3, height = 1.0, fixedsize="true"];
+    //Nodes and links creation
+     ndDedo[label="<left> | Nombre: Dedo\nContenido: I like turtles\nBf: 1\nAltura: 3| <right>"];
+     //Links ndDedo
+     ndDedo:left->ndCacao
+     ndDedo:right->ndInfancia
+     ndCacao[label="<left> | Nombre: Cacao\nContenido: nena is sleeping\nBf: -1\nAltura: 1| <right>"];
+     //Links ndCacao
+     ndCacao:left->ndAsnaeb
+     ndAsnaeb[label="<left> | Nombre: Asnaeb\nContenido: lol que cosas verdad\nBf: 0\nAltura: 0| <right>"];
+     //Links ndAsnaeb
+     ndInfancia[label="<left> | Nombre: Infancia\nContenido: verdad que si\nBf: 1\nAltura: 2| <right>"];
+     //Links ndInfancia
+     ndInfancia:left->ndImpressive
+     ndInfancia:right->ndTolteca
+     ndImpressive[label="<left> | Nombre: Impressive\nContenido: Weird thinking\nBf: 0\nAltura: 0| <right>"];
+     //Links ndImpressive
+     ndTolteca[label="<left> | Nombre: Tolteca\nContenido: Rambutanes are mine\nBf: 1\nAltura: 1| <right>"];
+     //Links ndTolteca
+     ndTolteca:right->ndignorant
+     ndignorant[label="<left> | Nombre: ignorant\nContenido: This is some stuff\nBf: 0\nAltura: 0| <right>"];
+     //Links ndignorant
+}

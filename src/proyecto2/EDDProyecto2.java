@@ -5,9 +5,11 @@
  */
 package proyecto2;
 
+import Estructuras.ArbolAVL;
 import Estructuras.TablaHash;
 import Interfaz.LoginFrame;
 import Interfaz.Principal;
+import proyecto2.Objetos.ArchivoObj;
 import proyecto2.Objetos.Usuario;
 
 public class EDDProyecto2 {
@@ -15,7 +17,7 @@ public class EDDProyecto2 {
     public static void main(String[] args) {
        /*Principal p = new Principal("paloma");
        p.show();*/
-        LoginFrame f = new LoginFrame();
+        /*LoginFrame f = new LoginFrame();
         f.setLocationRelativeTo(null);
         f.setVisible(true);
         /*TablaHash tab = new TablaHash();
@@ -34,6 +36,17 @@ public class EDDProyecto2 {
         //tab.graficar();
         tab.imprimir();
         */
+        
+        ArbolAVL t = new ArbolAVL();
+        t.insert(new ArchivoObj("Asnaeb", "lol que cosas verdad"));
+        t.insert(new ArchivoObj("Cacao", "nena is sleeping"));
+        t.insert(new ArchivoObj("Dedo", "I like turtles"));
+        t.insert(new ArchivoObj("Infancia", "verdad que si"));
+        t.insert(new ArchivoObj("Tolteca", "Rambutanes are mine"));
+        t.insert(new ArchivoObj("Impressive", "Weird thinking"));
+        t.insert(new ArchivoObj("ignorant", "This is some stuff"));
+        
+       t.generateGraph();
     }
     
 }
