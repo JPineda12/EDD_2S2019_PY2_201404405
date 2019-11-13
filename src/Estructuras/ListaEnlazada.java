@@ -7,6 +7,7 @@ package Estructuras;
 
 import Estructuras.Nodos.NodoLista;
 import proyecto2.Objetos.CarpetaObj;
+import proyecto2.Objetos.UsuarioError;
 
 /**
  *
@@ -44,11 +45,45 @@ public class ListaEnlazada {
                 aux = aux.getNext();
             }
             aux.setNext(newNode);
+            size++;
             return true;
         }
         return false;
     }
     
+    public boolean insertErr(Object data){
+       if(data == null){
+            return false;
+        }
+        if(!containsErr(data)){
+            NodoLista newNode = new NodoLista(data);
+            if(head == null){
+                head = newNode;
+                return true;
+            }
+            
+            NodoLista aux = head;
+            while(aux.getNext() != null){
+                aux = aux.getNext();
+            }
+            aux.setNext(newNode);
+            size++;
+            return true;
+        }
+        return false;
+    }
+    public boolean containsErr(Object data){
+        NodoLista aux = head;
+        UsuarioError c;
+        while( aux != null){
+            c = (UsuarioError) aux.getData();
+            if(((UsuarioError)data).getUsername().equals(c.getUsername())){
+                return true;
+            }
+            aux = aux.getNext();
+        }
+        return false;
+    }
     public boolean contains(Object data){
         NodoLista aux = head;
         CarpetaObj c;

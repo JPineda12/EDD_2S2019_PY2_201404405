@@ -36,6 +36,7 @@ import javax.swing.JPanel;
 import proyecto2.Objetos.ArchivoObj;
 import proyecto2.Objetos.CarpetaObj;
 import proyecto2.Objetos.Usuario;
+import proyecto2.Objetos.UsuarioError;
 
 /**
  *
@@ -53,6 +54,7 @@ public class Principal extends javax.swing.JFrame {
     int foldersCount;
     String currentFolder;
     boolean showRep, showMenu;
+    ListaEnlazada listaErrores;
     public Principal(Usuario username, Boolean admin, TablaHash users, MatrizAdy carpetas) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -711,33 +713,39 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_folderCreateBtActionPerformed
 
     private void folderModifyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBtActionPerformed
-        //users.graficar();
+        FrameErrores f = new FrameErrores(listaErrores, "pal");
+        f.setVisible(true);
     }//GEN-LAST:event_folderModifyBtActionPerformed
 
     private void UsersBulkLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsersBulkLoadActionPerformed
         JFileChooser choose = new JFileChooser(".");
-        BufferedReader br = null;
+        BufferedReader br;
         int f = choose.showOpenDialog(null);
+        String nombreArch = "";
+        listaErrores = new ListaEnlazada();
         if(f == JFileChooser.APPROVE_OPTION){
-            System.out.println("Insert: "+choose.getSelectedFile().getAbsolutePath());
             //labelUsername.setText(choose.getSelectedFile());
-            String line = "";
+            nombreArch = choose.getSelectedFile().getName();
+            String line;
             int n = 0;
+            int colus = 0;
             boolean userIsFirst = false;
             String csvFile = choose.getSelectedFile().getAbsolutePath();
             try {
                 br = new BufferedReader(new FileReader(csvFile));
-                String name = "";
-                String pass = "";
-                String usuario[] = null;
+                String name;
+                String pass;
+                String usuario[];
                 while((line = br.readLine()) != null){
                     usuario = line.split(",");
                     if(n == 0){
                         
                         if("usuario".equals(usuario[0].toLowerCase())){
-                            userIsFirst = true;                           
+                            userIsFirst = true;           
+                            colus = 0;
                         }else if("password".equals(usuario[0].toLowerCase())){
                             userIsFirst = false;
+                            colus = 1;
                         }else{
                             break;
                         }
@@ -756,11 +764,10 @@ public class Principal extends javax.swing.JFrame {
                                 Timestamp time = new Timestamp(System.currentTimeMillis());
                                 users.insertar(new Usuario(name, pass, time, false));
                             }else{
-                                System.out.println("User: "+name+" has a "
-                                        + "password < 8");
+                                agregarListaError(name, pass, 102, n, colus);
                             }
                         }else{
-                            System.out.println("User "+name+" already exists!");
+                            agregarListaError(name, pass, 101, n, colus);
                         }
                         
                     }
@@ -773,10 +780,35 @@ public class Principal extends javax.swing.JFrame {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        System.out.println("Done");
         users.imprimir();
-        users.graficar();
+        if (listaErrores.getSize() > 0) {
+            int op = JOptionPane.showConfirmDialog(this, "Algunos usuarios no se cargaron"
+                    + "\n ¿Desea ver la lista?");
+            if (op == JOptionPane.YES_OPTION) {
+                FrameErrores err = new FrameErrores(listaErrores, nombreArch);
+                err.setVisible(true);
+            }
+        }
     }//GEN-LAST:event_UsersBulkLoadActionPerformed
+    
+    private void agregarListaError(String user, String pass, int tipoError, int linea, int columna){
+        //tipoError = 101 -> User already exists ----- tipoError = 102 --> Password < 8
 
+        String mensaje = "";
+        if (tipoError == 101) {
+            mensaje = "Nombre de usuario ya existe";
+        } else if (tipoError == 102) {
+            mensaje = "Contraseña menor a 8 caracteres";
+            if (columna == 1) {
+                columna = 0;
+            } else if (columna == 0) {
+                columna = 1;
+            }
+        }
+        UsuarioError err = new UsuarioError(user, pass, linea, columna, mensaje);
+        listaErrores.insertErr(err);
+    }
     private boolean isLongEnough(String pass){
         return pass.length() >= 8;
     }
