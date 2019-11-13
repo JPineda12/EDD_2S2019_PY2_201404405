@@ -6,6 +6,7 @@
 package Interfaz;
 
 import Estructuras.ArbolAVL;
+import Estructuras.MatrizAdy;
 import Estructuras.TablaHash;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -27,7 +28,7 @@ public class LoginFrame extends javax.swing.JFrame {
     boolean editedOnce;
     boolean editedOncepwd;
     TablaHash users;
-    ArbolAVL files;
+    MatrizAdy folders;
     public LoginFrame() {
         initComponents();
         editedOnce = false;
@@ -238,10 +239,10 @@ public class LoginFrame extends javax.swing.JFrame {
         Usuario us = checkUser(user);
         if(us != null){
             if(checkPass(us,pass)){
-                files = new ArbolAVL();
+                folders = us.getCarpetas();
                 JOptionPane.showMessageDialog(null, "Logged In!",
                          "Success", JOptionPane.INFORMATION_MESSAGE);
-                Principal p = new Principal(user, us.getRol(), users, files);
+                Principal p = new Principal(us, us.getRol(), users, folders);
                 p.setVisible(true);
                 this.setVisible(false);
             }else{

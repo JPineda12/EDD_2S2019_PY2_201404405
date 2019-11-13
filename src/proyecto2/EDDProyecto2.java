@@ -6,12 +6,16 @@
 package proyecto2;
 
 import Estructuras.ArbolAVL;
+import Estructuras.ListaEnlazada;
+import Estructuras.MatrizAdy;
+import Estructuras.Nodos.Vertice;
 import Estructuras.TablaHash;
 import Interfaz.LoginFrame;
 import Interfaz.Principal;
 import java.sql.Timestamp;
 import java.util.Date;
 import proyecto2.Objetos.ArchivoObj;
+import proyecto2.Objetos.CarpetaObj;
 import proyecto2.Objetos.Usuario;
 
 public class EDDProyecto2 {
@@ -50,6 +54,25 @@ public class EDDProyecto2 {
         t.insert(new ArchivoObj("ignorant", "This is some stuff", timestamp, propietario));
         
        t.generateGraph();*/
+       
+    /*      ListaEnlazada l = new ListaEnlazada();
+        l.insert(new CarpetaObj("\\", null));
+        l.insert(new CarpetaObj("home", null));
+        l.insert(new CarpetaObj("what", null));
+        l.insert(new CarpetaObj("Music.", null));
+        l.imprimir();*/
+    
+        MatrizAdy m = new MatrizAdy();
+        String nombrePadre = "/";
+        m.crear_Cabeceras(0, nombrePadre);
+        String nombreHijo = "home";
+        Vertice p = m.buscarFila(nombrePadre);
+        CarpetaObj nueva = new CarpetaObj(nombrePadre+nombreHijo, new ArbolAVL());
+        int hijo = m.cantidadCarpetas(p)+1;
+        int padre = m.numVertice(nombrePadre);
+        m.crear_Cabeceras(hijo, nombreHijo);
+        m.insertar_elemento(hijo, padre, nueva);
+        m.graficar();
     }
     
 }

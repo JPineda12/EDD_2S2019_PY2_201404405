@@ -6,7 +6,11 @@
 package Interfaz;
 
 import Estructuras.ArbolAVL;
+import Estructuras.ListaEnlazada;
+import Estructuras.MatrizAdy;
 import Estructuras.Nodos.AVLNode;
+import Estructuras.Nodos.NodoLista;
+import Estructuras.Nodos.Vertice;
 import Estructuras.TablaHash;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -30,6 +34,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import proyecto2.Objetos.ArchivoObj;
+import proyecto2.Objetos.CarpetaObj;
 import proyecto2.Objetos.Usuario;
 
 /**
@@ -42,24 +47,86 @@ public class Principal extends javax.swing.JFrame {
     int contx, conty;
     GridBagConstraints c;
     TablaHash users;
+    MatrizAdy carpetas;
     ArbolAVL files;
-    String currentUser;
-    public Principal(String username, Boolean admin, TablaHash users, ArbolAVL files) {
+    Usuario currentUser;
+    int foldersCount;
+    String currentFolder;
+    public Principal(Usuario username, Boolean admin, TablaHash users, MatrizAdy carpetas) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.users = users;
-        this.files = files;
+        this.carpetas = carpetas;
+        files = new ArbolAVL();
         this.currentUser = username;
         contx = 0;
         conty = 0;
+        foldersCount = 0;
+        currentFolder = "/";
         c = new GridBagConstraints();
         panelPrincipal.setLayout(new GridBagLayout());
-        labelUsername.setText(username);
+        labelUsername.setText(username.getUsername());
         panelAdmin.setVisible(false);
         if(admin){
             panelAdmin.setVisible(true);
         }
         
+        addFolderstoPanel(currentFolder);
+        
+    }
+    
+    public void addFolderstoPanel(String nombreCarpeta){
+        Vertice aux = carpetas.getRoot().getDown();
+        CarpetaObj folder;
+        while (aux != null) {
+            folder = (CarpetaObj) aux.getDato();
+
+            if (nombreCarpeta.equals(folder.getNombre())) {
+                aux = aux.getRight();
+                if (aux != null) {
+                    String nombre = ((CarpetaObj) aux.getUp().getDato()).getNombre();
+                    Carpeta folderButton = new Carpeta(nombre);
+                    c.gridx = contx;
+                    c.gridy = conty;
+                    contx++;
+                    if (contx > 7) {
+                        conty++;
+                        contx = 0;
+                    }
+                    panelPrincipal.add(folderButton, c);
+                } else {
+                    break;
+                }
+            }
+            aux = aux.getDown();
+        }
+    }
+    
+    public void addFilestoPanel(String nombreCarpeta){
+        Vertice aux = carpetas.getRoot().getDown();
+        CarpetaObj folder;
+        while (aux != null) {
+            folder = (CarpetaObj) aux.getDato();
+
+            if (nombreCarpeta.equals(folder.getNombre())) {
+                ListaEnlazada temp = folder.getArchivos().convertirALista();
+                NodoLista h = temp.getHead();
+                while (h != null) {
+                    Archivo file = new Archivo(((ArchivoObj)h.getData()).getNombre());
+                    c.gridx = contx;
+                    c.gridy = conty;
+                    contx++;
+                    if (contx > 7) {
+                        conty++;
+                        contx = 0;
+                    }
+                    panelPrincipal.add(file, c);
+                    h = h.getNext();
+                }
+                break;
+            }
+            aux = aux.getDown();
+        }
     }
 
     /**
@@ -437,7 +504,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void folderCreateBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderCreateBtActionPerformed
         String nombre = JOptionPane.showInputDialog("Nombre de carpeta: ");
-        Carpeta folder = new Carpeta(nombre);
+        Carpeta folderButton = new Carpeta(nombre);
+        CarpetaObj carpeta = new CarpetaObj(nombre, new ArbolAVL());
         //folder.setLayout(new BorderLayout());
         
         c.gridx = contx;
@@ -447,8 +515,9 @@ public class Principal extends javax.swing.JFrame {
             conty++;
             contx = 0;
         }
-        panelPrincipal.add(folder,c);
-        
+        panelPrincipal.add(folderButton,c);
+        currentUser.addCarpeta(currentFolder, nombre);
+        carpetas.graficar();
     }//GEN-LAST:event_folderCreateBtActionPerformed
 
     private void folderModifyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBtActionPerformed
@@ -571,10 +640,10 @@ public class Principal extends javax.swing.JFrame {
                             
                         }
                         time = new Timestamp(System.currentTimeMillis());
-                        AVLNode node = new AVLNode(new ArchivoObj(name, content, time.toString(), currentUser));
+                        AVLNode node = new AVLNode(new ArchivoObj(name, content, time.toString(), currentUser.getUsername()));
                         if(!files.contains(node)){
                             if(isContentString(content)){
-                                files.insert(new ArchivoObj(name, content, time.toString(), currentUser));
+                                files.insert(new ArchivoObj(name, content, time.toString(), currentUser.getUsername()));
                                 System.out.println("inserted: "+name);
                             }else{
                                 System.out.println("File: "+name+" has a "
@@ -630,7 +699,7 @@ public class Principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal("User",false, null,null).setVisible(true);
+                new Principal(null,false, null,null).setVisible(true);
             }
         });
     }

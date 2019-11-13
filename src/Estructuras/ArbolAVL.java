@@ -271,6 +271,27 @@ public class ArbolAVL {
         }
     }
     
+    public ListaEnlazada convertirALista(){
+        ListaEnlazada l = new ListaEnlazada();
+        
+        l = listaInorder(root, l);
+        return l;
+    }
+    
+    private ListaEnlazada listaInorder(AVLNode nodo, ListaEnlazada l){
+        if(nodo.getLeft() != null){
+            l = listaInorder(nodo.getLeft(), l);
+        }
+        
+        l.insert((ArchivoObj)nodo.getHoja());
+        
+        if(nodo.getRight() != null){
+            l = listaInorder(nodo.getRight(), l);
+        }
+        
+        return l;
+    }
+    
     private String llenarDot(){
         String cadena = "";
         cadena += "digraph AVLTree {\n";
