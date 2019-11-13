@@ -61,18 +61,6 @@ public class EDDProyecto2 {
         l.insert(new CarpetaObj("what", null));
         l.insert(new CarpetaObj("Music.", null));
         l.imprimir();*/
-    
-        MatrizAdy m = new MatrizAdy();
-        String nombrePadre = "/";
-        m.crear_Cabeceras(0, nombrePadre);
-        String nombreHijo = "home";
-        Vertice p = m.buscarFila(nombrePadre);
-        CarpetaObj nueva = new CarpetaObj(nombrePadre+nombreHijo, new ArbolAVL());
-        int hijo = m.cantidadCarpetas(p)+1;
-        int padre = m.numVertice(nombrePadre);
-        m.crear_Cabeceras(hijo, nombreHijo);
-        m.insertar_elemento(hijo, padre, nueva);
-        m.graficar();
     }
     
 }

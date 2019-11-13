@@ -52,6 +52,7 @@ public class Principal extends javax.swing.JFrame {
     Usuario currentUser;
     int foldersCount;
     String currentFolder;
+    boolean showRep, showMenu;
     public Principal(Usuario username, Boolean admin, TablaHash users, MatrizAdy carpetas) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -70,21 +71,23 @@ public class Principal extends javax.swing.JFrame {
         if(admin){
             panelAdmin.setVisible(true);
         }
-        
+        showRep = true;
+        showMenu = true;
         addFolderstoPanel(currentFolder);
         
     }
     
     public void addFolderstoPanel(String nombreCarpeta){
         Vertice aux = carpetas.getRoot().getDown();
+        Vertice col;
         CarpetaObj folder;
         while (aux != null) {
             folder = (CarpetaObj) aux.getDato();
 
             if (nombreCarpeta.equals(folder.getNombre())) {
-                aux = aux.getRight();
-                if (aux != null) {
-                    String nombre = ((CarpetaObj) aux.getUp().getDato()).getNombre();
+                col = aux.getRight();
+                while (col != null) {
+                    String nombre = ((CarpetaObj) col.getUp().getDato()).getNombre();
                     Carpeta folderButton = new Carpeta(nombre);
                     c.gridx = contx;
                     c.gridy = conty;
@@ -94,9 +97,9 @@ public class Principal extends javax.swing.JFrame {
                         contx = 0;
                     }
                     panelPrincipal.add(folderButton, c);
-                } else {
-                    break;
+                    col = col.getRight();
                 }
+                break;
             }
             aux = aux.getDown();
         }
@@ -141,6 +144,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         btMenu = new javax.swing.JButton();
+        btMenuGraph = new javax.swing.JButton();
         panelMenu = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -160,6 +164,16 @@ public class Principal extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         filesBulkload = new rsbuttom.RSButtonMetro();
         panelPrincipal = new javax.swing.JPanel();
+        panelReports = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        folderModifyBt1 = new rsbuttom.RSButtonMetro();
+        folderCreateBt1 = new rsbuttom.RSButtonMetro();
+        jPanel7 = new javax.swing.JPanel();
+        folderModifyBt4 = new rsbuttom.RSButtonMetro();
+        panelAdmin1 = new javax.swing.JPanel();
+        folderModifyBt5 = new rsbuttom.RSButtonMetro();
+        folderModifyBt6 = new rsbuttom.RSButtonMetro();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -178,6 +192,17 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jPanel2.add(btMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        btMenuGraph.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/menu.png"))); // NOI18N
+        btMenuGraph.setBorder(null);
+        btMenuGraph.setContentAreaFilled(false);
+        btMenuGraph.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btMenuGraph.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMenuGraphActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btMenuGraph, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 0, -1, -1));
 
         panelMenu.setBackground(new java.awt.Color(183, 183, 183));
         panelMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -400,7 +425,7 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelMenu.add(panelAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 190, 90));
+        panelMenu.add(panelAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 190, 80));
 
         jLabel6.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(58, 58, 58));
@@ -428,6 +453,159 @@ public class Principal extends javax.swing.JFrame {
         panelPrincipal.setPreferredSize(new java.awt.Dimension(514, 514));
         panelPrincipal.setLayout(new java.awt.GridBagLayout());
 
+        panelReports.setBackground(new java.awt.Color(183, 183, 183));
+        panelReports.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel6.setBackground(new java.awt.Color(183, 183, 183));
+
+        jLabel4.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(58, 58, 58));
+        jLabel4.setText("REPORTS");
+
+        folderModifyBt1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/hashTable.png"))); // NOI18N
+        folderModifyBt1.setText("GRAFO");
+        folderModifyBt1.setColorNormal(new java.awt.Color(183, 183, 183));
+        folderModifyBt1.setColorTextHover(new java.awt.Color(58, 58, 58));
+        folderModifyBt1.setColorTextNormal(new java.awt.Color(58, 58, 58));
+        folderModifyBt1.setColorTextPressed(new java.awt.Color(58, 58, 58));
+        folderModifyBt1.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        folderModifyBt1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        folderModifyBt1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        folderModifyBt1.setIconTextGap(25);
+        folderModifyBt1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                folderModifyBt1ActionPerformed(evt);
+            }
+        });
+
+        folderCreateBt1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/hashTable2.png"))); // NOI18N
+        folderCreateBt1.setText("HASH TABLE");
+        folderCreateBt1.setColorNormal(new java.awt.Color(183, 183, 183));
+        folderCreateBt1.setColorTextHover(new java.awt.Color(58, 58, 58));
+        folderCreateBt1.setColorTextNormal(new java.awt.Color(58, 58, 58));
+        folderCreateBt1.setColorTextPressed(new java.awt.Color(58, 58, 58));
+        folderCreateBt1.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        folderCreateBt1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        folderCreateBt1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        folderCreateBt1.setIconTextGap(25);
+        folderCreateBt1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                folderCreateBt1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addContainerGap(96, Short.MAX_VALUE))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(folderCreateBt1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(folderModifyBt1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(folderCreateBt1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(folderModifyBt1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        panelReports.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, -1));
+
+        jPanel7.setBackground(new java.awt.Color(183, 183, 183));
+
+        folderModifyBt4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/history.png"))); // NOI18N
+        folderModifyBt4.setText("BITACORA");
+        folderModifyBt4.setColorNormal(new java.awt.Color(183, 183, 183));
+        folderModifyBt4.setColorTextHover(new java.awt.Color(58, 58, 58));
+        folderModifyBt4.setColorTextNormal(new java.awt.Color(58, 58, 58));
+        folderModifyBt4.setColorTextPressed(new java.awt.Color(58, 58, 58));
+        folderModifyBt4.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        folderModifyBt4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        folderModifyBt4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        folderModifyBt4.setIconTextGap(25);
+        folderModifyBt4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                folderModifyBt4ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(folderModifyBt4, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(folderModifyBt4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        panelReports.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 174, 50));
+
+        panelAdmin1.setBackground(new java.awt.Color(183, 183, 183));
+
+        javax.swing.GroupLayout panelAdmin1Layout = new javax.swing.GroupLayout(panelAdmin1);
+        panelAdmin1.setLayout(panelAdmin1Layout);
+        panelAdmin1Layout.setHorizontalGroup(
+            panelAdmin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 190, Short.MAX_VALUE)
+        );
+        panelAdmin1Layout.setVerticalGroup(
+            panelAdmin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 90, Short.MAX_VALUE)
+        );
+
+        panelReports.add(panelAdmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 190, 90));
+
+        folderModifyBt5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/Matrix.png"))); // NOI18N
+        folderModifyBt5.setText("MATRIZ ADY");
+        folderModifyBt5.setColorNormal(new java.awt.Color(183, 183, 183));
+        folderModifyBt5.setColorTextHover(new java.awt.Color(58, 58, 58));
+        folderModifyBt5.setColorTextNormal(new java.awt.Color(58, 58, 58));
+        folderModifyBt5.setColorTextPressed(new java.awt.Color(58, 58, 58));
+        folderModifyBt5.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        folderModifyBt5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        folderModifyBt5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        folderModifyBt5.setIconTextGap(25);
+        folderModifyBt5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                folderModifyBt5ActionPerformed(evt);
+            }
+        });
+        panelReports.add(folderModifyBt5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 174, 50));
+
+        folderModifyBt6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/tree.png"))); // NOI18N
+        folderModifyBt6.setText("ARBOL AVL");
+        folderModifyBt6.setColorNormal(new java.awt.Color(183, 183, 183));
+        folderModifyBt6.setColorTextHover(new java.awt.Color(58, 58, 58));
+        folderModifyBt6.setColorTextNormal(new java.awt.Color(58, 58, 58));
+        folderModifyBt6.setColorTextPressed(new java.awt.Color(58, 58, 58));
+        folderModifyBt6.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        folderModifyBt6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        folderModifyBt6.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        folderModifyBt6.setIconTextGap(25);
+        folderModifyBt6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                folderModifyBt6ActionPerformed(evt);
+            }
+        });
+        panelReports.add(folderModifyBt6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 174, 50));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -435,19 +613,27 @@ public class Principal extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(panelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
+                .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(panelReports, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(panelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(panelReports, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -460,7 +646,7 @@ public class Principal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 696, Short.MAX_VALUE)
         );
 
         pack();
@@ -495,10 +681,15 @@ public class Principal extends javax.swing.JFrame {
 
     private void btMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenuActionPerformed
         int pos = panelMenu.getX();
-        if(pos > -1){
-            Animacion.Animacion.mover_izquierda(0, -174, 2, 2, panelMenu);
+        int posf;
+        if(showMenu){
+            posf = pos - panelMenu.getWidth();
+            Animacion.Animacion.mover_izquierda(pos, posf, 2, 2, panelMenu);
+            showMenu = false;
         }else{
-            Animacion.Animacion.mover_derecha(-174, 0, 2, 2, panelMenu);
+            posf = pos + panelMenu.getWidth();
+            Animacion.Animacion.mover_derecha(pos, posf, 2, 2, panelMenu);
+            showMenu = true;
         }
     }//GEN-LAST:event_btMenuActionPerformed
 
@@ -517,11 +708,10 @@ public class Principal extends javax.swing.JFrame {
         }
         panelPrincipal.add(folderButton,c);
         currentUser.addCarpeta(currentFolder, nombre);
-        carpetas.graficar();
     }//GEN-LAST:event_folderCreateBtActionPerformed
 
     private void folderModifyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBtActionPerformed
-        // TODO add your handling code here:
+        //users.graficar();
     }//GEN-LAST:event_folderModifyBtActionPerformed
 
     private void UsersBulkLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsersBulkLoadActionPerformed
@@ -666,6 +856,41 @@ public class Principal extends javax.swing.JFrame {
         files.generateGraph();
     }//GEN-LAST:event_filesBulkloadActionPerformed
 
+    private void btMenuGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenuGraphActionPerformed
+        int pos = panelReports.getX();
+        int posf;
+        System.out.println(pos);
+        if(showRep){
+            posf = pos+panelReports.getWidth();
+            Animacion.Animacion.mover_derecha(pos, posf, 2, 2, panelReports);
+            showRep = false;
+        }else{
+            posf = pos-panelReports.getWidth();
+            Animacion.Animacion.mover_izquierda(pos, posf, 2, 2, panelReports);
+            showRep = true;
+        }
+    }//GEN-LAST:event_btMenuGraphActionPerformed
+
+    private void folderCreateBt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderCreateBt1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_folderCreateBt1ActionPerformed
+
+    private void folderModifyBt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBt1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_folderModifyBt1ActionPerformed
+
+    private void folderModifyBt4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBt4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_folderModifyBt4ActionPerformed
+
+    private void folderModifyBt5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBt5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_folderModifyBt5ActionPerformed
+
+    private void folderModifyBt6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBt6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_folderModifyBt6ActionPerformed
+
     private boolean isContentString(String content){
         return content.contains("");
     }
@@ -708,24 +933,35 @@ public class Principal extends javax.swing.JFrame {
     private rsbuttom.RSButtonMetro FileDelBt;
     private rsbuttom.RSButtonMetro UsersBulkLoad;
     private javax.swing.JButton btMenu;
+    private javax.swing.JButton btMenuGraph;
     private rsbuttom.RSButtonMetro fileCreateBt;
     private rsbuttom.RSButtonMetro fileModifyBt;
     private rsbuttom.RSButtonMetro filesBulkload;
     private rsbuttom.RSButtonMetro folderCreateBt;
+    private rsbuttom.RSButtonMetro folderCreateBt1;
     private rsbuttom.RSButtonMetro folderDelBt;
     private rsbuttom.RSButtonMetro folderModifyBt;
+    private rsbuttom.RSButtonMetro folderModifyBt1;
+    private rsbuttom.RSButtonMetro folderModifyBt4;
+    private rsbuttom.RSButtonMetro folderModifyBt5;
+    private rsbuttom.RSButtonMetro folderModifyBt6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JLabel labelUsername;
     private javax.swing.JButton logOutBt;
     private javax.swing.JPanel panelAdmin;
+    private javax.swing.JPanel panelAdmin1;
     private javax.swing.JPanel panelMenu;
     private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JPanel panelReports;
     // End of variables declaration//GEN-END:variables
 }
