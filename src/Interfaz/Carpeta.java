@@ -5,13 +5,15 @@
  */
 package Interfaz;
 
+import proyecto2.Objetos.CarpetaObj;
+
 /**
  *
  * @author brest12
  */
 public class Carpeta extends javax.swing.JPanel {
 
-    String nombre;
+    private String nombre;
     public Carpeta() {
         initComponents();
     }
@@ -40,6 +42,16 @@ public class Carpeta extends javax.swing.JPanel {
         jButton1.setBorderPainted(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -53,6 +65,26 @@ public class Carpeta extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        if (evt.getClickCount() == 2) {
+            //
+        } else {
+            this.getParent().requestFocus();
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
+    
+    public void setText(String text){
+        nombre = text;
+        jButton1.setText(text);
+    }
+    
+    public String getText(){
+        return nombre;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

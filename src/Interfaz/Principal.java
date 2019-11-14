@@ -58,7 +58,7 @@ public class Principal extends javax.swing.JFrame {
     boolean showRep, showMenu;
     ListaEnlazada listaErrores;
     Archivo selectedFile;
-    
+    Carpeta selectedFolder;
     public Principal(Usuario username, Boolean admin, TablaHash users, MatrizAdy carpetas) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -69,6 +69,7 @@ public class Principal extends javax.swing.JFrame {
         conty = 0;
         foldersCount = 0;
         selectedFile = null;
+        selectedFolder = null;
         currentFolder = (CarpetaObj)(currentUser.getCarpetas().buscarFila("/").getDato());
         c = new GridBagConstraints();
         panelPrincipal.setLayout(new GridBagLayout());
@@ -672,39 +673,62 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void folderDelBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderDelBtActionPerformed
-        // TODO add your handling code here:
+        if(selectedFolder != null){
+            currentUser.getCarpetas().eliminarVertice(selectedFolder.getText());
+            String nombreNodo = currentFolder.getNombre();
+            if(nombreNodo.equals("/")){
+                nombreNodo = "/"+selectedFolder.getText();
+            }else{
+                nombreNodo += "/"+selectedFolder.getText();
+            }
+            panelPrincipal.remove(selectedFolder);
+            panelPrincipal.revalidate();
+            panelPrincipal.repaint();  
+        }
     }//GEN-LAST:event_folderDelBtActionPerformed
 
     private void fileCreateBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileCreateBtActionPerformed
         String nombre = JOptionPane.showInputDialog("Nombre de Archivo: ");
-        if (nombre.length() > 0) {
-            if (!currentFolder.getArchivos().contains(nombre)) {
+        if (nombre != null) {
+            if (nombre.length() > 0) {
                 Timestamp time = new Timestamp(System.currentTimeMillis());
                 ArchivoObj newFile = new ArchivoObj(nombre, "", time.toString(),
-                         currentUser.getUsername());
-                Archivo file = new Archivo(newFile);
-                c.gridx = contx;
-                c.gridy = conty;
-                contx++;
-                if (contx >= 7) {
-                    conty++;
-                    contx = 0;
-                }
-                panelPrincipal.add(file, c);
+                        currentUser.getUsername());
+                if (!currentFolder.getArchivos().contains(nombre)) {
+                    Archivo file = new Archivo(newFile);
+                    c.gridx = contx;
+                    c.gridy = conty;
+                    contx++;
+                    if (contx >= 7) {
+                        conty++;
+                        contx = 0;
+                    }
+                    panelPrincipal.add(file, c);
 
-                currentFolder.getArchivos().insert(newFile);
-            }else{
-                JOptionPane.showMessageDialog(this, "Ya existe un archivo con este nombre!");
+                    currentFolder.getArchivos().insert(newFile);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ya existe un archivo "
+                            + "llamado "+nombre);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Nombre Invalido!");
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Nombre Invalido!");
         }
     }//GEN-LAST:event_fileCreateBtActionPerformed
 
     private void FileDelBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FileDelBtActionPerformed
-        // TODO add your handling code here:
+        if(selectedFile != null){
+            deleteFile(selectedFile.getArchivo());
+        }
     }//GEN-LAST:event_FileDelBtActionPerformed
-
+    
+    private void deleteFile(ArchivoObj file){
+        currentFolder.getArchivos().remove(file);
+        panelPrincipal.remove(selectedFile);
+        panelPrincipal.revalidate();
+        panelPrincipal.repaint();
+    }
+    
     private void fileModifyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileModifyBtActionPerformed
         if(selectedFile != null){    
             modifyFile(selectedFile.getArchivo());
@@ -743,23 +767,50 @@ public class Principal extends javax.swing.JFrame {
 
     private void folderCreateBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderCreateBtActionPerformed
         String nombre = JOptionPane.showInputDialog("Nombre de carpeta: ");
-        Carpeta folderButton = new Carpeta(nombre);
-        CarpetaObj carpeta = new CarpetaObj(nombre, new ArbolAVL());
-        //folder.setLayout(new BorderLayout());
-        
-        c.gridx = contx;
-        c.gridy = conty;
-        contx++;
-        if(contx>7){
-            conty++;
-            contx = 0;
+        if (nombre != null) {
+            if(nombre.length() > 0){
+                Carpeta folderButton = new Carpeta(nombre);
+                c.gridx = contx;
+                c.gridy = conty;
+                contx++;
+                if (contx > 7) {
+                    conty++;
+                    contx = 0;
+                }
+                panelPrincipal.add(folderButton, c);
+                currentUser.addCarpeta(currentFolder.getNombre(), nombre);
+            }
         }
-        panelPrincipal.add(folderButton,c);
-        currentUser.addCarpeta(currentFolder.getNombre(), nombre);
     }//GEN-LAST:event_folderCreateBtActionPerformed
 
     private void folderModifyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBtActionPerformed
-        
+        if(selectedFolder != null){
+            String nombreAnterior = selectedFolder.getText();
+            String nombre = JOptionPane.showInputDialog("Modificar: "
+                    + selectedFolder.getText()
+                    + "\nNuevo nombre");
+            if(nombre != null && nombre.length() > 0){
+                MatrizAdy aux = currentUser.getCarpetas();
+                ((CarpetaObj)aux.buscarFila(nombreAnterior).getDato()).setNombre(nombre);
+                String nombreNodo = currentFolder.getNombre();
+                if(nombreNodo.equals("/")){
+                    nombreNodo = "/"+nombreAnterior;
+                    System.out.println(nombreNodo);
+                    ((CarpetaObj)aux.buscarNodo("/",nombreNodo).getDato()).setNombre("/"+nombre);
+                }else{
+                    nombreNodo += "/"+nombreAnterior;
+                    ((CarpetaObj)aux.buscarNodo(currentFolder.getNombre()
+                            ,nombreAnterior).getDato())
+                            .setNombre(currentFolder.getNombre()+"/"+nombre);
+                }
+                selectedFolder.setText(nombre);
+                JOptionPane.showMessageDialog(this, "Carpeta Modificada!");
+            }else{
+                JOptionPane.showMessageDialog(this, "Nombre Invalido!");
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccionar una carpeta primero");   
+        }
     }//GEN-LAST:event_folderModifyBtActionPerformed
 
     private void UsersBulkLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsersBulkLoadActionPerformed
@@ -923,6 +974,9 @@ public class Principal extends javax.swing.JFrame {
                                     "El archivo "+name+" ya existe!\n"
                                             + "¿Desea sobreescribirlo?");
                             if(opt == 0){
+                                content = content.replaceAll("”", "");
+                                content = content.replaceAll("\"", "");
+                                content = content.replaceAll("“", "");
                                 ArchivoObj arch = new ArchivoObj(name, content,
                                         time.toString(), currentUser.getUsername());
                                 System.out.println(t.remove(arch));
@@ -992,7 +1046,13 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_formMouseClicked
 
     private void panelPrincipalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_panelPrincipalFocusGained
-        selectedFile = (Archivo) panelPrincipal.getComponentAt(panelPrincipal.getMousePosition());
+
+        Component comp = panelPrincipal.getComponentAt(panelPrincipal.getMousePosition());
+        if(comp.getClass().toString().contains("Archivo")){
+            selectedFile = (Archivo) comp;
+        }else if(comp.getClass().toString().contains("Carpeta")){
+            selectedFolder = (Carpeta) comp;
+        }
     }//GEN-LAST:event_panelPrincipalFocusGained
 
     /**

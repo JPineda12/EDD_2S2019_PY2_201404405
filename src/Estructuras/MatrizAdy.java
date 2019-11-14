@@ -56,6 +56,27 @@ public class MatrizAdy {
         return null;
     }
     
+    public Vertice buscarNodo(String padre, String hijo){
+        Vertice temp = root;
+        Vertice node;
+        CarpetaObj c;
+        while (temp != null) {
+            c = (CarpetaObj) temp.getDato();
+            if (c.getNombre().equals(padre)) {
+                node = temp.getRight();
+                while(node != null){
+                    c = (CarpetaObj) node.getDato();
+                    if(c.getNombre().equals(hijo)){
+                        return node;
+                    }
+                    node = node.getRight();
+                }
+            }
+            temp = temp.getDown();
+        }
+        return null;
+    }
+    
     public int numVertice(String nombreCarpeta){
         Vertice temp = root;
         CarpetaObj c;
