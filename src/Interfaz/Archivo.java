@@ -5,6 +5,7 @@
  */
 package Interfaz;
 
+import java.awt.Component;
 import proyecto2.Objetos.ArchivoObj;
 
 /**
@@ -13,7 +14,7 @@ import proyecto2.Objetos.ArchivoObj;
  */
 public class Archivo extends javax.swing.JPanel {
 
-    ArchivoObj archivo;
+    private ArchivoObj archivo;
     public Archivo() {
         initComponents();
     }
@@ -22,7 +23,16 @@ public class Archivo extends javax.swing.JPanel {
         initComponents();
         jButton1.setText(archivo.getNombre());
     }
-
+    
+    
+    public ArchivoObj getArchivo(){
+        return archivo;
+    }
+    
+    public void setText(String text){
+        jButton1.setText(text);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,6 +52,16 @@ public class Archivo extends javax.swing.JPanel {
         jButton1.setBorderPainted(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jButton1FocusLost(evt);
+            }
+        });
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -61,9 +81,21 @@ public class Archivo extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ContentViewer c = new ContentViewer(archivo);
-        c.setVisible(true);
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        if(evt.getClickCount() == 2){
+            ContentViewer c = new ContentViewer(archivo);
+            c.setVisible(true);
+        }else{
+            this.getParent().requestFocus();
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton1FocusLost
+
+    }//GEN-LAST:event_jButton1FocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

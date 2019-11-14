@@ -14,11 +14,14 @@ import Estructuras.Nodos.Vertice;
 import Estructuras.TablaHash;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -54,6 +57,8 @@ public class Principal extends javax.swing.JFrame {
     CarpetaObj currentFolder;
     boolean showRep, showMenu;
     ListaEnlazada listaErrores;
+    Archivo selectedFile;
+    
     public Principal(Usuario username, Boolean admin, TablaHash users, MatrizAdy carpetas) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -63,6 +68,7 @@ public class Principal extends javax.swing.JFrame {
         contx = 0;
         conty = 0;
         foldersCount = 0;
+        selectedFile = null;
         currentFolder = (CarpetaObj)(currentUser.getCarpetas().buscarFila("/").getDato());
         c = new GridBagConstraints();
         panelPrincipal.setLayout(new GridBagLayout());
@@ -173,6 +179,11 @@ public class Principal extends javax.swing.JFrame {
         folderModifyBt6 = new rsbuttom.RSButtonMetro();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         jPanel1.setForeground(new java.awt.Color(51, 57, 59));
 
@@ -448,6 +459,16 @@ public class Principal extends javax.swing.JFrame {
 
         panelPrincipal.setForeground(new java.awt.Color(51, 57, 59));
         panelPrincipal.setPreferredSize(new java.awt.Dimension(514, 514));
+        panelPrincipal.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                panelPrincipalFocusGained(evt);
+            }
+        });
+        panelPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelPrincipalMouseClicked(evt);
+            }
+        });
         panelPrincipal.setLayout(new java.awt.GridBagLayout());
 
         panelReports.setBackground(new java.awt.Color(183, 183, 183));
@@ -512,6 +533,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(folderCreateBt1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(folderModifyBt1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -684,9 +706,27 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_FileDelBtActionPerformed
 
     private void fileModifyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileModifyBtActionPerformed
-        // TODO add your handling code here:
+        if(selectedFile != null){    
+            modifyFile(selectedFile.getArchivo());
+        }
     }//GEN-LAST:event_fileModifyBtActionPerformed
 
+    private void modifyFile(ArchivoObj file){
+        String[] options = {"Nombre del Archivo", "Contenido del Archivo", "Nada"};
+        int op = JOptionPane.showOptionDialog(this, "Archivo: "+file.getNombre()
+                + "\n¿Que desea modificar?",
+                "Modificar", JOptionPane.DEFAULT_OPTION, 
+                JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+        if(op == 0){
+            String nombre = JOptionPane.showInputDialog("Nuevo nombre de archivo");
+            file.setNombre(nombre);
+            selectedFile.setText(nombre);
+            
+        }else if(op == 1){
+            ContentViewer cv = new ContentViewer(file);
+            cv.setVisible(true);
+        }
+    }
     private void btMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenuActionPerformed
         int pos = panelMenu.getX();
         int posf;
@@ -719,8 +759,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_folderCreateBtActionPerformed
 
     private void folderModifyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBtActionPerformed
-        FrameErrores f = new FrameErrores(listaErrores, "pal");
-        f.setVisible(true);
+        
     }//GEN-LAST:event_folderModifyBtActionPerformed
 
     private void UsersBulkLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsersBulkLoadActionPerformed
@@ -943,6 +982,18 @@ public class Principal extends javax.swing.JFrame {
     private void folderModifyBt6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBt6ActionPerformed
         currentFolder.getArchivos().generateGraph();
     }//GEN-LAST:event_folderModifyBt6ActionPerformed
+
+    private void panelPrincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelPrincipalMouseClicked
+        System.out.println("");
+    }//GEN-LAST:event_panelPrincipalMouseClicked
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+
+    }//GEN-LAST:event_formMouseClicked
+
+    private void panelPrincipalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_panelPrincipalFocusGained
+        selectedFile = (Archivo) panelPrincipal.getComponentAt(panelPrincipal.getMousePosition());
+    }//GEN-LAST:event_panelPrincipalFocusGained
 
     /**
      * @param args the command line arguments

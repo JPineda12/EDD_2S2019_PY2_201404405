@@ -22,7 +22,7 @@ public class ArbolAVL {
     
     AVLNode root;
     int nodeCount;
-    
+    int tamanoNodos;
     public ArbolAVL(){
         this.root = null;
         this.nodeCount = 0;
@@ -86,6 +86,9 @@ public class ArbolAVL {
             return false;
         }
         AVLNode newNode = new AVLNode(arch);
+        if(arch.getContenido().length() > 40){
+            tamanoNodos = 6;
+        }
         if(contains(newNode)){
             return false;
         }else{
@@ -298,7 +301,7 @@ public class ArbolAVL {
         cadena += "    rankdir=TB;\n";
         cadena += "    graph [pad=\".25\", ranksep=\"1.0\", nodesep=\"1\"];\n";
         cadena += "    node [shape=record, style = rounded, color = forestgreen];\n";
-        cadena += "    node [width = 4, height = 1.5, fixedsize=\"true\"];\n";
+        cadena += "    node [width = "+tamanoNodos+", height = 1.5, fixedsize=\"true\"];\n";
         cadena += "";
         
         cadena += "    //Nodes and links creation\n";
