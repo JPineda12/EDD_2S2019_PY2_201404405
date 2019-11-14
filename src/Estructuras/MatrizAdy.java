@@ -177,22 +177,20 @@ public class MatrizAdy {
        return nuevo;
     }
     
-    public boolean crear_Cabeceras(int x, String nombre){
-        Vertice c = crear_Columna(x, nombre);
-        Vertice f = crear_Fila(x, nombre);
+    public boolean crear_Cabeceras(int x, String nombre, CarpetaObj carp){
+        Vertice c = crear_Columna(x, nombre, carp);
+        Vertice f = crear_Fila(x, nombre, carp);
         return c != null && f != null;
     }
     
-    private Vertice crear_Columna(int x, String nombre){
+    private Vertice crear_Columna(int x, String nombre, CarpetaObj c){
         Vertice head_col = root;
-        CarpetaObj c = new CarpetaObj(nombre, null);
         Vertice columna = insertar_ordenado_columna(new Vertice(c,x,-1), head_col);
         return columna;
     }
     
-    private Vertice crear_Fila(int y, String nombre){
+    private Vertice crear_Fila(int y, String nombre, CarpetaObj c){
         Vertice head_row = root;
-        CarpetaObj c = new CarpetaObj(nombre, null);
         Vertice row = insertar_ordenado_fila(new Vertice(c,-1,y), head_row);
         return row;
     }
@@ -249,21 +247,21 @@ public class MatrizAdy {
         CarpetaObj carpeta = (CarpetaObj) dato;
         
         if(columna == null && fila == null){
-            columna = crear_Columna(x, carpeta.getNombre());
-            fila = crear_Fila(y, carpeta.getNombre());
+            columna = crear_Columna(x, carpeta.getNombre(), carpeta);
+            fila = crear_Fila(y, carpeta.getNombre(), carpeta);
             nuevo = insertar_ordenado_columna(nuevo, fila);
             insertar_ordenado_fila(nuevo, columna);
             System.out.println("x: "+nuevo.getX()+" Y: "+nuevo.getY());
             return true;    
         }
         else if(columna == null && fila != null){
-            columna = crear_Columna(x, carpeta.getNombre());
+            columna = crear_Columna(x, carpeta.getNombre(), carpeta);
             nuevo = insertar_ordenado_columna(nuevo, fila);
             insertar_ordenado_fila(nuevo, columna);
             return true;
         }
         else if(columna != null && fila == null){
-            fila = crear_Fila(y, carpeta.getNombre());
+            fila = crear_Fila(y, carpeta.getNombre(), carpeta);
             nuevo = insertar_ordenado_columna(nuevo, fila);
             insertar_ordenado_fila(nuevo, columna);
             return true;

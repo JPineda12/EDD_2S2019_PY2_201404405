@@ -40,13 +40,13 @@ public class ArbolAVL {
     }
     
     public boolean isEmpty(){
-        return treeSize() == 0;
+        return root == null;
     }
     
     public boolean contains(String cadena){
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        ArchivoObj f = new ArchivoObj("cadena", "who knows", time.toString(), "none");
-        AVLNode temp = new AVLNode(time);
+        ArchivoObj f = new ArchivoObj(cadena, "who knows", time.toString(), "none");
+        AVLNode temp = new AVLNode(f);
         return contains(temp);
     }
     
@@ -283,7 +283,7 @@ public class ArbolAVL {
             l = listaInorder(nodo.getLeft(), l);
         }
         
-        l.insert((ArchivoObj)nodo.getHoja());
+        l.insertArch(nodo.getHoja());
         
         if(nodo.getRight() != null){
             l = listaInorder(nodo.getRight(), l);

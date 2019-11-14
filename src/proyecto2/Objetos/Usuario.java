@@ -32,7 +32,7 @@ public class Usuario {
         this.timestamp = timestamp;
         this.rol = rol;
         this.carpetas = new MatrizAdy();
-        this.carpetas.crear_Cabeceras(0, "/");
+        this.carpetas.crear_Cabeceras(0,"/", new CarpetaObj("/", new ArbolAVL()));
     }
 
     public String getUsername() {
@@ -50,7 +50,8 @@ public class Usuario {
     public void addCarpeta(String nombrePadre, String nombreHijo){
         Vertice p = carpetas.buscarFila(nombrePadre);
         int hijo = carpetas.cantidadCarpetas(p)+1;
-        carpetas.crear_Cabeceras(hijo, nombreHijo);
+        CarpetaObj folder = new CarpetaObj(nombreHijo, new ArbolAVL());
+        carpetas.crear_Cabeceras(hijo, nombreHijo, folder);
         int padre = carpetas.numVertice(nombrePadre);
         String nombreNodo = "";
         if(nombrePadre.equals("/")){

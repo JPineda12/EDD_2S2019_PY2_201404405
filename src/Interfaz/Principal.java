@@ -49,10 +49,9 @@ public class Principal extends javax.swing.JFrame {
     GridBagConstraints c;
     TablaHash users;
     MatrizAdy carpetas;
-    ArbolAVL files;
     Usuario currentUser;
     int foldersCount;
-    String currentFolder;
+    CarpetaObj currentFolder;
     boolean showRep, showMenu;
     ListaEnlazada listaErrores;
     public Principal(Usuario username, Boolean admin, TablaHash users, MatrizAdy carpetas) {
@@ -60,12 +59,11 @@ public class Principal extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.users = users;
         this.carpetas = carpetas;
-        files = new ArbolAVL();
         this.currentUser = username;
         contx = 0;
         conty = 0;
         foldersCount = 0;
-        currentFolder = "/";
+        currentFolder = (CarpetaObj)(currentUser.getCarpetas().buscarFila("/").getDato());
         c = new GridBagConstraints();
         panelPrincipal.setLayout(new GridBagLayout());
         labelUsername.setText(username.getUsername());
@@ -75,8 +73,8 @@ public class Principal extends javax.swing.JFrame {
         }
         showRep = true;
         showMenu = true;
-        addFolderstoPanel(currentFolder);
-        
+        addFolderstoPanel(currentFolder.getNombre());
+        addFilestoPanel(currentFolder);
     }
     
     public void addFolderstoPanel(String nombreCarpeta){
@@ -94,7 +92,7 @@ public class Principal extends javax.swing.JFrame {
                     c.gridx = contx;
                     c.gridy = conty;
                     contx++;
-                    if (contx > 7) {
+                    if (contx >= 7) {
                         conty++;
                         contx = 0;
                     }
@@ -107,30 +105,27 @@ public class Principal extends javax.swing.JFrame {
         }
     }
     
-    public void addFilestoPanel(String nombreCarpeta){
-        Vertice aux = carpetas.getRoot().getDown();
-        CarpetaObj folder;
-        while (aux != null) {
-            folder = (CarpetaObj) aux.getDato();
-
-            if (nombreCarpeta.equals(folder.getNombre())) {
-                ListaEnlazada temp = folder.getArchivos().convertirALista();
-                NodoLista h = temp.getHead();
-                while (h != null) {
-                    Archivo file = new Archivo(((ArchivoObj)h.getData()).getNombre());
-                    c.gridx = contx;
-                    c.gridy = conty;
-                    contx++;
-                    if (contx > 7) {
-                        conty++;
-                        contx = 0;
-                    }
-                    panelPrincipal.add(file, c);
-                    h = h.getNext();
+    public void addFilestoPanel(CarpetaObj carpeta) {
+        ArbolAVL a = carpeta.getArchivos();
+        if(!a.isEmpty()){
+            System.out.println("Converting to list...");
+            ListaEnlazada archs = a.convertirALista();
+            System.out.println("Files: "+archs.getSize());
+            NodoLista h = archs.getHead();
+            System.out.println(h);
+            while (h != null) {
+                Archivo file = new Archivo(((ArchivoObj)h.getData()));
+                c.gridx = contx;
+                c.gridy = conty;
+                contx++;
+                if (contx >= 7) {
+                    conty++;
+                    contx = 0;
                 }
-                break;
+                panelPrincipal.add(file, c);
+                h = h.getNext();
             }
-            aux = aux.getDown();
+            
         }
     }
 
@@ -660,17 +655,28 @@ public class Principal extends javax.swing.JFrame {
 
     private void fileCreateBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileCreateBtActionPerformed
         String nombre = JOptionPane.showInputDialog("Nombre de Archivo: ");
-        Archivo file = new Archivo(nombre);
-        //folder.setLayout(new BorderLayout());
-        
-        c.gridx = contx;
-        c.gridy = conty;
-        contx++;
-        if(contx>7){
-            conty++;
-            contx = 0;
+        if (nombre.length() > 0) {
+            if (!currentFolder.getArchivos().contains(nombre)) {
+                Timestamp time = new Timestamp(System.currentTimeMillis());
+                ArchivoObj newFile = new ArchivoObj(nombre, "", time.toString(),
+                         currentUser.getUsername());
+                Archivo file = new Archivo(newFile);
+                c.gridx = contx;
+                c.gridy = conty;
+                contx++;
+                if (contx >= 7) {
+                    conty++;
+                    contx = 0;
+                }
+                panelPrincipal.add(file, c);
+
+                currentFolder.getArchivos().insert(newFile);
+            }else{
+                JOptionPane.showMessageDialog(this, "Ya existe un archivo con este nombre!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Nombre Invalido!");
         }
-        panelPrincipal.add(file,c);
     }//GEN-LAST:event_fileCreateBtActionPerformed
 
     private void FileDelBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FileDelBtActionPerformed
@@ -709,7 +715,7 @@ public class Principal extends javax.swing.JFrame {
             contx = 0;
         }
         panelPrincipal.add(folderButton,c);
-        currentUser.addCarpeta(currentFolder, nombre);
+        currentUser.addCarpeta(currentFolder.getNombre(), nombre);
     }//GEN-LAST:event_folderCreateBtActionPerformed
 
     private void folderModifyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBtActionPerformed
@@ -723,6 +729,8 @@ public class Principal extends javax.swing.JFrame {
         int f = choose.showOpenDialog(null);
         String nombreArch = "";
         listaErrores = new ListaEnlazada();
+        int count = 0;
+        int counterr = 0;  
         if(f == JFileChooser.APPROVE_OPTION){
             //labelUsername.setText(choose.getSelectedFile());
             nombreArch = choose.getSelectedFile().getName();
@@ -736,6 +744,7 @@ public class Principal extends javax.swing.JFrame {
                 String name;
                 String pass;
                 String usuario[];
+
                 while((line = br.readLine()) != null){
                     usuario = line.split(",");
                     if(n == 0){
@@ -763,13 +772,17 @@ public class Principal extends javax.swing.JFrame {
                             if(isLongEnough(pass)){
                                 Timestamp time = new Timestamp(System.currentTimeMillis());
                                 users.insertar(new Usuario(name, pass, time, false));
+                                count++;
                             }else{
-                                agregarListaError(name, pass, 102, n, colus);
+                                if(agregarListaError(name, pass, 102, n, colus)){
+                                    counterr++;
+                                }
                             }
                         }else{
-                            agregarListaError(name, pass, 101, n, colus);
+                            if(agregarListaError(name, pass, 101, n, colus)){
+                                counterr++;
+                            }
                         }
-                        
                     }
                     n++;
                 }
@@ -780,10 +793,9 @@ public class Principal extends javax.swing.JFrame {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        System.out.println("Done");
-        users.imprimir();
+        JOptionPane.showMessageDialog(this, "Se cargaron "+count+" usuarios correctamente");
         if (listaErrores.getSize() > 0) {
-            int op = JOptionPane.showConfirmDialog(this, "Algunos usuarios no se cargaron"
+            int op = JOptionPane.showConfirmDialog(this, counterr+" usuarios no se cargaron"
                     + "\n ¿Desea ver la lista?");
             if (op == JOptionPane.YES_OPTION) {
                 FrameErrores err = new FrameErrores(listaErrores, nombreArch);
@@ -792,7 +804,7 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_UsersBulkLoadActionPerformed
     
-    private void agregarListaError(String user, String pass, int tipoError, int linea, int columna){
+    private boolean agregarListaError(String user, String pass, int tipoError, int linea, int columna){
         //tipoError = 101 -> User already exists ----- tipoError = 102 --> Password < 8
 
         String mensaje = "";
@@ -807,7 +819,7 @@ public class Principal extends javax.swing.JFrame {
             }
         }
         UsuarioError err = new UsuarioError(user, pass, linea, columna, mensaje);
-        listaErrores.insertErr(err);
+        return listaErrores.insertErr(err);
     }
     private boolean isLongEnough(String pass){
         return pass.length() >= 8;
@@ -823,32 +835,29 @@ public class Principal extends javax.swing.JFrame {
 
     private void filesBulkloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filesBulkloadActionPerformed
         JFileChooser choose = new JFileChooser(".");
-        BufferedReader br = null;
+        BufferedReader br;
         Timestamp time;
         int f = choose.showOpenDialog(null);
         if(f == JFileChooser.APPROVE_OPTION){
-            System.out.println("Insert: "+choose.getSelectedFile().getAbsolutePath());
-            //labelUsername.setText(choose.getSelectedFile());
-            String line = "";
+            String line;
             int n = 0;
             boolean fileIsFirst = false;
             String csvFile = choose.getSelectedFile().getAbsolutePath();
             try {
                 br = new BufferedReader(new FileReader(csvFile));
-                String name = "";
-                String content = "";
-                String file[] = null;
+                String name;
+                String content;
+                String file[];
                 while((line = br.readLine()) != null){
                     file = line.split(",");
                     if(n == 0){
                         System.out.println(file[0].toLowerCase());
                         if("archivo".equals(file[0].toLowerCase())){
-                            System.out.println("Yes");
                             fileIsFirst = true;                           
                         }else if("contenido".equals(file[0].toLowerCase())){
                             fileIsFirst = false;
                         }else{
-                            System.out.println("Breaking up :'(");
+                            JOptionPane.showMessageDialog(this, "CSV Invalido!");
                             break;
                         }
                     }else if(n > 0){
@@ -862,17 +871,24 @@ public class Principal extends javax.swing.JFrame {
                             
                         }
                         time = new Timestamp(System.currentTimeMillis());
+                        ArbolAVL t = currentFolder.getArchivos();
                         AVLNode node = new AVLNode(new ArchivoObj(name, content, time.toString(), currentUser.getUsername()));
-                        if(!files.contains(node)){
-                            if(isContentString(content)){
-                                files.insert(new ArchivoObj(name, content, time.toString(), currentUser.getUsername()));
-                                System.out.println("inserted: "+name);
-                            }else{
-                                System.out.println("File: "+name+" has a "
-                                        + "content that is not a String!");
-                            }
+                        if(!t.contains(node)){
+                            content = content.replaceAll("”", "");
+                            content = content.replaceAll("\"", "");
+                            content = content.replaceAll("“", "");
+                                t.insert(new ArchivoObj(name, content,
+                                        time.toString(), currentUser.getUsername()));
                         }else{
-                            System.out.println("file "+name+" already exists!");
+                            int opt = JOptionPane.showConfirmDialog(this,
+                                    "El archivo "+name+" ya existe!\n"
+                                            + "¿Desea sobreescribirlo?");
+                            if(opt == 0){
+                                ArchivoObj arch = new ArchivoObj(name, content,
+                                        time.toString(), currentUser.getUsername());
+                                System.out.println(t.remove(arch));
+                                t.insert(arch);
+                            }
                         }
                         
                     }
@@ -885,7 +901,12 @@ public class Principal extends javax.swing.JFrame {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        files.generateGraph();
+        panelPrincipal.removeAll();
+        c = new GridBagConstraints();
+        contx = 0;
+        conty = 0;
+        addFolderstoPanel(currentFolder.getNombre());
+        addFilestoPanel(currentFolder);
     }//GEN-LAST:event_filesBulkloadActionPerformed
 
     private void btMenuGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenuGraphActionPerformed
@@ -904,7 +925,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btMenuGraphActionPerformed
 
     private void folderCreateBt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderCreateBt1ActionPerformed
-        // TODO add your handling code here:
+        users.graficar();
     }//GEN-LAST:event_folderCreateBt1ActionPerformed
 
     private void folderModifyBt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBt1ActionPerformed
@@ -916,16 +937,13 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_folderModifyBt4ActionPerformed
 
     private void folderModifyBt5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBt5ActionPerformed
-        // TODO add your handling code here:
+        carpetas.graficar();
     }//GEN-LAST:event_folderModifyBt5ActionPerformed
 
     private void folderModifyBt6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBt6ActionPerformed
-        // TODO add your handling code here:
+        currentFolder.getArchivos().generateGraph();
     }//GEN-LAST:event_folderModifyBt6ActionPerformed
 
-    private boolean isContentString(String content){
-        return content.contains("");
-    }
     /**
      * @param args the command line arguments
      */
