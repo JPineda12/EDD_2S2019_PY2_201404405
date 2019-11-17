@@ -21,6 +21,7 @@ public class ListaEnlazada {
 
     public ListaEnlazada() {
         head = null;
+        this.size = 0;
     }
 
     public int getSize() {
@@ -39,6 +40,7 @@ public class ListaEnlazada {
             NodoLista newNode = new NodoLista(data);
             if (head == null) {
                 head = newNode;
+                size++;
                 return true;
             }
 
@@ -51,6 +53,19 @@ public class ListaEnlazada {
             return true;
         }
         return false;
+    }
+    
+    public CarpetaObj obtainCarpeta(int i){
+        NodoLista temp = head;
+        int n = 0;
+        while(temp != null){
+            if(n == i){
+                return (CarpetaObj)temp.getData();
+            }
+            temp = temp.getNext();
+            n++;
+        }
+        return null;
     }
 
     public boolean insertErr(Object data) {

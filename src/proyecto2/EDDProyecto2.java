@@ -14,6 +14,8 @@ import Interfaz.LoginFrame;
 import Interfaz.Principal;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import proyecto2.Objetos.ArchivoObj;
 import proyecto2.Objetos.CarpetaObj;
 import proyecto2.Objetos.Usuario;
@@ -21,7 +23,7 @@ import proyecto2.Objetos.Usuario;
 public class EDDProyecto2 {
 
     public static void main(String[] args) {
-       /*Principal p = new Principal("paloma");
+        /*Principal p = new Principal("paloma");
        p.show();*/
         LoginFrame f = new LoginFrame();
         f.setLocationRelativeTo(null);
@@ -41,8 +43,8 @@ public class EDDProyecto2 {
 
         //tab.graficar();
         tab.imprimir();
-        */
-       /*Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+         */
+ /*Timestamp timestamp = new Timestamp(System.currentTimeMillis());
        String propietario = "Juan";
        ArbolAVL t = new ArbolAVL();
         t.insert(new ArchivoObj("Asnaeb", "lol que cosas verdad",timestamp, propietario));
@@ -54,13 +56,6 @@ public class EDDProyecto2 {
         t.insert(new ArchivoObj("ignorant", "This is some stuff", timestamp, propietario));
         
        t.generateGraph();*/
-       
-    /*      ListaEnlazada l = new ListaEnlazada();
-        l.insert(new CarpetaObj("\\", null));
-        l.insert(new CarpetaObj("home", null));
-        l.insert(new CarpetaObj("what", null));
-        l.insert(new CarpetaObj("Music.", null));
-        l.imprimir();*/
+
     }
-    
 }

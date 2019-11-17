@@ -26,6 +26,7 @@ public class ArbolAVL {
     public ArbolAVL(){
         this.root = null;
         this.nodeCount = 0;
+        tamanoNodos = 4;
     }
     
     public int treeHeight(){

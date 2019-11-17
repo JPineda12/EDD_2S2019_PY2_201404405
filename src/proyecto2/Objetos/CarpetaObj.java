@@ -15,16 +15,26 @@ public class CarpetaObj {
     
     private String nombre;
     private ArbolAVL archivos;
+    private String padre;
     
-    public CarpetaObj(String nombre, ArbolAVL archivos){
+    public CarpetaObj(String nombre,  ArbolAVL archivos, String nombrePadre){
         this.nombre = nombre;
         this.archivos = archivos;
+        this.padre = nombrePadre;
     }
 
     public String getNombre() {
         return nombre;
     }
-
+    
+    public String getPadre(){
+        return padre;
+    }
+    
+    public void setPadre(String padre){
+        this.padre = padre;
+    }
+    
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }

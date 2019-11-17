@@ -22,6 +22,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -59,6 +60,8 @@ public class Principal extends javax.swing.JFrame {
     ListaEnlazada listaErrores;
     Archivo selectedFile;
     Carpeta selectedFolder;
+    String actualAddress;
+    boolean flag;
     public Principal(Usuario username, Boolean admin, TablaHash users, MatrizAdy carpetas) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -80,6 +83,9 @@ public class Principal extends javax.swing.JFrame {
         }
         showRep = true;
         showMenu = true;
+        flag = true;
+        actualAddress = "/";
+        txtFldAddres.setText(actualAddress);
         addFolderstoPanel(currentFolder.getNombre());
         addFilestoPanel(currentFolder);
     }
@@ -149,6 +155,7 @@ public class Principal extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         btMenu = new javax.swing.JButton();
         btMenuGraph = new javax.swing.JButton();
+        txtFldAddres = new javax.swing.JTextField();
         panelMenu = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -212,6 +219,24 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jPanel2.add(btMenuGraph, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 0, -1, -1));
+
+        txtFldAddres.setForeground(new java.awt.Color(125, 125, 125));
+        txtFldAddres.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtFldAddresFocusLost(evt);
+            }
+        });
+        txtFldAddres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFldAddresActionPerformed(evt);
+            }
+        });
+        txtFldAddres.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFldAddresKeyReleased(evt);
+            }
+        });
+        jPanel2.add(txtFldAddres, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 520, 30));
 
         panelMenu.setBackground(new java.awt.Color(183, 183, 183));
         panelMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -674,16 +699,20 @@ public class Principal extends javax.swing.JFrame {
 
     private void folderDelBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderDelBtActionPerformed
         if(selectedFolder != null){
+            ListaEnlazada hijos = currentUser.getCarpetas().getHijos(selectedFolder.getText());
             currentUser.getCarpetas().eliminarVertice(selectedFolder.getText());
-            String nombreNodo = currentFolder.getNombre();
-            if(nombreNodo.equals("/")){
-                nombreNodo = "/"+selectedFolder.getText();
-            }else{
-                nombreNodo += "/"+selectedFolder.getText();
+            //Borrando hijos de la carpeta
+            String auxSon;
+            System.out.println("Tiene: "+hijos.getSize()+" hijos");
+            for(int i = 0; i < hijos.getSize(); i++){
+                auxSon = hijos.obtainCarpeta(i).getNombre();
+                currentUser.getCarpetas().eliminarVertice(auxSon);
             }
             panelPrincipal.remove(selectedFolder);
             panelPrincipal.revalidate();
             panelPrincipal.repaint();  
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccionar una carpeta primero");            
         }
     }//GEN-LAST:event_folderDelBtActionPerformed
 
@@ -719,6 +748,8 @@ public class Principal extends javax.swing.JFrame {
     private void FileDelBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FileDelBtActionPerformed
         if(selectedFile != null){
             deleteFile(selectedFile.getArchivo());
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccionar un Archivo primero");               
         }
     }//GEN-LAST:event_FileDelBtActionPerformed
     
@@ -732,6 +763,8 @@ public class Principal extends javax.swing.JFrame {
     private void fileModifyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileModifyBtActionPerformed
         if(selectedFile != null){    
             modifyFile(selectedFile.getArchivo());
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccionar un Archivo primero");   
         }
     }//GEN-LAST:event_fileModifyBtActionPerformed
 
@@ -786,24 +819,24 @@ public class Principal extends javax.swing.JFrame {
     private void folderModifyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBtActionPerformed
         if(selectedFolder != null){
             String nombreAnterior = selectedFolder.getText();
-            String nombre = JOptionPane.showInputDialog("Modificar: "
+            String nombreNuevo = JOptionPane.showInputDialog("Modificar: "
                     + selectedFolder.getText()
                     + "\nNuevo nombre");
-            if(nombre != null && nombre.length() > 0){
+            if(nombreNuevo != null && nombreNuevo.length() > 0){
                 MatrizAdy aux = currentUser.getCarpetas();
-                ((CarpetaObj)aux.buscarFila(nombreAnterior).getDato()).setNombre(nombre);
+                ((CarpetaObj)aux.buscarFila(nombreAnterior).getDato()).setNombre(nombreNuevo);
                 String nombreNodo = currentFolder.getNombre();
                 if(nombreNodo.equals("/")){
                     nombreNodo = "/"+nombreAnterior;
                     System.out.println(nombreNodo);
-                    ((CarpetaObj)aux.buscarNodo("/",nombreNodo).getDato()).setNombre("/"+nombre);
+                    ((CarpetaObj)aux.buscarNodo("/",nombreNodo).getDato()).setNombre("/"+nombreNuevo);
                 }else{
                     nombreNodo += "/"+nombreAnterior;
                     ((CarpetaObj)aux.buscarNodo(currentFolder.getNombre()
-                            ,nombreAnterior).getDato())
-                            .setNombre(currentFolder.getNombre()+"/"+nombre);
+                            ,nombreNodo).getDato())
+                            .setNombre(currentFolder.getNombre()+"/"+nombreNuevo);
                 }
-                selectedFolder.setText(nombre);
+                selectedFolder.setText(nombreNuevo);
                 JOptionPane.showMessageDialog(this, "Carpeta Modificada!");
             }else{
                 JOptionPane.showMessageDialog(this, "Nombre Invalido!");
@@ -1038,7 +1071,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_folderModifyBt6ActionPerformed
 
     private void panelPrincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelPrincipalMouseClicked
-        System.out.println("");
+
     }//GEN-LAST:event_panelPrincipalMouseClicked
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
@@ -1046,14 +1079,94 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_formMouseClicked
 
     private void panelPrincipalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_panelPrincipalFocusGained
-
+        System.out.println("-");
         Component comp = panelPrincipal.getComponentAt(panelPrincipal.getMousePosition());
         if(comp.getClass().toString().contains("Archivo")){
             selectedFile = (Archivo) comp;
         }else if(comp.getClass().toString().contains("Carpeta")){
-            selectedFolder = (Carpeta) comp;
+            Carpeta carpeta = (Carpeta) comp;
+            if(carpeta.isSelected()){
+                if(selectedFolder != null){
+                    selectedFolder.setSelected(false);
+                }
+                selectedFolder = carpeta;
+            }else if(carpeta.isOpened()){
+                panelPrincipal.removeAll();
+                panelPrincipal.revalidate();
+                panelPrincipal.repaint();
+                if(selectedFolder != null){
+                    selectedFolder.setOpen(false);
+                }
+                selectedFolder = (Carpeta) comp;
+                currentFolder = (CarpetaObj)currentUser.getCarpetas()
+                    .buscarFila(selectedFolder.getText()).getDato();
+                addFolderstoPanel(currentFolder.getNombre());
+                addFilestoPanel(currentFolder);
+                actualAddress = txtFldAddres.getText()+"/"+currentFolder.getNombre();
+                if(txtFldAddres.getText().equals("/")){
+                    actualAddress = "/"+currentFolder.getNombre();
+                }
+                selectedFolder = null;
+                txtFldAddres.setText(actualAddress);                
+            }
+            
         }
     }//GEN-LAST:event_panelPrincipalFocusGained
+
+    private void txtFldAddresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFldAddresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFldAddresActionPerformed
+
+    private void txtFldAddresFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFldAddresFocusLost
+        System.out.println(flag);
+        if(flag){
+            System.out.println("hmm.");
+            buscarDireccion();
+        }else{
+            flag = true;
+        }
+    }//GEN-LAST:event_txtFldAddresFocusLost
+    private void buscarDireccion(){
+       String tryAddres = txtFldAddres.getText();
+       System.out.println("1: "+tryAddres);
+        if(tryAddres.length() > 0){
+            int i;
+            if(tryAddres.length() > 1 && tryAddres.endsWith("/")){
+                tryAddres = tryAddres.substring(0, tryAddres.lastIndexOf("/"));
+                i = tryAddres.lastIndexOf("/");                
+            }else{
+                tryAddres = "/";
+                i = tryAddres.lastIndexOf("/")-1;
+            }
+            
+            System.out.println("2: "+tryAddres.substring(i+1, tryAddres.length()));
+            String tryFolder = tryAddres.substring(i+1, tryAddres.length());
+            Vertice tryV = currentUser.getCarpetas().buscarFila(tryFolder);
+            if (tryV != null) {
+                panelPrincipal.removeAll();
+                panelPrincipal.revalidate();
+                panelPrincipal.repaint();
+                String nombre = ((CarpetaObj) tryV.getDato()).getNombre();
+                currentFolder = (CarpetaObj) currentUser.getCarpetas()
+                        .buscarFila(nombre).getDato();
+                addFolderstoPanel(currentFolder.getNombre());
+                addFilestoPanel(currentFolder);
+                txtFldAddres.setText(tryAddres);
+            }else{
+                JOptionPane.showMessageDialog(this, "Direccion inexistente..");
+                txtFldAddres.setText(actualAddress);                
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Direccion inexistente!");
+            txtFldAddres.setText(actualAddress);
+        }        
+    }
+    private void txtFldAddresKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFldAddresKeyReleased
+        if(evt.getKeyCode()== KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_ESCAPE){
+            flag = false;
+            buscarDireccion();
+        }
+    }//GEN-LAST:event_txtFldAddresKeyReleased
 
     /**
      * @param args the command line arguments
@@ -1124,5 +1237,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel panelMenu;
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JPanel panelReports;
+    private javax.swing.JTextField txtFldAddres;
     // End of variables declaration//GEN-END:variables
 }

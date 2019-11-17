@@ -2,29 +2,8 @@ digraph AVLTree {
     rankdir=TB;
     graph [pad=".25", ranksep="1.0", nodesep="1"];
     node [shape=record, style = rounded, color = forestgreen];
-    node [width = 6, height = 1.5, fixedsize="true"];
+    node [width = 4, height = 1.5, fixedsize="true"];
     //Nodes and links creation
-     ndMusicthis[label="<left> | Nombre: Music.this\nContenido: Lmao Crazy nigg\nBf: 1\nAltura: 3\nTimestamp: 2019-11-13 23:16:42.794\nPropietario: Admin | <right>"];
-     //Links ndMusicthis
-     ndMusicthis:left->ndJuanexe
-     ndMusicthis:right->ndchuchitor
-     ndJuanexe[label="<left> | Nombre: Juan.exe\nContenido: Weird stuff\nBf: 1\nAltura: 1\nTimestamp: 2019-11-13 23:16:42.793\nPropietario: Admin | <right>"];
-     //Links ndJuanexe
-     ndJuanexe:right->ndMainpy
-     ndMainpy[label="<left> | Nombre: Main.py\nContenido: Cadena chida\nBf: 0\nAltura: 0\nTimestamp: 2019-11-13 23:16:42.805\nPropietario: Admin | <right>"];
-     //Links ndMainpy
-     ndchuchitor[label="<left> | Nombre: chuchito.r\nContenido: give me cookie please\nBf: -1\nAltura: 2\nTimestamp: 2019-11-13 23:16:42.8\nPropietario: Admin | <right>"];
-     //Links ndchuchitor
-     ndchuchitor:left->ndNuevoexe
-     ndchuchitor:right->ndpiernagh
-     ndNuevoexe[label="<left> | Nombre: Nuevo.exe\nContenido: hola este es un nuevo archivo amigos hxkahfxa\nBf: 0\nAltura: 1\nTimestamp: 2019-11-13 23:16:44.006\nPropietario: Admin | <right>"];
-     //Links ndNuevoexe
-     ndNuevoexe:left->ndNsyncexe
-     ndNuevoexe:right->ndasnaebsa
-     ndNsyncexe[label="<left> | Nombre: Nsync.exe\nContenido: lol music \nBf: 0\nAltura: 0\nTimestamp: 2019-11-13 23:16:42.804\nPropietario: Admin | <right>"];
-     //Links ndNsyncexe
-     ndasnaebsa[label="<left> | Nombre: asnaeb.sa\nContenido: saaaaandorms\nBf: 0\nAltura: 0\nTimestamp: 2019-11-13 23:16:42.803\nPropietario: Admin | <right>"];
-     //Links ndasnaebsa
-     ndpiernagh[label="<left> | Nombre: pierna.gh\nContenido: I want a bag\nBf: 0\nAltura: 0\nTimestamp: 2019-11-13 23:16:42.801\nPropietario: Admin | <right>"];
-     //Links ndpiernagh
+     ndthis[label="<left> | Nombre: this\nContenido: \nBf: 0\nAltura: 0\nTimestamp: 2019-11-15 11:05:32.994\nPropietario: Admin | <right>"];
+     //Links ndthis
 }

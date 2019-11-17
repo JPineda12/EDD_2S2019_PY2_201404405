@@ -24,7 +24,7 @@ public class MatrizAdy {
     private int numVertices;
     
     public MatrizAdy(){
-        this.root = new Vertice(new CarpetaObj("root", null), -1, -1);
+        this.root = new Vertice(new CarpetaObj("root", null,  null), -1, -1);
         numVertices = 0;
     }
     
@@ -131,6 +131,17 @@ public class MatrizAdy {
         return null;
     }
     
+    public int findDeepestCarpeta(){
+        Vertice temp = root;
+        while(temp != null){
+            if(temp.getRight() == null){
+                return temp.getX();
+            }
+            temp = temp.getRight();
+        }
+        return 0;
+    }
+    
     private Vertice insertar_ordenado_columna(Vertice nuevo, Vertice head_col){
        Vertice temp = head_col;
        boolean flag = false;
@@ -198,10 +209,20 @@ public class MatrizAdy {
        return nuevo;
     }
     
-    public boolean crear_Cabeceras(int x, String nombre, CarpetaObj carp){
+    public int crear_Cabeceras(int x, String nombre, CarpetaObj carp, boolean reinsert){
+        if(buscarColumna(x) != null && buscarFila(x) != null){
+            if(reinsert){
+                    x = x + 1;
+                while(buscarColumna(x) != null){
+                    x = x + 1;
+                }
+            }else{
+                return -1;
+            }
+        }
         Vertice c = crear_Columna(x, nombre, carp);
         Vertice f = crear_Fila(x, nombre, carp);
-        return c != null && f != null;
+        return x;
     }
     
     private Vertice crear_Columna(int x, String nombre, CarpetaObj c){
@@ -224,30 +245,32 @@ public class MatrizAdy {
     public void reAcomodarXCarpetas(Vertice nuevaCarpeta, Vertice carpetaExistente){
         //Reacomodando su x
         Vertice aux = carpetaExistente;
+        Vertice node;
         while(aux != null){
-            aux.setX(aux.getX()+1);
+            aux.setX(aux.getX()+1);            
+            node = aux.getDown();
+            if(node != null){
+                node.setX(node.getX()+1);
+            }
             aux = aux.getRight();
         }
-        //Reacomodando su enlace
-        nuevaCarpeta.left = carpetaExistente.left;
-        carpetaExistente.left = nuevaCarpeta;
-        carpetaExistente.left.right = nuevaCarpeta;
-        nuevaCarpeta.right = carpetaExistente;
+        
     }
     
     public void reAcomodarYCarpetas(Vertice nuevaCarpeta, Vertice carpetaExistente) {
         //Reacomodando su y
         Vertice aux = carpetaExistente;
+        Vertice node;
         while (aux != null) {
             aux.setY(aux.getY() + 1);
+            node = aux.getRight();
+                if(node != null){
+                    node.setY(node.getY()+1);
+                }
             aux = aux.getDown();
         }
-        //Reacomodando su enlace
-        nuevaCarpeta.up = carpetaExistente.up;
-        carpetaExistente.up = nuevaCarpeta;
-        carpetaExistente.up.down = nuevaCarpeta;
-        nuevaCarpeta.down = carpetaExistente;
     }
+    
     
     public int cantidadCarpetas(Vertice carpeta){
         int n = 0;
@@ -259,6 +282,16 @@ public class MatrizAdy {
             carpeta = carpeta.right;
         }
         return n;
+    }
+    
+    public ListaEnlazada getHijos(String nombrePadre){
+        Vertice aux = buscarFila(nombrePadre);
+        ListaEnlazada hijos = new ListaEnlazada();
+        while(aux.right != null){
+            aux = aux.right;
+            hijos.insert(aux.getDato());
+        }
+        return hijos;
     }
     
     public boolean insertar_elemento(int x, int y, Object dato){
