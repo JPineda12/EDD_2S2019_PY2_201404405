@@ -77,11 +77,11 @@ public class Carpeta extends javax.swing.JPanel {
 
         jToggleButton1 = new javax.swing.JToggleButton();
 
-        setBackground(new java.awt.Color(36, 40, 41));
-        setForeground(new java.awt.Color(36, 40, 41));
+        setBackground(new java.awt.Color(59, 52, 51));
+        setForeground(new java.awt.Color(59, 52, 51));
         setPreferredSize(new java.awt.Dimension(70, 73));
 
-        jToggleButton1.setBackground(new java.awt.Color(36, 40, 41));
+        jToggleButton1.setBackground(new java.awt.Color(59, 52, 51));
         jToggleButton1.setForeground(new java.awt.Color(255, 255, 242));
         jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/Folder.png"))); // NOI18N
         jToggleButton1.setText("Carpeta");

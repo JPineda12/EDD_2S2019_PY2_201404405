@@ -78,11 +78,11 @@ public class Archivo extends javax.swing.JPanel {
 
         jToggleButton2 = new javax.swing.JToggleButton();
 
-        setBackground(new java.awt.Color(36, 40, 41));
+        setBackground(new java.awt.Color(59, 52, 51));
         setForeground(new java.awt.Color(36, 40, 41));
         setPreferredSize(new java.awt.Dimension(70, 73));
 
-        jToggleButton2.setBackground(new java.awt.Color(36, 40, 41));
+        jToggleButton2.setBackground(new java.awt.Color(59, 52, 51));
         jToggleButton2.setForeground(new java.awt.Color(255, 255, 242));
         jToggleButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/File.png"))); // NOI18N
         jToggleButton2.setText("Archivo");

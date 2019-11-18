@@ -226,7 +226,7 @@ public class Principal extends javax.swing.JFrame {
         });
         panelHeader.add(btMenuGraph, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 0, -1, -1));
 
-        txtFldAddres.setBackground(new java.awt.Color(36, 40, 41));
+        txtFldAddres.setBackground(new java.awt.Color(59, 52, 51));
         txtFldAddres.setForeground(new java.awt.Color(211, 211, 211));
         txtFldAddres.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         txtFldAddres.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -246,8 +246,8 @@ public class Principal extends javax.swing.JFrame {
         });
         panelHeader.add(txtFldAddres, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 450, 30));
 
-        prevFolder.setBackground(new java.awt.Color(36, 40, 41));
-        prevFolder.setForeground(new java.awt.Color(36, 40, 41));
+        prevFolder.setBackground(new java.awt.Color(59, 52, 51));
+        prevFolder.setForeground(new java.awt.Color(59, 52, 51));
         prevFolder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/prevFolder.png"))); // NOI18N
         prevFolder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -594,7 +594,7 @@ public class Principal extends javax.swing.JFrame {
         });
         panelReports.add(avlTreeBt, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 174, 50));
 
-        panelPrinc.setBackground(new java.awt.Color(36, 40, 41));
+        panelPrinc.setBackground(new java.awt.Color(59, 52, 51));
         panelPrinc.setForeground(new java.awt.Color(36, 40, 41));
         panelPrinc.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {

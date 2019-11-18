@@ -5,6 +5,13 @@
  */
 package Interfaz;
 
+import Estructuras.TablaHash;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import proyecto2.Objetos.ArchivoObj;
 
@@ -15,6 +22,7 @@ import proyecto2.Objetos.ArchivoObj;
 public class ContentViewer extends javax.swing.JFrame {
 
     ArchivoObj arch;
+
     public ContentViewer(ArchivoObj arch) {
         initComponents();
         this.arch = arch;
@@ -61,6 +69,11 @@ public class ContentViewer extends javax.swing.JFrame {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/download.png"))); // NOI18N
         jButton2.setToolTipText("Download a file");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -94,6 +107,30 @@ public class ContentViewer extends javax.swing.JFrame {
         arch.setContenido(jTextArea1.getText());
         JOptionPane.showMessageDialog(this, "Se guardo el archivo!");
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // DESCARGA
+        String finalNombre = arch.getNombre();
+        if(finalNombre.contains(".")){
+            finalNombre = finalNombre.substring(0, finalNombre.indexOf("."));
+        }
+        File archivo = new File("Exports/"+finalNombre+".txt");
+        try {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo))) {
+                writer.write(arch.getContenido());
+                writer.close();
+
+            }
+
+            String[] args = new String[] {"xdg-open", "Exports/"+finalNombre+".txt"};
+            Process proc = new ProcessBuilder(args).start();
+
+        } catch (IOException ex) {
+            Logger.getLogger(TablaHash.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

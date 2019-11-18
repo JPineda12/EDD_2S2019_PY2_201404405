@@ -133,7 +133,7 @@
             <Component class="javax.swing.JTextField" name="txtFldAddres">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="29" green="28" red="24" type="rgb"/>
+                  <Color blue="33" green="34" red="3b" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="d3" green="d3" red="d3" type="rgb"/>
@@ -158,10 +158,10 @@
             <Component class="javax.swing.JButton" name="prevFolder">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="29" green="28" red="24" type="rgb"/>
+                  <Color blue="33" green="34" red="3b" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="29" green="28" red="24" type="rgb"/>
+                  <Color blue="33" green="34" red="3b" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Interfaz/Icons/prevFolder.png"/>
@@ -862,7 +862,7 @@
             <Container class="javax.swing.JPanel" name="panelPrinc">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="29" green="28" red="24" type="rgb"/>
+                  <Color blue="33" green="34" red="3b" type="rgb"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="29" green="28" red="24" type="rgb"/>
