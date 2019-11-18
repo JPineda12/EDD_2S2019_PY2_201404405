@@ -6,14 +6,14 @@ digraph Matrix{
 
     //Filas
     Fila0 [label = "/" width = 1.5 style = filled, fillcolor = bisque1, group = 0];
-    Fila1 [label = "aight" width = 1.5 style = filled, fillcolor = bisque1, group = 0];
+    Fila1 [label = "carp" width = 1.5 style = filled, fillcolor = bisque1, group = 0];
 
   //Enlaces de filas
     Fila0->Fila1
 
   //Columnas
     Column0[label ="/" width = 1.5 style = filled, fillcolor = pink2, group = 1];
-    Column1[label ="aight" width = 1.5 style = filled, fillcolor = pink2, group = 2];
+    Column1[label ="carp" width = 1.5 style = filled, fillcolor = pink2, group = 2];
 
 
     //Enlaces de columnas
@@ -26,7 +26,7 @@ digraph Matrix{
     root->Column0;
     root->Fila0;
     //(^<---------------------- F I L A   0---------------------->
-    N1_F0 [label = "/aight" width = 1.5 group = 2 style = filled, fillcolor = lavenderblush1];
+    N1_F0 [label = "/carp" width = 1.5 group = 2 style = filled, fillcolor = lavenderblush1];
 
     //(^<---------------------- F I L A   1---------------------->
 

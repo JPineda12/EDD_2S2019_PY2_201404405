@@ -1,0 +1,4 @@
+digraph stack{
+    node [shape=record];
+    pila[label="{|18/11/2019 05:08:23\nOperacion: Se elimino el archivo \"asd\"\nUsuario:Admin|18/11/2019 05:08:17\nOperacion: Se creo un archivo llamado: asd\nUsuario:Admin}"];
+}

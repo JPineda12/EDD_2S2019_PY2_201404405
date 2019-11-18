@@ -1,0 +1,39 @@
+digraph AVLTree {
+    rankdir=TB;
+    graph [pad=".25", ranksep="1.0", nodesep="1"];
+    node [shape=record, style = rounded, color = forestgreen];
+    node [width = 6, height = 1.5, fixedsize="true"];
+    //Nodes and links creation
+     ndchuchitor[label="<left> | Nombre: chuchito.r\nContenido: give me cookie please\nBf: 0\nAltura: 3\nTimestamp: 2019-11-18 05:08:55.798\nPropietario: Admin | <right>"];
+     //Links ndchuchitor
+     ndchuchitor:left->ndMainpy
+     ndchuchitor:right->ndnenaexe
+     ndMainpy[label="<left> | Nombre: Main.py\nContenido: Cadena chida\nBf: -1\nAltura: 2\nTimestamp: 2019-11-18 05:08:55.8\nPropietario: Admin | <right>"];
+     //Links ndMainpy
+     ndMainpy:left->ndJuanexe
+     ndMainpy:right->ndNuevoexe
+     ndJuanexe[label="<left> | Nombre: Juan.exe\nContenido: Weird stuff\nBf: -1\nAltura: 1\nTimestamp: 2019-11-18 05:08:55.796\nPropietario: Admin | <right>"];
+     //Links ndJuanexe
+     ndJuanexe:left->ndAword
+     ndAword[label="<left> | Nombre: A.word\nContenido: okay\nBf: 0\nAltura: 0\nTimestamp: 2019-11-18 05:09:24.337\nPropietario: Admin | <right>"];
+     //Links ndAword
+     ndNuevoexe[label="<left> | Nombre: Nuevo.exe\nContenido: hola este es un nuevo archivo amigos hxkahfxa\nBf: 0\nAltura: 0\nTimestamp: 2019-11-18 05:08:57.87\nPropietario: Admin | <right>"];
+     //Links ndNuevoexe
+     ndnenaexe[label="<left> | Nombre: nena.exe\nContenido: what should I put here haha\nBf: 0\nAltura: 2\nTimestamp: 2019-11-18 05:08:55.797\nPropietario: Admin | <right>"];
+     //Links ndnenaexe
+     ndnenaexe:left->ndjugaes
+     ndnenaexe:right->ndold
+     ndjugaes[label="<left> | Nombre: juga.es\nContenido: bet on me\nBf: 1\nAltura: 1\nTimestamp: 2019-11-18 05:08:55.799\nPropietario: Admin | <right>"];
+     //Links ndjugaes
+     ndjugaes:right->ndlelelepy
+     ndlelelepy[label="<left> | Nombre: lelele.py\nContenido: hahaha\nBf: 0\nAltura: 0\nTimestamp: 2019-11-18 05:08:55.798\nPropietario: Admin | <right>"];
+     //Links ndlelelepy
+     ndold[label="<left> | Nombre: old\nContenido: okay nuevo bro\nBf: 0\nAltura: 1\nTimestamp: 2019-11-18 05:09:24.337\nPropietario: Admin | <right>"];
+     //Links ndold
+     ndold:left->ndnuevoword
+     ndold:right->ndpiernagh
+     ndnuevoword[label="<left> | Nombre: nuevo.word\nContenido: okay\nBf: 0\nAltura: 0\nTimestamp: 2019-11-18 05:09:24.337\nPropietario: Admin | <right>"];
+     //Links ndnuevoword
+     ndpiernagh[label="<left> | Nombre: pierna.gh\nContenido: I want a bag\nBf: 0\nAltura: 0\nTimestamp: 2019-11-18 05:08:55.798\nPropietario: Admin | <right>"];
+     //Links ndpiernagh
+}

@@ -4,6 +4,6 @@ digraph AVLTree {
     node [shape=record, style = rounded, color = forestgreen];
     node [width = 4, height = 1.5, fixedsize="true"];
     //Nodes and links creation
-     ndAdmen[label="<left> | Nombre: Admen\nContenido: \nBf: 0\nAltura: 0\nTimestamp: 2019-11-18 02:06:42.208\nPropietario: Admin | <right>"];
-     //Links ndAdmen
+     ndwoord[label="<left> | Nombre: woord\nContenido: pendejo\nBf: 0\nAltura: 0\nTimestamp: 2019-11-18 04:59:12.89\nPropietario: Admin | <right>"];
+     //Links ndwoord
 }

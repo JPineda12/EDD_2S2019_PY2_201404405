@@ -1063,7 +1063,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_bitacoraBtActionPerformed
 
     private void matrizAdyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matrizAdyBtActionPerformed
-        /*carpetas.graficar();
+        MatrizAdy c = new MatrizAdy();
+        c.convertList_to_Matriz(carpetas);
+        c.graficar();
         try {
             Thread.sleep(500);
         } catch (InterruptedException ex) {
@@ -1071,7 +1073,7 @@ public class Principal extends javax.swing.JFrame {
         }
         
         ImageViewer img = new ImageViewer("./Reports/MatrizAdy.png");
-        img.setVisible(true); */       
+        img.setVisible(true);       
     }//GEN-LAST:event_matrizAdyBtActionPerformed
 
     private void avlTreeBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_avlTreeBtActionPerformed
@@ -1231,7 +1233,7 @@ public class Principal extends javax.swing.JFrame {
                 sArchivo.getContenido(),
                  sArchivo.getTimestamp(),
                  tmp.getUsername());
-        boolean suc = tmp.getCarpetas().obtainCarpeta(0).getArchivos().insert(sArchivo);
+        boolean suc = tmp.getCarpetas().obtainCarpeta(0).getArchivos().insert(newFile);
         if (suc) {
             JOptionPane.showMessageDialog(this, "Se compartio el archivo satisfactoriamente con"
                     + " " + tmp.getUsername());

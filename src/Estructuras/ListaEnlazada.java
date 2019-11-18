@@ -78,9 +78,15 @@ public class ListaEnlazada {
         if(head == null){
             return false;
         }
+        if(head.getNext() == null){
+            size = 0;
+            head = null;
+            return true;
+        }
         NodoLista temp = head;
         if(pos == 0){
             head = temp.getNext();
+            size--;
             return true;
         }
         for(int i = 0; i< pos-1 ; i++){
@@ -95,7 +101,9 @@ public class ListaEnlazada {
         
         NodoLista next = temp.getNext().getNext();
         size--;
-        next.setN(size);
+        if(next != null){
+            next.setN(size);
+        }
         temp.setNext(next);
         return true;
     }

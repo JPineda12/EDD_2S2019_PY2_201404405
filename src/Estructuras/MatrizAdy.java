@@ -22,10 +22,11 @@ public class MatrizAdy {
     
     private final Vertice root;
     private int numVertices;
-    
+    private int count;
     public MatrizAdy(){
         this.root = new Vertice("root",new CarpetaObj("root", null,  null, null, -1), -1, -1);
         numVertices = 0;
+        count = 0;
     }
     
     public Vertice getRoot(){
@@ -232,6 +233,36 @@ public class MatrizAdy {
         return 0;
     }
     
+    public void convertList_to_Matriz(ListaEnlazada ls){
+        CarpetaObj c = ls.obtainCarpeta(0);
+        //crear_Cabeceras(0, c.getNombre(), c, false);
+        convertingListToMatrix(c, count);
+    }
+    
+    private void convertingListToMatrix(CarpetaObj c, int x){
+        crear_Cabeceras(x, c.getNombre(), c, false);
+        String nombreNodo;
+        if(!c.getNombre().equals("/")){
+            if(c.getPadre().getNombre().equals("/")){
+                nombreNodo = "/"+c.getNombre();
+            }else{
+                nombreNodo = c.getPadre().getNombre()+"/"+c.getNombre();
+            }
+            Vertice p = buscarFila(c.getPadre().getNombre());
+            int hijo = cantidadCarpetas(p)+1;
+            int padre = numVertice(c.getPadre().getNombre());
+            CarpetaObj nueva = new CarpetaObj(nombreNodo, c.getArchivos(), 
+                    c.getPadre(), c.getHijos(), c.getnCarpeta());
+            insertar_elemento(x,padre, nueva);
+        }
+        count++;
+        if(c.getHijos().getSize() > 0){
+            for(int i=0; i < c.getHijos().getSize(); i++){
+                convertingListToMatrix(c.getHijos().obtainCarpeta(i), count);
+            }
+        }
+    }
+    
     private Vertice insertar_ordenado_columna(Vertice nuevo, Vertice head_col){
        Vertice temp = head_col;
        boolean flag = false;
@@ -313,6 +344,7 @@ public class MatrizAdy {
         }
         Vertice c = crear_Columna(x, nombre, carp);
         Vertice f = crear_Fila(x, nombre, carp);
+        numVertices++;
         return x;
     }
     
