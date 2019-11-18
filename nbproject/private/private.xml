@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2">
         <file>
             <url>src/proyecto2/EDDProyecto2.java</url>
             <bookmark id="1">
@@ -12,9 +12,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/brest12/NetBeansProjects/%5BEDD%5DProyecto2/src/Estructuras/MatrizAdy.java</file>
             <file>file:/home/brest12/NetBeansProjects/%5BEDD%5DProyecto2/src/Interfaz/Principal.java</file>
+            <file>file:/home/brest12/NetBeansProjects/%5BEDD%5DProyecto2/src/proyecto2/Objetos/Usuario.java</file>
             <file>file:/home/brest12/NetBeansProjects/%5BEDD%5DProyecto2/src/proyecto2/EDDProyecto2.java</file>
-            <file>file:/home/brest12/NetBeansProjects/%5BEDD%5DProyecto2/src/Interfaz/Carpeta.java</file>
         </group>
     </open-files>
 </project-private>

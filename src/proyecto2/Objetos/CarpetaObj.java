@@ -16,7 +16,7 @@ public class CarpetaObj {
     private String nombre;
     private ArbolAVL archivos;
     private String padre;
-    
+    private int xy;
     public CarpetaObj(String nombre,  ArbolAVL archivos, String nombrePadre){
         this.nombre = nombre;
         this.archivos = archivos;
@@ -46,6 +46,5 @@ public class CarpetaObj {
     public void setArchivos(ArbolAVL archivos) {
         this.archivos = archivos;
     }
-    
-    
+
 }

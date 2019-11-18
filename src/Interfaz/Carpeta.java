@@ -6,6 +6,7 @@
 package Interfaz;
 
 import java.awt.event.KeyEvent;
+import net.miginfocom.swing.MigLayout;
 import proyecto2.Objetos.CarpetaObj;
 
 
@@ -15,17 +16,34 @@ public class Carpeta extends javax.swing.JPanel {
     
     private boolean selected;
     private boolean open;
-    private String nombre;
+    String realNombre, shownNombre;
+    private CarpetaObj carpeta;
     public Carpeta() {
         initComponents();
     }
-    public Carpeta(String nombre){
-        this.nombre = nombre;
+    public Carpeta(CarpetaObj carpeta){
         initComponents();
-        jButton1.setText(nombre);
+        realNombre = carpeta.getNombre();
+        shownNombre = generateSNombre(realNombre);
+        jToggleButton1.setText(shownNombre);
+        this.carpeta = carpeta;
         open = false;
         selected = false;
     }
+    
+    private void mLayout() {
+        MigLayout m = new MigLayout("", "80:80:80", "80:80:80");
+        this.removeAll();
+        this.setLayout(m);
+        this.add(jToggleButton1);
+    }
+
+    private String generateSNombre(String nombre) {
+        if (nombre.length() > 12) {
+            nombre = nombre.substring(0, 9) + "...";
+        }
+        return nombre;
+    }   
     
     public void setOpen(boolean open){
         this.open = open;
@@ -33,6 +51,7 @@ public class Carpeta extends javax.swing.JPanel {
     
     public void setSelected(boolean select){
         this.selected = select;
+        jToggleButton1.setSelected(select);
     }
     
     public boolean isOpened(){
@@ -41,6 +60,10 @@ public class Carpeta extends javax.swing.JPanel {
     
     public boolean isSelected(){
         return selected;
+    }
+    
+    public CarpetaObj getCarpeta(){
+        return carpeta;
     }
 
     /**
@@ -52,40 +75,25 @@ public class Carpeta extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        jToggleButton1 = new javax.swing.JToggleButton();
 
-        setForeground(new java.awt.Color(51, 57, 59));
+        setBackground(new java.awt.Color(36, 40, 41));
+        setForeground(new java.awt.Color(36, 40, 41));
+        setPreferredSize(new java.awt.Dimension(70, 73));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/Folder.png"))); // NOI18N
-        jButton1.setText("Carpeta");
-        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton1.setBorderPainted(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jButton1FocusGained(evt);
-            }
-        });
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jButton1MousePressed(evt);
-            }
+        jToggleButton1.setBackground(new java.awt.Color(36, 40, 41));
+        jToggleButton1.setForeground(new java.awt.Color(255, 255, 242));
+        jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/Folder.png"))); // NOI18N
+        jToggleButton1.setText("Carpeta");
+        jToggleButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jToggleButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jToggleButton1.setMaximumSize(new java.awt.Dimension(70, 73));
+        jToggleButton1.setMinimumSize(new java.awt.Dimension(70, 73));
+        jToggleButton1.setPreferredSize(new java.awt.Dimension(70, 73));
+        jToggleButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToggleButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jButton1MouseReleased(evt);
-            }
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
-            }
-        });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jButton1KeyReleased(evt);
+                jToggleButton1MouseReleased(evt);
             }
         });
 
@@ -93,57 +101,41 @@ public class Carpeta extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton1)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-
-    }//GEN-LAST:event_jButton1MouseClicked
-
-    private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
-   // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1MousePressed
-
-    private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
-        if (evt.getClickCount() == 2) {
+    private void jToggleButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton1MouseReleased
+        if(evt.getClickCount() == 2){
             setOpen(true);
+            setSelected(false);
             this.getParent().requestFocus();
         }else{
             setSelected(true);
             this.getParent().requestFocus();
         }
-    }//GEN-LAST:event_jButton1MouseReleased
-
-    private void jButton1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyReleased
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-             setOpen(true);
-            this.getParent().requestFocus();          
-        }
-    }//GEN-LAST:event_jButton1KeyReleased
-
-    private void jButton1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton1FocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1FocusGained
+    }//GEN-LAST:event_jToggleButton1MouseReleased
     
     public void setText(String text){
-        nombre = text;
-        jButton1.setText(text);
+        realNombre = text;
+        jToggleButton1.setText(text);
+        carpeta.setNombre(realNombre);
     }
     
     public String getText(){
-        return nombre;
+        return realNombre;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }

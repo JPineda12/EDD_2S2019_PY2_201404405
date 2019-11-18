@@ -6,36 +6,24 @@ digraph Matrix{
 
     //Filas
     Fila0 [label = "/" width = 1.5 style = filled, fillcolor = bisque1, group = 0];
-    Fila1 [label = "rand" width = 1.5 style = filled, fillcolor = bisque1, group = 0];
 
   //Enlaces de filas
-    Fila0->Fila1
 
   //Columnas
     Column0[label ="/" width = 1.5 style = filled, fillcolor = pink2, group = 1];
-    Column1[label ="rand" width = 1.5 style = filled, fillcolor = pink2, group = 2];
 
 
     //Enlaces de columnas
-    Column0->Column1
 
   //Alinear Raiz con columnas
-    {rank = same; root; Column0; Column1;};
+    {rank = same; root; Column0;};
 
       //Enlaces Raiz con primera fila y column
     root->Column0;
     root->Fila0;
     //(^<---------------------- F I L A   0---------------------->
-    N1_F0 [label = "/rand" width = 1.5 group = 2 style = filled, fillcolor = lavenderblush1];
-
-    //(^<---------------------- F I L A   1---------------------->
 
     //E N L A C E S  F I L A   0
-    Column1->N1_F0;
-    Fila0->N1_F0;
-    {rank = same; Fila0; N1_F0; };
-
-    //E N L A C E S  F I L A   1
-    {rank = same; Fila1; };
+    {rank = same; Fila0; };
 
 }

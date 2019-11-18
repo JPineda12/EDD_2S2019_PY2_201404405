@@ -24,7 +24,7 @@ public class MatrizAdy {
     private int numVertices;
     
     public MatrizAdy(){
-        this.root = new Vertice(new CarpetaObj("root", null,  null), -1, -1);
+        this.root = new Vertice("root",new CarpetaObj("root", null,  null), -1, -1);
         numVertices = 0;
     }
     
@@ -92,6 +92,7 @@ public class MatrizAdy {
     
     public boolean eliminarVertice(String nombreCarpeta){
         int xy = numVertice(nombreCarpeta);
+        System.out.println(xy);
         if(xy >= 0){
             Vertice auxCol = buscarColumna(xy);
             Vertice auxRow = buscarFila(xy);
@@ -103,20 +104,109 @@ public class MatrizAdy {
                     auxCol.right.left = auxCol.left;
                 }
                 Vertice temp = auxCol.down;
-                temp.left.right = temp.right;
+                System.out.println("abajo: "+((CarpetaObj)temp.getDato()).getNombre());
+                //   3 4 5 10
+                // 3   4   
+                // 4
+                // 
+                // 8
+                // 10
+                if(temp.left != null){
+                    temp.left.right = temp.right;
+                }
                 auxCol.down = null;
-                
-                
+                 
                 auxRow.up.down = auxRow.down;
                 if (auxRow.down != null) {
                     auxRow.down.up = auxRow.up;
                 }
+                System.out.println(auxRow.right);
                 auxRow.right = null;
-
+                
+                auxCol = null;
+                auxRow = null;
                 return true;
 
             }
         }
+        return false;
+    }
+    
+    private Vertice buscarNodo(int x, int y){
+        Vertice aux = root.down;
+        while(aux != null){
+            
+        
+        }
+            
+        return aux;
+    }
+
+    public boolean eliminarCarpeta(String padre, String hijo) {
+        Vertice nodo = buscarNodo(padre, hijo);
+        Vertice cabeceraFila, cabeceraCol, aux, aux2;
+        String nombreCabecera;
+        if (nodo != null) {
+            cabeceraCol = nodo.up;
+            cabeceraFila = nodo.left;
+            nombreCabecera = cabeceraCol.getNombreNodo();
+            System.out.println("Col: " + nombreCabecera);
+            aux = nodo.left;
+            while (aux != null) {
+                if (aux.left == null) {
+                    aux2 = aux.down;
+                    while (aux2 != null) {
+                        if (aux2.getNombreNodo().equals(nombreCabecera)) {
+                            System.out.println("Found: " + aux2.getNombreNodo());
+                            cabeceraFila = aux2;
+                            break;
+                        }
+                        aux2 = aux2.down;
+                    }
+                }
+                aux = aux.left;
+            }
+            
+            if(nodo.right != null){
+                nodo.right.left = nodo.left;
+            }
+            if(nodo.left != null){
+                nodo.left.right = nodo.right;
+            }
+            
+            if(cabeceraCol.right != null){
+                cabeceraCol.right.left = cabeceraCol.left;
+            }
+            if(cabeceraCol.left != null){
+                cabeceraCol.left.right = cabeceraCol.right;
+            }
+            
+            if(cabeceraFila.down != null){
+                cabeceraFila.down.up = cabeceraFila.up;
+            }
+            if(cabeceraFila.up != null){
+                cabeceraFila.up.down = cabeceraFila.down;
+            }
+            
+            cabeceraCol.down = null;
+            if(cabeceraFila.right == nodo){
+                cabeceraFila.right = null;
+            }
+            
+            if(nodo.up != null){
+                System.out.println("Still alive? "+nodo.up.getNombreNodo());
+                nodo.up = null;
+            }
+            if(nodo.left == cabeceraCol){
+                nodo.left = null;
+            }
+            
+            nodo = null;
+            cabeceraCol = null;
+            cabeceraFila = null;
+            return true;
+        }
+
         return false;
     }
     
@@ -210,6 +300,7 @@ public class MatrizAdy {
     }
     
     public int crear_Cabeceras(int x, String nombre, CarpetaObj carp, boolean reinsert){
+        System.out.println("insert: "+carp.getNombre());
         if(buscarColumna(x) != null && buscarFila(x) != null){
             if(reinsert){
                     x = x + 1;
@@ -227,13 +318,13 @@ public class MatrizAdy {
     
     private Vertice crear_Columna(int x, String nombre, CarpetaObj c){
         Vertice head_col = root;
-        Vertice columna = insertar_ordenado_columna(new Vertice(c,x,-1), head_col);
+        Vertice columna = insertar_ordenado_columna(new Vertice(nombre+x,c,x,-1), head_col);
         return columna;
     }
     
     private Vertice crear_Fila(int y, String nombre, CarpetaObj c){
         Vertice head_row = root;
-        Vertice row = insertar_ordenado_fila(new Vertice(c,-1,y), head_row);
+        Vertice row = insertar_ordenado_fila(new Vertice(nombre+y,c,-1,y), head_row);
         return row;
     }
     
@@ -247,11 +338,14 @@ public class MatrizAdy {
         Vertice aux = carpetaExistente;
         Vertice node;
         while(aux != null){
+            System.out.println("Moving: "+aux.getNombreNodo());
             aux.setX(aux.getX()+1);            
             node = aux.getDown();
             if(node != null){
                 node.setX(node.getX()+1);
+                System.out.println("node: "+node.getNombreNodo()+" new x : "+node.getX());
             }
+            System.out.println("new: "+aux.getNombreNodo());
             aux = aux.getRight();
         }
         
@@ -259,6 +353,7 @@ public class MatrizAdy {
     
     public void reAcomodarYCarpetas(Vertice nuevaCarpeta, Vertice carpetaExistente) {
         //Reacomodando su y
+        System.out.println(carpetaExistente.getNombreNodo());
         Vertice aux = carpetaExistente;
         Vertice node;
         while (aux != null) {
@@ -295,7 +390,7 @@ public class MatrizAdy {
     }
     
     public boolean insertar_elemento(int x, int y, Object dato){
-        Vertice nuevo = new Vertice(dato, x, y);
+        Vertice nuevo = new Vertice(((CarpetaObj)dato).getNombre(),dato, x, y);
         Vertice columna = buscarColumna(x);
         Vertice fila = buscarFila(y);
         CarpetaObj carpeta = (CarpetaObj) dato;

@@ -16,14 +16,21 @@ public class Vertice {
     private Object dato;
     private int x;
     private int y;
+    private String nombreNodo;
     public Vertice down, up, right,left;
 
 
-    public Vertice(Object dato, int x, int y){
+    public Vertice(String nombreNodo, Object dato, int x, int y){
         this.dato = dato;
         this.x = x;
         this.y = y;
+        this.nombreNodo = nombreNodo;
     }
+
+    public String getNombreNodo() {
+        return nombreNodo;
+    }
+    
     public Object getDato() {
         return dato;
     }

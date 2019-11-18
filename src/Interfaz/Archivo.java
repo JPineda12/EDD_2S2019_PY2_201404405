@@ -6,6 +6,9 @@
 package Interfaz;
 
 import java.awt.Component;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import net.miginfocom.swing.MigLayout;
 import proyecto2.Objetos.ArchivoObj;
 
 /**
@@ -15,22 +18,53 @@ import proyecto2.Objetos.ArchivoObj;
 public class Archivo extends javax.swing.JPanel {
 
     private ArchivoObj archivo;
+    String realNombre, shownNombre;
     public Archivo() {
         initComponents();
     }
     public Archivo(ArchivoObj archivo){
         this.archivo = archivo;
         initComponents();
-        jButton1.setText(archivo.getNombre());
+        realNombre = archivo.getNombre();
+        shownNombre = generateSNombre(realNombre);
+        jToggleButton2.setText(shownNombre);
+
     }
     
+    private void mLayout(){
+        MigLayout m = new MigLayout("","80:80:80","80:80:80");
+        this.removeAll();
+        this.setLayout(m);
+        this.add(jToggleButton2);
+    }
+    
+    private String generateSNombre(String nombre){
+        if(nombre.length() > 12){
+            nombre = archivo.getNombre().substring(0,8)+"...";
+        }
+        return nombre;
+    }
     
     public ArchivoObj getArchivo(){
         return archivo;
     }
     
     public void setText(String text){
-        jButton1.setText(text);
+        this.realNombre = text;
+        shownNombre = generateSNombre(realNombre);
+        jToggleButton2.setText(shownNombre);
+    }
+    
+    public String getNombre(){
+        return realNombre;
+    }
+    
+    public boolean estaSeleccionado(){
+        return jToggleButton2.isSelected();
+    }
+    
+    public void setSeleccionado(boolean seleccion){
+        jToggleButton2.setSelected(seleccion);
     }
     
     /**
@@ -42,29 +76,23 @@ public class Archivo extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        jToggleButton2 = new javax.swing.JToggleButton();
 
-        setForeground(new java.awt.Color(51, 57, 59));
+        setBackground(new java.awt.Color(36, 40, 41));
+        setForeground(new java.awt.Color(36, 40, 41));
+        setPreferredSize(new java.awt.Dimension(70, 73));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/File.png"))); // NOI18N
-        jButton1.setText("Archivo");
-        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton1.setBorderPainted(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jButton1FocusLost(evt);
-            }
-        });
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
-            }
-        });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        jToggleButton2.setBackground(new java.awt.Color(36, 40, 41));
+        jToggleButton2.setForeground(new java.awt.Color(255, 255, 242));
+        jToggleButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/File.png"))); // NOI18N
+        jToggleButton2.setText("Archivo");
+        jToggleButton2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jToggleButton2.setBorderPainted(false);
+        jToggleButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jToggleButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToggleButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jToggleButton2MouseReleased(evt);
             }
         });
 
@@ -72,33 +100,26 @@ public class Archivo extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton1)
+            .addComponent(jToggleButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton1)
+            .addComponent(jToggleButton2)
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void jToggleButton2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton2MouseReleased
         if(evt.getClickCount() == 2){
             ContentViewer c = new ContentViewer(archivo);
             c.setVisible(true);
         }else{
+            System.out.println(jToggleButton2.isSelected());
             this.getParent().requestFocus();
-        }
-    }//GEN-LAST:event_jButton1MouseClicked
-
-    private void jButton1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton1FocusLost
-
-    }//GEN-LAST:event_jButton1FocusLost
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_jToggleButton2MouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JToggleButton jToggleButton2;
     // End of variables declaration//GEN-END:variables
 }

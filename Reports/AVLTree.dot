@@ -2,8 +2,350 @@ digraph AVLTree {
     rankdir=TB;
     graph [pad=".25", ranksep="1.0", nodesep="1"];
     node [shape=record, style = rounded, color = forestgreen];
-    node [width = 4, height = 1.5, fixedsize="true"];
+    node [width = 6, height = 1.5, fixedsize="true"];
     //Nodes and links creation
-     ndthis[label="<left> | Nombre: this\nContenido: \nBf: 0\nAltura: 0\nTimestamp: 2019-11-15 11:05:32.994\nPropietario: Admin | <right>"];
-     //Links ndthis
+     ndNsyncexe[label="<left> | Nombre: Nsync.exe\nContenido: lol music \nBf: -1\nAltura: 7\nTimestamp: 2019-11-17 21:06:55.197\nPropietario: Admin | <right>"];
+     //Links ndNsyncexe
+     ndNsyncexe:left->ndEufpx
+     ndNsyncexe:right->ndVariusNullaFacilisisvf
+     ndEufpx[label="<left> | Nombre: Eu.fpx\nContenido: eget orci vehicula\nBf: 0\nAltura: 6\nTimestamp: 2019-11-17 21:07:17.237\nPropietario: Admin | <right>"];
+     //Links ndEufpx
+     ndEufpx:left->ndConvallisfor
+     ndEufpx:right->ndLaciniasol
+     ndConvallisfor[label="<left> | Nombre: Convallis.for\nContenido: quisque porta volutpat\nBf: -1\nAltura: 5\nTimestamp: 2019-11-17 21:07:17.237\nPropietario: Admin | <right>"];
+     //Links ndConvallisfor
+     ndConvallisfor:left->ndAnteIpsumPrimisxpix
+     ndConvallisfor:right->ndEgetqti
+     ndAnteIpsumPrimisxpix[label="<left> | Nombre: AnteIpsumPrimis.xpix\nContenido: vivamus tortor duis mattis egestas metus\nBf: -1\nAltura: 4\nTimestamp: 2019-11-17 21:07:17.242\nPropietario: Admin | <right>"];
+     //Links ndAnteIpsumPrimisxpix
+     ndAnteIpsumPrimisxpix:left->ndAliquethtx
+     ndAnteIpsumPrimisxpix:right->ndAugueVestibulumAntemp2
+     ndAliquethtx[label="<left> | Nombre: Aliquet.htx\nContenido: diam erat\nBf: 0\nAltura: 3\nTimestamp: 2019-11-17 21:07:17.238\nPropietario: Admin | <right>"];
+     //Links ndAliquethtx
+     ndAliquethtx:left->ndAhpg
+     ndAliquethtx:right->ndAliquetMassaltx
+     ndAhpg[label="<left> | Nombre: A.hpg\nContenido: posuere felis sed lacus\nBf: 1\nAltura: 2\nTimestamp: 2019-11-17 21:07:17.242\nPropietario: Admin | <right>"];
+     //Links ndAhpg
+     ndAhpg:left->ndAelc
+     ndAhpg:right->ndAPedePosuereword
+     ndAelc[label="<left> | Nombre: A.elc\nContenido: rutrum neque aenean auctor gravida sem\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.243\nPropietario: Admin | <right>"];
+     //Links ndAelc
+     ndAPedePosuereword[label="<left> | Nombre: APedePosuere.word\nContenido: auctor gravida sem\nBf: 0\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.246\nPropietario: Admin | <right>"];
+     //Links ndAPedePosuereword
+     ndAPedePosuereword:left->ndAword
+     ndAPedePosuereword:right->ndAeneanSitAmetsaveme
+     ndAword[label="<left> | Nombre: A.word\nContenido: id sapien\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.245\nPropietario: Admin | <right>"];
+     //Links ndAword
+     ndAeneanSitAmetsaveme[label="<left> | Nombre: AeneanSitAmet.saveme\nContenido: lorem ipsum dolor sit amet consectetuer adipiscing elit\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.24\nPropietario: Admin | <right>"];
+     //Links ndAeneanSitAmetsaveme
+     ndAliquetMassaltx[label="<left> | Nombre: AliquetMassa.ltx\nContenido: amet diam in magna\nBf: 1\nAltura: 2\nTimestamp: 2019-11-17 21:07:17.245\nPropietario: Admin | <right>"];
+     //Links ndAliquetMassaltx
+     ndAliquetMassaltx:left->ndAliquetxgz
+     ndAliquetMassaltx:right->ndAliquetPulvinarSedtr
+     ndAliquetxgz[label="<left> | Nombre: Aliquet.xgz\nContenido: duis consequat dui nec nisi volutpat eleifend donec\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.244\nPropietario: Admin | <right>"];
+     //Links ndAliquetxgz
+     ndAliquetPulvinarSedtr[label="<left> | Nombre: AliquetPulvinarSed.tr\nContenido: augue vestibulum rutrum\nBf: 1\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.242\nPropietario: Admin | <right>"];
+     //Links ndAliquetPulvinarSedtr
+     ndAliquetPulvinarSedtr:right->ndAnteIpsumspl
+     ndAnteIpsumspl[label="<left> | Nombre: AnteIpsum.spl\nContenido: nam dui proin leo odio porttitor\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.245\nPropietario: Admin | <right>"];
+     //Links ndAnteIpsumspl
+     ndAugueVestibulumAntemp2[label="<left> | Nombre: AugueVestibulumAnte.mp2\nContenido: quisque id\nBf: -1\nAltura: 2\nTimestamp: 2019-11-17 21:07:17.243\nPropietario: Admin | <right>"];
+     //Links ndAugueVestibulumAntemp2
+     ndAugueVestibulumAntemp2:left->ndAtFeugiatNonxml
+     ndAugueVestibulumAntemp2:right->ndCongueRisusSemperlha
+     ndAtFeugiatNonxml[label="<left> | Nombre: AtFeugiatNon.xml\nContenido: porta volutpat quam pede lobortis ligula sit\nBf: 0\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.244\nPropietario: Admin | <right>"];
+     //Links ndAtFeugiatNonxml
+     ndAtFeugiatNonxml:left->ndAtFeugiatNonsmil
+     ndAtFeugiatNonxml:right->ndAtNuncCommodoavs
+     ndAtFeugiatNonsmil[label="<left> | Nombre: AtFeugiatNon.smil\nContenido: pede libero quis orci nullam molestie\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.244\nPropietario: Admin | <right>"];
+     //Links ndAtFeugiatNonsmil
+     ndAtNuncCommodoavs[label="<left> | Nombre: AtNuncCommodo.avs\nContenido: ultrices posuere cubilia curae donec pharetra\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.245\nPropietario: Admin | <right>"];
+     //Links ndAtNuncCommodoavs
+     ndCongueRisusSemperlha[label="<left> | Nombre: CongueRisusSemper.lha\nContenido: mattis nibh ligula\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.242\nPropietario: Admin | <right>"];
+     //Links ndCongueRisusSemperlha
+     ndEgetqti[label="<left> | Nombre: Eget.qti\nContenido: ante ipsum primis in faucibus orci luctus\nBf: 0\nAltura: 3\nTimestamp: 2019-11-17 21:07:17.241\nPropietario: Admin | <right>"];
+     //Links ndEgetqti
+     ndEgetqti:left->ndDiamIdetx
+     ndEgetqti:right->ndEratCurabiturGravidamap
+     ndDiamIdetx[label="<left> | Nombre: DiamId.etx\nContenido: erat volutpat in congue etiam justo etiam pretium\nBf: 0\nAltura: 2\nTimestamp: 2019-11-17 21:07:17.24\nPropietario: Admin | <right>"];
+     //Links ndDiamIdetx
+     ndDiamIdetx:left->ndCumSociistif
+     ndDiamIdetx:right->ndDolorxlm
+     ndCumSociistif[label="<left> | Nombre: CumSociis.tif\nContenido: vitae mattis nibh ligula nec sem duis\nBf: 0\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.24\nPropietario: Admin | <right>"];
+     //Links ndCumSociistif
+     ndCumSociistif:left->ndConvallisTortorRisushtt
+     ndCumSociistif:right->ndCuraeDonecPharetrafdf
+     ndConvallisTortorRisushtt[label="<left> | Nombre: ConvallisTortorRisus.htt\nContenido: ac leo pellentesque\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.243\nPropietario: Admin | <right>"];
+     //Links ndConvallisTortorRisushtt
+     ndCuraeDonecPharetrafdf[label="<left> | Nombre: CuraeDonecPharetra.fdf\nContenido: ipsum integer a nibh in quis justo maecenas\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.241\nPropietario: Admin | <right>"];
+     //Links ndCuraeDonecPharetrafdf
+     ndDolorxlm[label="<left> | Nombre: Dolor.xlm\nContenido: penatibus et magnis\nBf: 0\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.244\nPropietario: Admin | <right>"];
+     //Links ndDolorxlm
+     ndDolorxlm:left->ndDictumstmp3
+     ndDolorxlm:right->ndDuisxml
+     ndDictumstmp3[label="<left> | Nombre: Dictumst.mp3\nContenido: ac leo pellentesque ultrices mattis odio donec\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.242\nPropietario: Admin | <right>"];
+     //Links ndDictumstmp3
+     ndDuisxml[label="<left> | Nombre: Duis.xml\nContenido: mattis odio\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.245\nPropietario: Admin | <right>"];
+     //Links ndDuisxml
+     ndEratCurabiturGravidamap[label="<left> | Nombre: EratCurabiturGravida.map\nContenido: est et\nBf: 1\nAltura: 2\nTimestamp: 2019-11-17 21:07:17.245\nPropietario: Admin | <right>"];
+     //Links ndEratCurabiturGravidamap
+     ndEratCurabiturGravidamap:left->ndElementumInHacp7a
+     ndEratCurabiturGravidamap:right->ndErosViverraxl
+     ndElementumInHacp7a[label="<left> | Nombre: ElementumInHac.p7a\nContenido: praesent blandit nam nulla\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.246\nPropietario: Admin | <right>"];
+     //Links ndElementumInHacp7a
+     ndErosViverraxl[label="<left> | Nombre: ErosViverra.xl\nContenido: leo maecenas pulvinar lobortis est phasellus sit amet\nBf: -1\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.241\nPropietario: Admin | <right>"];
+     //Links ndErosViverraxl
+     ndErosViverraxl:left->ndEratVestibulummp3
+     ndEratVestibulummp3[label="<left> | Nombre: EratVestibulum.mp3\nContenido: tempus vivamus\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.247\nPropietario: Admin | <right>"];
+     //Links ndEratVestibulummp3
+     ndLaciniasol[label="<left> | Nombre: Lacinia.sol\nContenido: enim in tempor\nBf: 0\nAltura: 5\nTimestamp: 2019-11-17 21:07:17.237\nPropietario: Admin | <right>"];
+     //Links ndLaciniasol
+     ndLaciniasol:left->ndInLiberodxf
+     ndLaciniasol:right->ndMainpy
+     ndInLiberodxf[label="<left> | Nombre: InLibero.dxf\nContenido: posuere cubilia curae\nBf: 0\nAltura: 4\nTimestamp: 2019-11-17 21:07:17.242\nPropietario: Admin | <right>"];
+     //Links ndInLiberodxf
+     ndInLiberodxf:left->ndFelisavi
+     ndInLiberodxf:right->ndIntegerTinciduntppa
+     ndFelisavi[label="<left> | Nombre: Felis.avi\nContenido: hac habitasse platea dictumst maecenas ut massa quis\nBf: 1\nAltura: 3\nTimestamp: 2019-11-17 21:07:17.244\nPropietario: Admin | <right>"];
+     //Links ndFelisavi
+     ndFelisavi:left->ndFaucibuseps
+     ndFelisavi:right->ndIdLigulaSuspendisseshar
+     ndFaucibuseps[label="<left> | Nombre: Faucibus.eps\nContenido: vestibulum rutrum rutrum neque aenean\nBf: 0\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.246\nPropietario: Admin | <right>"];
+     //Links ndFaucibuseps
+     ndFaucibuseps:left->ndEujs
+     ndFaucibuseps:right->ndFaucibusspl
+     ndEujs[label="<left> | Nombre: Eu.js\nContenido: tempor convallis\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.244\nPropietario: Admin | <right>"];
+     //Links ndEujs
+     ndFaucibusspl[label="<left> | Nombre: Faucibus.spl\nContenido: et ultrices posuere cubilia curae\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.237\nPropietario: Admin | <right>"];
+     //Links ndFaucibusspl
+     ndIdLigulaSuspendisseshar[label="<left> | Nombre: IdLigulaSuspendisse.shar\nContenido: volutpat in congue etiam justo etiam pretium\nBf: 1\nAltura: 2\nTimestamp: 2019-11-17 21:07:17.236\nPropietario: Admin | <right>"];
+     //Links ndIdLigulaSuspendisseshar
+     ndIdLigulaSuspendisseshar:left->ndFuscelha
+     ndIdLigulaSuspendisseshar:right->ndImperdietSapienrmp
+     ndFuscelha[label="<left> | Nombre: Fusce.lha\nContenido: rutrum ac lobortis vel dapibus\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.244\nPropietario: Admin | <right>"];
+     //Links ndFuscelha
+     ndImperdietSapienrmp[label="<left> | Nombre: ImperdietSapien.rmp\nContenido: vel ipsum praesent blandit\nBf: 1\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.239\nPropietario: Admin | <right>"];
+     //Links ndImperdietSapienrmp
+     ndImperdietSapienrmp:right->ndInImperdiets
+     ndInImperdiets[label="<left> | Nombre: InImperdiet.s\nContenido: ligula pellentesque ultrices phasellus id\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.245\nPropietario: Admin | <right>"];
+     //Links ndInImperdiets
+     ndIntegerTinciduntppa[label="<left> | Nombre: IntegerTincidunt.ppa\nContenido: elit proin interdum\nBf: 1\nAltura: 3\nTimestamp: 2019-11-17 21:07:17.236\nPropietario: Admin | <right>"];
+     //Links ndIntegerTinciduntppa
+     ndIntegerTinciduntppa:left->ndInTemporspr
+     ndIntegerTinciduntppa:right->ndJuanexe
+     ndInTemporspr[label="<left> | Nombre: InTempor.spr\nContenido: a libero nam dui proin\nBf: 1\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.242\nPropietario: Admin | <right>"];
+     //Links ndInTemporspr
+     ndInTemporspr:right->ndInTempushpgl
+     ndInTempushpgl[label="<left> | Nombre: InTempus.hpgl\nContenido: vulputate vitae nisl aenean lectus pellentesque eget nunc\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.243\nPropietario: Admin | <right>"];
+     //Links ndInTempushpgl
+     ndJuanexe[label="<left> | Nombre: Juan.exe\nContenido: Weird stuff\nBf: -1\nAltura: 2\nTimestamp: 2019-11-17 21:06:55.195\nPropietario: Admin | <right>"];
+     //Links ndJuanexe
+     ndJuanexe:left->ndInterdumMaurisUllamcorperdef
+     ndJuanexe:right->ndJustowp5
+     ndInterdumMaurisUllamcorperdef[label="<left> | Nombre: InterdumMaurisUllamcorper.def\nContenido: accumsan tortor quis turpis sed\nBf: -1\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.243\nPropietario: Admin | <right>"];
+     //Links ndInterdumMaurisUllamcorperdef
+     ndInterdumMaurisUllamcorperdef:left->ndInterdump7c
+     ndInterdump7c[label="<left> | Nombre: Interdum.p7c\nContenido: non sodales sed tincidunt eu felis fusce\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.246\nPropietario: Admin | <right>"];
+     //Links ndInterdump7c
+     ndJustowp5[label="<left> | Nombre: Justo.wp5\nContenido: interdum venenatis turpis enim\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.239\nPropietario: Admin | <right>"];
+     //Links ndJustowp5
+     ndMainpy[label="<left> | Nombre: Main.py\nContenido: Esto es una cadena\nBf: 0\nAltura: 4\nTimestamp: 2019-11-17 21:06:55.187\nPropietario: Admin | <right>"];
+     //Links ndMainpy
+     ndMainpy:left->ndLorempas
+     ndMainpy:right->ndMorbidwf
+     ndLorempas[label="<left> | Nombre: Lorem.pas\nContenido: diam vitae quam suspendisse potenti nullam porttitor lacus\nBf: -1\nAltura: 3\nTimestamp: 2019-11-17 21:07:17.237\nPropietario: Admin | <right>"];
+     //Links ndLorempas
+     ndLorempas:left->ndLeoPellentesqueUltricesxlk
+     ndLorempas:right->ndLoremIpsummcd
+     ndLeoPellentesqueUltricesxlk[label="<left> | Nombre: LeoPellentesqueUltrices.xlk\nContenido: ridiculus mus vivamus vestibulum sagittis sapien cum sociis\nBf: -1\nAltura: 2\nTimestamp: 2019-11-17 21:07:17.239\nPropietario: Admin | <right>"];
+     //Links ndLeoPellentesqueUltricesxlk
+     ndLeoPellentesqueUltricesxlk:left->ndLectusmv
+     ndLeoPellentesqueUltricesxlk:right->ndLobortisSapienSapienxla
+     ndLectusmv[label="<left> | Nombre: Lectus.mv\nContenido: rutrum nulla\nBf: 0\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.241\nPropietario: Admin | <right>"];
+     //Links ndLectusmv
+     ndLectusmv:left->ndLacusPurusvst
+     ndLectusmv:right->ndLeolhx
+     ndLacusPurusvst[label="<left> | Nombre: LacusPurus.vst\nContenido: posuere cubilia curae donec pharetra\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.239\nPropietario: Admin | <right>"];
+     //Links ndLacusPurusvst
+     ndLeolhx[label="<left> | Nombre: Leo.lhx\nContenido: orci nullam\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.244\nPropietario: Admin | <right>"];
+     //Links ndLeolhx
+     ndLobortisSapienSapienxla[label="<left> | Nombre: LobortisSapienSapien.xla\nContenido: natoque penatibus et\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.239\nPropietario: Admin | <right>"];
+     //Links ndLobortisSapienSapienxla
+     ndLoremIpsummcd[label="<left> | Nombre: LoremIpsum.mcd\nContenido: justo eu massa donec dapibus duis at velit\nBf: 1\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.238\nPropietario: Admin | <right>"];
+     //Links ndLoremIpsummcd
+     ndLoremIpsummcd:right->ndMaecenasoda
+     ndMaecenasoda[label="<left> | Nombre: Maecenas.oda\nContenido: semper rutrum nulla nunc purus\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.24\nPropietario: Admin | <right>"];
+     //Links ndMaecenasoda
+     ndMorbidwf[label="<left> | Nombre: Morbi.dwf\nContenido: a suscipit nulla elit ac nulla sed\nBf: 0\nAltura: 3\nTimestamp: 2019-11-17 21:07:17.246\nPropietario: Admin | <right>"];
+     //Links ndMorbidwf
+     ndMorbidwf:left->ndMetusAeneanFermentumzsh
+     ndMorbidwf:right->ndMusicthis
+     ndMetusAeneanFermentumzsh[label="<left> | Nombre: MetusAeneanFermentum.zsh\nContenido: vestibulum ante\nBf: 0\nAltura: 2\nTimestamp: 2019-11-17 21:07:17.24\nPropietario: Admin | <right>"];
+     //Links ndMetusAeneanFermentumzsh
+     ndMetusAeneanFermentumzsh:left->ndMattishlp
+     ndMetusAeneanFermentumzsh:right->ndMolestiejs
+     ndMattishlp[label="<left> | Nombre: Mattis.hlp\nContenido: amet sapien dignissim vestibulum vestibulum ante ipsum\nBf: 0\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.239\nPropietario: Admin | <right>"];
+     //Links ndMattishlp
+     ndMattishlp:left->ndMassaQuisAugueiv
+     ndMattishlp:right->ndMetusAeneanFermentumcc
+     ndMassaQuisAugueiv[label="<left> | Nombre: MassaQuisAugue.iv\nContenido: nulla quisque arcu libero rutrum ac lobortis vel\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.245\nPropietario: Admin | <right>"];
+     //Links ndMassaQuisAugueiv
+     ndMetusAeneanFermentumcc[label="<left> | Nombre: MetusAeneanFermentum.cc\nContenido: velit donec diam neque\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.243\nPropietario: Admin | <right>"];
+     //Links ndMetusAeneanFermentumcc
+     ndMolestiejs[label="<left> | Nombre: Molestie.js\nContenido: amet justo morbi ut odio\nBf: -1\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.242\nPropietario: Admin | <right>"];
+     //Links ndMolestiejs
+     ndMolestiejs:left->ndMizip
+     ndMizip[label="<left> | Nombre: Mi.zip\nContenido: aliquam sit amet\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.246\nPropietario: Admin | <right>"];
+     //Links ndMizip
+     ndMusicthis[label="<left> | Nombre: Music.this\nContenido: Lmao Crazy nigg\nBf: 1\nAltura: 2\nTimestamp: 2019-11-17 21:06:55.195\nPropietario: Admin | <right>"];
+     //Links ndMusicthis
+     ndMusicthis:left->ndMorbiQuisnix
+     ndMusicthis:right->ndNisixm
+     ndMorbiQuisnix[label="<left> | Nombre: MorbiQuis.nix\nContenido: id ligula suspendisse ornare consequat lectus in\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.238\nPropietario: Admin | <right>"];
+     //Links ndMorbiQuisnix
+     ndNisixm[label="<left> | Nombre: Nisi.xm\nContenido: quam suspendisse\nBf: 0\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.238\nPropietario: Admin | <right>"];
+     //Links ndNisixm
+     ndNisixm:left->ndNecxld
+     ndNisixm:right->ndNonSodalesSedpfunk
+     ndNecxld[label="<left> | Nombre: Nec.xld\nContenido: nibh in\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.239\nPropietario: Admin | <right>"];
+     //Links ndNecxld
+     ndNonSodalesSedpfunk[label="<left> | Nombre: NonSodalesSed.pfunk\nContenido: ultrices libero non mattis\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.243\nPropietario: Admin | <right>"];
+     //Links ndNonSodalesSedpfunk
+     ndVariusNullaFacilisisvf[label="<left> | Nombre: VariusNullaFacilisi.svf\nContenido: ac tellus semper interdum mauris ullamcorper purus\nBf: 0\nAltura: 5\nTimestamp: 2019-11-17 21:07:17.236\nPropietario: Admin | <right>"];
+     //Links ndVariusNullaFacilisisvf
+     ndVariusNullaFacilisisvf:left->ndPulvinarSedpko
+     ndVariusNullaFacilisisvf:right->ndchuchitor
+     ndPulvinarSedpko[label="<left> | Nombre: PulvinarSed.pko\nContenido: volutpat quam pede lobortis\nBf: 0\nAltura: 4\nTimestamp: 2019-11-17 21:07:17.238\nPropietario: Admin | <right>"];
+     //Links ndPulvinarSedpko
+     ndPulvinarSedpko:left->ndPellentesqueAtpkg
+     ndPulvinarSedpko:right->ndSedSagittisabc
+     ndPellentesqueAtpkg[label="<left> | Nombre: PellentesqueAt.pkg\nContenido: id turpis integer aliquet\nBf: 0\nAltura: 3\nTimestamp: 2019-11-17 21:07:17.236\nPropietario: Admin | <right>"];
+     //Links ndPellentesqueAtpkg
+     ndPellentesqueAtpkg:left->ndOrciVehiculamif
+     ndPellentesqueAtpkg:right->ndPorttitorLoremgsp
+     ndOrciVehiculamif[label="<left> | Nombre: OrciVehicula.mif\nContenido: eu sapien\nBf: -1\nAltura: 2\nTimestamp: 2019-11-17 21:07:17.238\nPropietario: Admin | <right>"];
+     //Links ndOrciVehiculamif
+     ndOrciVehiculamif:left->ndNuevoexe
+     ndOrciVehiculamif:right->ndParturientmp3
+     ndNuevoexe[label="<left> | Nombre: Nuevo.exe\nContenido: hola este es un nuevo archivo amigos hxkahfxa\nBf: 1\nAltura: 1\nTimestamp: 2019-11-17 21:06:56.777\nPropietario: Admin | <right>"];
+     //Links ndNuevoexe
+     ndNuevoexe:right->ndOdioaim
+     ndOdioaim[label="<left> | Nombre: Odio.aim\nContenido: nullam porttitor lacus\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.247\nPropietario: Admin | <right>"];
+     //Links ndOdioaim
+     ndParturientmp3[label="<left> | Nombre: Parturient.mp3\nContenido: in ante\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.247\nPropietario: Admin | <right>"];
+     //Links ndParturientmp3
+     ndPorttitorLoremgsp[label="<left> | Nombre: PorttitorLorem.gsp\nContenido: platea dictumst etiam faucibus cursus urna\nBf: 1\nAltura: 2\nTimestamp: 2019-11-17 21:07:17.238\nPropietario: Admin | <right>"];
+     //Links ndPorttitorLoremgsp
+     ndPorttitorLoremgsp:left->ndPellentesqueAtNullaksh
+     ndPorttitorLoremgsp:right->ndPrimisInf
+     ndPellentesqueAtNullaksh[label="<left> | Nombre: PellentesqueAtNulla.ksh\nContenido: quam pede lobortis ligula sit\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.244\nPropietario: Admin | <right>"];
+     //Links ndPellentesqueAtNullaksh
+     ndPrimisInf[label="<left> | Nombre: PrimisIn.f\nContenido: platea dictumst maecenas ut massa quis augue luctus\nBf: 0\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.244\nPropietario: Admin | <right>"];
+     //Links ndPrimisInf
+     ndPrimisInf:left->ndPosuerewri
+     ndPrimisInf:right->ndPulvinarLobortisEstwri
+     ndPosuerewri[label="<left> | Nombre: Posuere.wri\nContenido: felis sed\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.244\nPropietario: Admin | <right>"];
+     //Links ndPosuerewri
+     ndPulvinarLobortisEstwri[label="<left> | Nombre: PulvinarLobortisEst.wri\nContenido: cras pellentesque volutpat\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.24\nPropietario: Admin | <right>"];
+     //Links ndPulvinarLobortisEstwri
+     ndSedSagittisabc[label="<left> | Nombre: SedSagittis.abc\nContenido: primis in faucibus orci luctus et\nBf: 0\nAltura: 3\nTimestamp: 2019-11-17 21:07:17.238\nPropietario: Admin | <right>"];
+     //Links ndSedSagittisabc
+     ndSedSagittisabc:left->ndRisusDapibussl
+     ndSedSagittisabc:right->ndSollicitudinVitaeConsectetuerzip
+     ndRisusDapibussl[label="<left> | Nombre: RisusDapibus.sl\nContenido: erat vestibulum sed magna at nunc commodo\nBf: 0\nAltura: 2\nTimestamp: 2019-11-17 21:07:17.239\nPropietario: Admin | <right>"];
+     //Links ndRisusDapibussl
+     ndRisusDapibussl:left->ndQuamtiff
+     ndRisusDapibussl:right->ndSedMagnaAth
+     ndQuamtiff[label="<left> | Nombre: Quam.tiff\nContenido: nulla sed accumsan felis ut at\nBf: 0\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.242\nPropietario: Admin | <right>"];
+     //Links ndQuamtiff
+     ndQuamtiff:left->ndQuamder
+     ndQuamtiff:right->ndQuisJustoMaecenasxif
+     ndQuamder[label="<left> | Nombre: Quam.der\nContenido: sapien non mi integer\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.247\nPropietario: Admin | <right>"];
+     //Links ndQuamder
+     ndQuisJustoMaecenasxif[label="<left> | Nombre: QuisJustoMaecenas.xif\nContenido: sagittis sapien cum sociis\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.24\nPropietario: Admin | <right>"];
+     //Links ndQuisJustoMaecenasxif
+     ndSedMagnaAth[label="<left> | Nombre: SedMagnaAt.h\nContenido: leo odio condimentum id luctus nec molestie\nBf: -1\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.239\nPropietario: Admin | <right>"];
+     //Links ndSedMagnaAth
+     ndSedMagnaAth:left->ndSapienALiberoxl
+     ndSapienALiberoxl[label="<left> | Nombre: SapienALibero.xl\nContenido: hac habitasse platea dictumst\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.243\nPropietario: Admin | <right>"];
+     //Links ndSapienALiberoxl
+     ndSollicitudinVitaeConsectetuerzip[label="<left> | Nombre: SollicitudinVitaeConsectetuer.zip\nContenido: eu magna vulputate luctus cum sociis natoque penatibus\nBf: 0\nAltura: 2\nTimestamp: 2019-11-17 21:07:17.245\nPropietario: Admin | <right>"];
+     //Links ndSollicitudinVitaeConsectetuerzip
+     ndSollicitudinVitaeConsectetuerzip:left->ndSitAmetevy
+     ndSollicitudinVitaeConsectetuerzip:right->ndUtmbd
+     ndSitAmetevy[label="<left> | Nombre: SitAmet.evy\nContenido: ante vestibulum ante ipsum\nBf: -1\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.243\nPropietario: Admin | <right>"];
+     //Links ndSitAmetevy
+     ndSitAmetevy:left->ndSedVestibulummjpg
+     ndSedVestibulummjpg[label="<left> | Nombre: SedVestibulum.mjpg\nContenido: ut blandit non interdum in ante vestibulum ante\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.238\nPropietario: Admin | <right>"];
+     //Links ndSedVestibulummjpg
+     ndUtmbd[label="<left> | Nombre: Ut.mbd\nContenido: quisque porta volutpat erat\nBf: 0\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.237\nPropietario: Admin | <right>"];
+     //Links ndUtmbd
+     ndUtmbd:left->ndSuspendisseppt
+     ndUtmbd:right->ndUtps
+     ndSuspendisseppt[label="<left> | Nombre: Suspendisse.ppt\nContenido: praesent blandit lacinia\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.246\nPropietario: Admin | <right>"];
+     //Links ndSuspendisseppt
+     ndUtps[label="<left> | Nombre: Ut.ps\nContenido: lectus in est risus auctor sed tristique\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.246\nPropietario: Admin | <right>"];
+     //Links ndUtps
+     ndchuchitor[label="<left> | Nombre: chuchito.r\nContenido: give me cookie please\nBf: 0\nAltura: 4\nTimestamp: 2019-11-17 21:06:55.196\nPropietario: Admin | <right>"];
+     //Links ndchuchitor
+     ndchuchitor:left->ndViverraidc
+     ndchuchitor:right->ndrandomjava
+     ndViverraidc[label="<left> | Nombre: Viverra.idc\nContenido: lacus at turpis donec\nBf: 0\nAltura: 3\nTimestamp: 2019-11-17 21:07:17.237\nPropietario: Admin | <right>"];
+     //Links ndViverraidc
+     ndViverraidc:left->ndVitaeNislra
+     ndViverraidc:right->ndVulputatemcd
+     ndVitaeNislra[label="<left> | Nombre: VitaeNisl.ra\nContenido: ridiculus mus etiam vel augue vestibulum\nBf: -1\nAltura: 2\nTimestamp: 2019-11-17 21:07:17.236\nPropietario: Admin | <right>"];
+     //Links ndVitaeNislra
+     ndVitaeNislra:left->ndVestibulumxll
+     ndVitaeNislra:right->ndVivamusTortorDuisspr
+     ndVestibulumxll[label="<left> | Nombre: Vestibulum.xll\nContenido: dapibus augue vel\nBf: 0\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.24\nPropietario: Admin | <right>"];
+     //Links ndVestibulumxll
+     ndVestibulumxll:left->ndVenenatisLaciniaAeneanpm
+     ndVestibulumxll:right->ndVestibulumAnteIpsumxwd
+     ndVenenatisLaciniaAeneanpm[label="<left> | Nombre: VenenatisLaciniaAenean.pm\nContenido: arcu sed\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.236\nPropietario: Admin | <right>"];
+     //Links ndVenenatisLaciniaAeneanpm
+     ndVestibulumAnteIpsumxwd[label="<left> | Nombre: VestibulumAnteIpsum.xwd\nContenido: vestibulum eget\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.246\nPropietario: Admin | <right>"];
+     //Links ndVestibulumAnteIpsumxwd
+     ndVivamusTortorDuisspr[label="<left> | Nombre: VivamusTortorDuis.spr\nContenido: aliquet at feugiat non pretium\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.237\nPropietario: Admin | <right>"];
+     //Links ndVivamusTortorDuisspr
+     ndVulputatemcd[label="<left> | Nombre: Vulputate.mcd\nContenido: quis orci nullam molestie nibh in lectus pellentesque\nBf: 0\nAltura: 2\nTimestamp: 2019-11-17 21:07:17.245\nPropietario: Admin | <right>"];
+     //Links ndVulputatemcd
+     ndVulputatemcd:left->ndVolutpattgz
+     ndVulputatemcd:right->ndVulputatexld
+     ndVolutpattgz[label="<left> | Nombre: Volutpat.tgz\nContenido: feugiat non pretium quis lectus suspendisse\nBf: -1\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.242\nPropietario: Admin | <right>"];
+     //Links ndVolutpattgz
+     ndVolutpattgz:left->ndViverraxls
+     ndViverraxls[label="<left> | Nombre: Viverra.xls\nContenido: velit id pretium iaculis\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.246\nPropietario: Admin | <right>"];
+     //Links ndViverraxls
+     ndVulputatexld[label="<left> | Nombre: Vulputate.xld\nContenido: natoque penatibus et\nBf: 0\nAltura: 1\nTimestamp: 2019-11-17 21:07:17.239\nPropietario: Admin | <right>"];
+     //Links ndVulputatexld
+     ndVulputatexld:left->ndVulputatewri
+     ndVulputatexld:right->ndasnaebsa
+     ndVulputatewri[label="<left> | Nombre: Vulputate.wri\nContenido: ullamcorper purus sit amet\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:07:17.244\nPropietario: Admin | <right>"];
+     //Links ndVulputatewri
+     ndasnaebsa[label="<left> | Nombre: asnaeb.sa\nContenido: saaaaandorms\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:06:55.197\nPropietario: Admin | <right>"];
+     //Links ndasnaebsa
+     ndrandomjava[label="<left> | Nombre: random.java\nContenido: Lol string bro\nBf: -1\nAltura: 3\nTimestamp: 2019-11-17 21:06:55.195\nPropietario: Admin | <right>"];
+     //Links ndrandomjava
+     ndrandomjava:left->ndnenaexe
+     ndrandomjava:right->ndwmp3
+     ndnenaexe[label="<left> | Nombre: nena.exe\nContenido: what should I put here haha\nBf: -1\nAltura: 2\nTimestamp: 2019-11-17 21:06:55.196\nPropietario: Admin | <right>"];
+     //Links ndnenaexe
+     ndnenaexe:left->ndjugaes
+     ndnenaexe:right->ndpiernagh
+     ndjugaes[label="<left> | Nombre: juga.es\nContenido: bet on me\nBf: 0\nAltura: 1\nTimestamp: 2019-11-17 21:06:55.197\nPropietario: Admin | <right>"];
+     //Links ndjugaes
+     ndjugaes:left->ndjamonthis
+     ndjugaes:right->ndlelelepy
+     ndjamonthis[label="<left> | Nombre: jamon.this\nContenido: this is some good jam\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:06:55.197\nPropietario: Admin | <right>"];
+     //Links ndjamonthis
+     ndlelelepy[label="<left> | Nombre: lelele.py\nContenido: hahaha\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:06:55.196\nPropietario: Admin | <right>"];
+     //Links ndlelelepy
+     ndpiernagh[label="<left> | Nombre: pierna.gh\nContenido: I want a bag\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:06:55.196\nPropietario: Admin | <right>"];
+     //Links ndpiernagh
+     ndwmp3[label="<left> | Nombre: w.mp3\nContenido: rodolfjasr\nBf: -1\nAltura: 1\nTimestamp: 2019-11-17 21:06:55.195\nPropietario: Admin | <right>"];
+     //Links ndwmp3
+     ndwmp3:left->ndtextext
+     ndtextext[label="<left> | Nombre: tex.text\nContenido: incress\nBf: 0\nAltura: 0\nTimestamp: 2019-11-17 21:06:55.195\nPropietario: Admin | <right>"];
+     //Links ndtextext
 }

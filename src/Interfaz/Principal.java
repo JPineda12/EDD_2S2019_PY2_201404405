@@ -37,6 +37,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import net.miginfocom.swing.MigLayout;
 import proyecto2.Objetos.ArchivoObj;
 import proyecto2.Objetos.CarpetaObj;
 import proyecto2.Objetos.Usuario;
@@ -48,34 +50,33 @@ import proyecto2.Objetos.UsuarioError;
  */
 public class Principal extends javax.swing.JFrame {
 
-    
-    int contx, conty;
-    GridBagConstraints c;
     TablaHash users;
     MatrizAdy carpetas;
     Usuario currentUser;
     int foldersCount;
     CarpetaObj currentFolder;
+    CarpetaObj lastFolder;
     boolean showRep, showMenu;
     ListaEnlazada listaErrores;
     Archivo selectedFile;
     Carpeta selectedFolder;
     String actualAddress;
     boolean flag;
+    int maxcol;
     public Principal(Usuario username, Boolean admin, TablaHash users, MatrizAdy carpetas) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.users = users;
         this.carpetas = carpetas;
         this.currentUser = username;
-        contx = 0;
-        conty = 0;
         foldersCount = 0;
         selectedFile = null;
         selectedFolder = null;
-        currentFolder = (CarpetaObj)(currentUser.getCarpetas().buscarFila("/").getDato());
-        c = new GridBagConstraints();
-        panelPrincipal.setLayout(new GridBagLayout());
+        currentFolder = (CarpetaObj)(currentUser.getCarpetas().buscarFila(0).getDato());
+        lastFolder = null;
+        //panelPrincipal.setLayout(new GridLayout(0,maxcol));
+        MigLayout m = new MigLayout("wrap 5");
+        panelPrinc.setLayout(m);
         labelUsername.setText(username.getUsername());
         panelAdmin.setVisible(false);
         if(admin){
@@ -88,6 +89,16 @@ public class Principal extends javax.swing.JFrame {
         txtFldAddres.setText(actualAddress);
         addFolderstoPanel(currentFolder.getNombre());
         addFilestoPanel(currentFolder);
+        
+        MigLayout ml = new MigLayout("wrap 1");
+        panelReports.removeAll();
+        panelReports.setLayout(ml);
+        panelReports.add(jLabel4);
+        panelReports.add(hashTable);
+        panelReports.add(grafoBt);
+        panelReports.add(matrizAdyBt);
+        panelReports.add(avlTreeBt);
+        panelReports.add(bitacoraBt);
     }
     
     public void addFolderstoPanel(String nombreCarpeta){
@@ -101,15 +112,10 @@ public class Principal extends javax.swing.JFrame {
                 col = aux.getRight();
                 while (col != null) {
                     String nombre = ((CarpetaObj) col.getUp().getDato()).getNombre();
-                    Carpeta folderButton = new Carpeta(nombre);
-                    c.gridx = contx;
-                    c.gridy = conty;
-                    contx++;
-                    if (contx >= 7) {
-                        conty++;
-                        contx = 0;
-                    }
-                    panelPrincipal.add(folderButton, c);
+                    Carpeta folderButton = new Carpeta(new CarpetaObj(nombre, 
+                            ((CarpetaObj)col.getDato()).getArchivos(),nombre));
+                    panelPrinc.add(folderButton);
+                    panelPrinc.revalidate();
                     col = col.getRight();
                 }
                 break;
@@ -128,14 +134,8 @@ public class Principal extends javax.swing.JFrame {
             System.out.println(h);
             while (h != null) {
                 Archivo file = new Archivo(((ArchivoObj)h.getData()));
-                c.gridx = contx;
-                c.gridy = conty;
-                contx++;
-                if (contx >= 7) {
-                    conty++;
-                    contx = 0;
-                }
-                panelPrincipal.add(file, c);
+                panelPrinc.add(file);
+                panelPrinc.revalidate();                
                 h = h.getNext();
             }
             
@@ -152,10 +152,11 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        panelHeader = new javax.swing.JPanel();
         btMenu = new javax.swing.JButton();
         btMenuGraph = new javax.swing.JButton();
         txtFldAddres = new javax.swing.JTextField();
+        prevFolder = new javax.swing.JButton();
         panelMenu = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -174,17 +175,15 @@ public class Principal extends javax.swing.JFrame {
         UsersBulkLoad = new rsbuttom.RSButtonMetro();
         jLabel6 = new javax.swing.JLabel();
         filesBulkload = new rsbuttom.RSButtonMetro();
-        panelPrincipal = new javax.swing.JPanel();
         panelReports = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        folderModifyBt1 = new rsbuttom.RSButtonMetro();
-        folderCreateBt1 = new rsbuttom.RSButtonMetro();
-        jPanel7 = new javax.swing.JPanel();
-        folderModifyBt4 = new rsbuttom.RSButtonMetro();
-        panelAdmin1 = new javax.swing.JPanel();
-        folderModifyBt5 = new rsbuttom.RSButtonMetro();
-        folderModifyBt6 = new rsbuttom.RSButtonMetro();
+        grafoBt = new rsbuttom.RSButtonMetro();
+        hashTable = new rsbuttom.RSButtonMetro();
+        bitacoraBt = new rsbuttom.RSButtonMetro();
+        matrizAdyBt = new rsbuttom.RSButtonMetro();
+        avlTreeBt = new rsbuttom.RSButtonMetro();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        panelPrinc = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -195,8 +194,8 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel1.setForeground(new java.awt.Color(51, 57, 59));
 
-        jPanel2.setBackground(new java.awt.Color(0, 33, 206));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelHeader.setBackground(new java.awt.Color(0, 33, 206));
+        panelHeader.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/menu.png"))); // NOI18N
         btMenu.setBorder(null);
@@ -207,7 +206,7 @@ public class Principal extends javax.swing.JFrame {
                 btMenuActionPerformed(evt);
             }
         });
-        jPanel2.add(btMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+        panelHeader.add(btMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         btMenuGraph.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/menu.png"))); // NOI18N
         btMenuGraph.setBorder(null);
@@ -218,9 +217,11 @@ public class Principal extends javax.swing.JFrame {
                 btMenuGraphActionPerformed(evt);
             }
         });
-        jPanel2.add(btMenuGraph, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 0, -1, -1));
+        panelHeader.add(btMenuGraph, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 0, -1, -1));
 
-        txtFldAddres.setForeground(new java.awt.Color(125, 125, 125));
+        txtFldAddres.setBackground(new java.awt.Color(36, 40, 41));
+        txtFldAddres.setForeground(new java.awt.Color(211, 211, 211));
+        txtFldAddres.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         txtFldAddres.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtFldAddresFocusLost(evt);
@@ -236,7 +237,17 @@ public class Principal extends javax.swing.JFrame {
                 txtFldAddresKeyReleased(evt);
             }
         });
-        jPanel2.add(txtFldAddres, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 520, 30));
+        panelHeader.add(txtFldAddres, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 450, 30));
+
+        prevFolder.setBackground(new java.awt.Color(36, 40, 41));
+        prevFolder.setForeground(new java.awt.Color(36, 40, 41));
+        prevFolder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/prevFolder.png"))); // NOI18N
+        prevFolder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prevFolderActionPerformed(evt);
+            }
+        });
+        panelHeader.add(prevFolder, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
         panelMenu.setBackground(new java.awt.Color(183, 183, 183));
         panelMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -483,183 +494,129 @@ public class Principal extends javax.swing.JFrame {
         });
         panelMenu.add(filesBulkload, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 510, 174, 50));
 
-        panelPrincipal.setForeground(new java.awt.Color(51, 57, 59));
-        panelPrincipal.setPreferredSize(new java.awt.Dimension(514, 514));
-        panelPrincipal.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                panelPrincipalFocusGained(evt);
-            }
-        });
-        panelPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                panelPrincipalMouseClicked(evt);
-            }
-        });
-        panelPrincipal.setLayout(new java.awt.GridBagLayout());
-
         panelReports.setBackground(new java.awt.Color(183, 183, 183));
         panelReports.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel6.setBackground(new java.awt.Color(183, 183, 183));
 
         jLabel4.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(58, 58, 58));
         jLabel4.setText("REPORTS");
+        panelReports.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        folderModifyBt1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/hashTable.png"))); // NOI18N
-        folderModifyBt1.setText("GRAFO");
-        folderModifyBt1.setColorNormal(new java.awt.Color(183, 183, 183));
-        folderModifyBt1.setColorTextHover(new java.awt.Color(58, 58, 58));
-        folderModifyBt1.setColorTextNormal(new java.awt.Color(58, 58, 58));
-        folderModifyBt1.setColorTextPressed(new java.awt.Color(58, 58, 58));
-        folderModifyBt1.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        folderModifyBt1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        folderModifyBt1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        folderModifyBt1.setIconTextGap(25);
-        folderModifyBt1.addActionListener(new java.awt.event.ActionListener() {
+        grafoBt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/hashTable.png"))); // NOI18N
+        grafoBt.setText("GRAFO");
+        grafoBt.setColorNormal(new java.awt.Color(183, 183, 183));
+        grafoBt.setColorTextHover(new java.awt.Color(58, 58, 58));
+        grafoBt.setColorTextNormal(new java.awt.Color(58, 58, 58));
+        grafoBt.setColorTextPressed(new java.awt.Color(58, 58, 58));
+        grafoBt.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        grafoBt.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        grafoBt.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        grafoBt.setIconTextGap(25);
+        grafoBt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                folderModifyBt1ActionPerformed(evt);
+                grafoBtActionPerformed(evt);
+            }
+        });
+        panelReports.add(grafoBt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
+
+        hashTable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/hashTable2.png"))); // NOI18N
+        hashTable.setText("HASH TABLE");
+        hashTable.setColorNormal(new java.awt.Color(183, 183, 183));
+        hashTable.setColorTextHover(new java.awt.Color(58, 58, 58));
+        hashTable.setColorTextNormal(new java.awt.Color(58, 58, 58));
+        hashTable.setColorTextPressed(new java.awt.Color(58, 58, 58));
+        hashTable.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        hashTable.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        hashTable.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        hashTable.setIconTextGap(25);
+        hashTable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hashTableActionPerformed(evt);
+            }
+        });
+        panelReports.add(hashTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 160, 50));
+
+        bitacoraBt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/history.png"))); // NOI18N
+        bitacoraBt.setText("BITACORA");
+        bitacoraBt.setColorNormal(new java.awt.Color(183, 183, 183));
+        bitacoraBt.setColorTextHover(new java.awt.Color(58, 58, 58));
+        bitacoraBt.setColorTextNormal(new java.awt.Color(58, 58, 58));
+        bitacoraBt.setColorTextPressed(new java.awt.Color(58, 58, 58));
+        bitacoraBt.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        bitacoraBt.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        bitacoraBt.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        bitacoraBt.setIconTextGap(25);
+        bitacoraBt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bitacoraBtActionPerformed(evt);
+            }
+        });
+        panelReports.add(bitacoraBt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, -1, 50));
+
+        matrizAdyBt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/Matrix.png"))); // NOI18N
+        matrizAdyBt.setText("MATRIZ ADY");
+        matrizAdyBt.setColorNormal(new java.awt.Color(183, 183, 183));
+        matrizAdyBt.setColorTextHover(new java.awt.Color(58, 58, 58));
+        matrizAdyBt.setColorTextNormal(new java.awt.Color(58, 58, 58));
+        matrizAdyBt.setColorTextPressed(new java.awt.Color(58, 58, 58));
+        matrizAdyBt.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        matrizAdyBt.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        matrizAdyBt.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        matrizAdyBt.setIconTextGap(25);
+        matrizAdyBt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                matrizAdyBtActionPerformed(evt);
+            }
+        });
+        panelReports.add(matrizAdyBt, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 174, 50));
+
+        avlTreeBt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/tree.png"))); // NOI18N
+        avlTreeBt.setText("ARBOL AVL");
+        avlTreeBt.setColorNormal(new java.awt.Color(183, 183, 183));
+        avlTreeBt.setColorTextHover(new java.awt.Color(58, 58, 58));
+        avlTreeBt.setColorTextNormal(new java.awt.Color(58, 58, 58));
+        avlTreeBt.setColorTextPressed(new java.awt.Color(58, 58, 58));
+        avlTreeBt.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        avlTreeBt.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        avlTreeBt.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        avlTreeBt.setIconTextGap(25);
+        avlTreeBt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                avlTreeBtActionPerformed(evt);
+            }
+        });
+        panelReports.add(avlTreeBt, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 174, 50));
+
+        panelPrinc.setBackground(new java.awt.Color(36, 40, 41));
+        panelPrinc.setForeground(new java.awt.Color(36, 40, 41));
+        panelPrinc.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                panelPrincFocusGained(evt);
             }
         });
 
-        folderCreateBt1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/hashTable2.png"))); // NOI18N
-        folderCreateBt1.setText("HASH TABLE");
-        folderCreateBt1.setColorNormal(new java.awt.Color(183, 183, 183));
-        folderCreateBt1.setColorTextHover(new java.awt.Color(58, 58, 58));
-        folderCreateBt1.setColorTextNormal(new java.awt.Color(58, 58, 58));
-        folderCreateBt1.setColorTextPressed(new java.awt.Color(58, 58, 58));
-        folderCreateBt1.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        folderCreateBt1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        folderCreateBt1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        folderCreateBt1.setIconTextGap(25);
-        folderCreateBt1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                folderCreateBt1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addContainerGap(96, Short.MAX_VALUE))
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(folderCreateBt1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(folderModifyBt1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+        javax.swing.GroupLayout panelPrincLayout = new javax.swing.GroupLayout(panelPrinc);
+        panelPrinc.setLayout(panelPrincLayout);
+        panelPrincLayout.setHorizontalGroup(
+            panelPrincLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 519, Short.MAX_VALUE)
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(folderCreateBt1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(folderModifyBt1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        panelPrincLayout.setVerticalGroup(
+            panelPrincLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 629, Short.MAX_VALUE)
         );
 
-        panelReports.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, -1));
-
-        jPanel7.setBackground(new java.awt.Color(183, 183, 183));
-
-        folderModifyBt4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/history.png"))); // NOI18N
-        folderModifyBt4.setText("BITACORA");
-        folderModifyBt4.setColorNormal(new java.awt.Color(183, 183, 183));
-        folderModifyBt4.setColorTextHover(new java.awt.Color(58, 58, 58));
-        folderModifyBt4.setColorTextNormal(new java.awt.Color(58, 58, 58));
-        folderModifyBt4.setColorTextPressed(new java.awt.Color(58, 58, 58));
-        folderModifyBt4.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        folderModifyBt4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        folderModifyBt4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        folderModifyBt4.setIconTextGap(25);
-        folderModifyBt4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                folderModifyBt4ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(folderModifyBt4, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(folderModifyBt4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        panelReports.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 174, 50));
-
-        panelAdmin1.setBackground(new java.awt.Color(183, 183, 183));
-
-        javax.swing.GroupLayout panelAdmin1Layout = new javax.swing.GroupLayout(panelAdmin1);
-        panelAdmin1.setLayout(panelAdmin1Layout);
-        panelAdmin1Layout.setHorizontalGroup(
-            panelAdmin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 190, Short.MAX_VALUE)
-        );
-        panelAdmin1Layout.setVerticalGroup(
-            panelAdmin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 90, Short.MAX_VALUE)
-        );
-
-        panelReports.add(panelAdmin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 190, 90));
-
-        folderModifyBt5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/Matrix.png"))); // NOI18N
-        folderModifyBt5.setText("MATRIZ ADY");
-        folderModifyBt5.setColorNormal(new java.awt.Color(183, 183, 183));
-        folderModifyBt5.setColorTextHover(new java.awt.Color(58, 58, 58));
-        folderModifyBt5.setColorTextNormal(new java.awt.Color(58, 58, 58));
-        folderModifyBt5.setColorTextPressed(new java.awt.Color(58, 58, 58));
-        folderModifyBt5.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        folderModifyBt5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        folderModifyBt5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        folderModifyBt5.setIconTextGap(25);
-        folderModifyBt5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                folderModifyBt5ActionPerformed(evt);
-            }
-        });
-        panelReports.add(folderModifyBt5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 174, 50));
-
-        folderModifyBt6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/tree.png"))); // NOI18N
-        folderModifyBt6.setText("ARBOL AVL");
-        folderModifyBt6.setColorNormal(new java.awt.Color(183, 183, 183));
-        folderModifyBt6.setColorTextHover(new java.awt.Color(58, 58, 58));
-        folderModifyBt6.setColorTextNormal(new java.awt.Color(58, 58, 58));
-        folderModifyBt6.setColorTextPressed(new java.awt.Color(58, 58, 58));
-        folderModifyBt6.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        folderModifyBt6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        folderModifyBt6.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        folderModifyBt6.setIconTextGap(25);
-        folderModifyBt6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                folderModifyBt6ActionPerformed(evt);
-            }
-        });
-        panelReports.add(folderModifyBt6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 174, 50));
+        jScrollPane1.setViewportView(panelPrinc);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(panelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(panelReports, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -667,18 +624,12 @@ public class Principal extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(panelReports, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(panelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addContainerGap())))
+                    .addComponent(panelMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelReports, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addGap(0, 0, 0))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -691,7 +642,7 @@ public class Principal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 696, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -699,18 +650,17 @@ public class Principal extends javax.swing.JFrame {
 
     private void folderDelBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderDelBtActionPerformed
         if(selectedFolder != null){
-            ListaEnlazada hijos = currentUser.getCarpetas().getHijos(selectedFolder.getText());
+            ListaEnlazada hijos = currentUser.getCarpetas().getHijos(selectedFolder.getCarpeta().getNombre());
             currentUser.getCarpetas().eliminarVertice(selectedFolder.getText());
             //Borrando hijos de la carpeta
             String auxSon;
-            System.out.println("Tiene: "+hijos.getSize()+" hijos");
             for(int i = 0; i < hijos.getSize(); i++){
                 auxSon = hijos.obtainCarpeta(i).getNombre();
                 currentUser.getCarpetas().eliminarVertice(auxSon);
             }
-            panelPrincipal.remove(selectedFolder);
-            panelPrincipal.revalidate();
-            panelPrincipal.repaint();  
+            panelPrinc.remove(selectedFolder);
+            panelPrinc.revalidate();
+            panelPrinc.repaint();  
         }else{
             JOptionPane.showMessageDialog(this, "Seleccionar una carpeta primero");            
         }
@@ -725,16 +675,12 @@ public class Principal extends javax.swing.JFrame {
                         currentUser.getUsername());
                 if (!currentFolder.getArchivos().contains(nombre)) {
                     Archivo file = new Archivo(newFile);
-                    c.gridx = contx;
-                    c.gridy = conty;
-                    contx++;
-                    if (contx >= 7) {
-                        conty++;
-                        contx = 0;
-                    }
-                    panelPrincipal.add(file, c);
-
+                    panelPrinc.add(file);
+                    panelPrinc.revalidate();
                     currentFolder.getArchivos().insert(newFile);
+                if (selectedFolder != null) {
+                    selectedFolder.setSelected(false);
+                }
                 } else {
                     JOptionPane.showMessageDialog(this, "Ya existe un archivo "
                             + "llamado "+nombre);
@@ -755,9 +701,9 @@ public class Principal extends javax.swing.JFrame {
     
     private void deleteFile(ArchivoObj file){
         currentFolder.getArchivos().remove(file);
-        panelPrincipal.remove(selectedFile);
-        panelPrincipal.revalidate();
-        panelPrincipal.repaint();
+        panelPrinc.remove(selectedFile);
+        panelPrinc.revalidate();
+        panelPrinc.repaint();
     }
     
     private void fileModifyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileModifyBtActionPerformed
@@ -802,29 +748,29 @@ public class Principal extends javax.swing.JFrame {
         String nombre = JOptionPane.showInputDialog("Nombre de carpeta: ");
         if (nombre != null) {
             if(nombre.length() > 0){
-                Carpeta folderButton = new Carpeta(nombre);
-                c.gridx = contx;
-                c.gridy = conty;
-                contx++;
-                if (contx > 7) {
-                    conty++;
-                    contx = 0;
+            CarpetaObj c = new CarpetaObj(nombre, new ArbolAVL(), currentFolder.getNombre());                
+                Carpeta folderButton = new Carpeta(c);
+                
+                panelPrinc.add(folderButton);
+                panelPrinc.revalidate();               
+                if (selectedFile != null) {
+                    selectedFile.setSeleccionado(false);
                 }
-                panelPrincipal.add(folderButton, c);
-                currentUser.addCarpeta(currentFolder.getNombre(), nombre);
+                currentUser.addCarpeta(currentFolder.getNombre(), c.getNombre());
             }
         }
     }//GEN-LAST:event_folderCreateBtActionPerformed
 
     private void folderModifyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBtActionPerformed
         if(selectedFolder != null){
+            String anterior = selectedFolder.getCarpeta().getNombre();
             String nombreAnterior = selectedFolder.getText();
             String nombreNuevo = JOptionPane.showInputDialog("Modificar: "
                     + selectedFolder.getText()
                     + "\nNuevo nombre");
             if(nombreNuevo != null && nombreNuevo.length() > 0){
                 MatrizAdy aux = currentUser.getCarpetas();
-                ((CarpetaObj)aux.buscarFila(nombreAnterior).getDato()).setNombre(nombreNuevo);
+                ((CarpetaObj)aux.buscarFila(anterior).getDato()).setNombre(nombreNuevo);
                 String nombreNodo = currentFolder.getNombre();
                 if(nombreNodo.equals("/")){
                     nombreNodo = "/"+nombreAnterior;
@@ -973,10 +919,11 @@ public class Principal extends javax.swing.JFrame {
                 String file[];
                 while((line = br.readLine()) != null){
                     file = line.split(",");
+                    System.out.println(file[0].toLowerCase());
                     if(n == 0){
-                        System.out.println(file[0].toLowerCase());
                         if("archivo".equals(file[0].toLowerCase())){
-                            fileIsFirst = true;                           
+                            fileIsFirst = true;
+                            System.out.println("file");
                         }else if("contenido".equals(file[0].toLowerCase())){
                             fileIsFirst = false;
                         }else{
@@ -987,7 +934,7 @@ public class Principal extends javax.swing.JFrame {
                         if(fileIsFirst){
                             name = file[0];
                             content = file[1];
-                            System.out.println(name);;
+                            System.out.println(name);
                         }else{
                             name = file[1];
                             content = file[0];
@@ -1027,10 +974,7 @@ public class Principal extends javax.swing.JFrame {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        panelPrincipal.removeAll();
-        c = new GridBagConstraints();
-        contx = 0;
-        conty = 0;
+        panelPrinc.removeAll();
         addFolderstoPanel(currentFolder.getNombre());
         addFilestoPanel(currentFolder);
     }//GEN-LAST:event_filesBulkloadActionPerformed
@@ -1050,68 +994,53 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btMenuGraphActionPerformed
 
-    private void folderCreateBt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderCreateBt1ActionPerformed
+    private void hashTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hashTableActionPerformed
         users.graficar();
-    }//GEN-LAST:event_folderCreateBt1ActionPerformed
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ImageViewer img = new ImageViewer("./Reports/UsersHashTable.png");
+        img.setVisible(true);
+    }//GEN-LAST:event_hashTableActionPerformed
 
-    private void folderModifyBt1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBt1ActionPerformed
+    private void grafoBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grafoBtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_folderModifyBt1ActionPerformed
+    }//GEN-LAST:event_grafoBtActionPerformed
 
-    private void folderModifyBt4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBt4ActionPerformed
+    private void bitacoraBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bitacoraBtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_folderModifyBt4ActionPerformed
+    }//GEN-LAST:event_bitacoraBtActionPerformed
 
-    private void folderModifyBt5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBt5ActionPerformed
+    private void matrizAdyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matrizAdyBtActionPerformed
         carpetas.graficar();
-    }//GEN-LAST:event_folderModifyBt5ActionPerformed
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ImageViewer img = new ImageViewer("./Reports/MatrizAdy.png");
+        img.setVisible(true);        
+    }//GEN-LAST:event_matrizAdyBtActionPerformed
 
-    private void folderModifyBt6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBt6ActionPerformed
+    private void avlTreeBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_avlTreeBtActionPerformed
         currentFolder.getArchivos().generateGraph();
-    }//GEN-LAST:event_folderModifyBt6ActionPerformed
-
-    private void panelPrincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelPrincipalMouseClicked
-
-    }//GEN-LAST:event_panelPrincipalMouseClicked
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ImageViewer img = new ImageViewer("./Reports/AVLTree.png");
+        img.setVisible(true);
+    }//GEN-LAST:event_avlTreeBtActionPerformed
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
 
     }//GEN-LAST:event_formMouseClicked
-
-    private void panelPrincipalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_panelPrincipalFocusGained
-        System.out.println("-");
-        Component comp = panelPrincipal.getComponentAt(panelPrincipal.getMousePosition());
-        if(comp.getClass().toString().contains("Archivo")){
-            selectedFile = (Archivo) comp;
-        }else if(comp.getClass().toString().contains("Carpeta")){
-            Carpeta carpeta = (Carpeta) comp;
-            if(carpeta.isSelected()){
-                if(selectedFolder != null){
-                    selectedFolder.setSelected(false);
-                }
-                selectedFolder = carpeta;
-            }else if(carpeta.isOpened()){
-                panelPrincipal.removeAll();
-                panelPrincipal.revalidate();
-                panelPrincipal.repaint();
-                if(selectedFolder != null){
-                    selectedFolder.setOpen(false);
-                }
-                selectedFolder = (Carpeta) comp;
-                currentFolder = (CarpetaObj)currentUser.getCarpetas()
-                    .buscarFila(selectedFolder.getText()).getDato();
-                addFolderstoPanel(currentFolder.getNombre());
-                addFilestoPanel(currentFolder);
-                actualAddress = txtFldAddres.getText()+"/"+currentFolder.getNombre();
-                if(txtFldAddres.getText().equals("/")){
-                    actualAddress = "/"+currentFolder.getNombre();
-                }
-                selectedFolder = null;
-                txtFldAddres.setText(actualAddress);                
-            }
-            
-        }
-    }//GEN-LAST:event_panelPrincipalFocusGained
 
     private void txtFldAddresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFldAddresActionPerformed
         // TODO add your handling code here:
@@ -1127,7 +1056,7 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtFldAddresFocusLost
     private void buscarDireccion(){
-       String tryAddres = txtFldAddres.getText();
+       /*String tryAddres = txtFldAddres.getText();
        System.out.println("1: "+tryAddres);
         if(tryAddres.length() > 0){
             int i;
@@ -1143,9 +1072,9 @@ public class Principal extends javax.swing.JFrame {
             String tryFolder = tryAddres.substring(i+1, tryAddres.length());
             Vertice tryV = currentUser.getCarpetas().buscarFila(tryFolder);
             if (tryV != null) {
-                panelPrincipal.removeAll();
-                panelPrincipal.revalidate();
-                panelPrincipal.repaint();
+                panelPrinc.removeAll();
+                panelPrinc.revalidate();
+                panelPrinc.repaint();
                 String nombre = ((CarpetaObj) tryV.getDato()).getNombre();
                 currentFolder = (CarpetaObj) currentUser.getCarpetas()
                         .buscarFila(nombre).getDato();
@@ -1159,7 +1088,7 @@ public class Principal extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(this, "Direccion inexistente!");
             txtFldAddres.setText(actualAddress);
-        }        
+        }*/        
     }
     private void txtFldAddresKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFldAddresKeyReleased
         if(evt.getKeyCode()== KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_ESCAPE){
@@ -1167,6 +1096,65 @@ public class Principal extends javax.swing.JFrame {
             buscarDireccion();
         }
     }//GEN-LAST:event_txtFldAddresKeyReleased
+
+    private void panelPrincFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_panelPrincFocusGained
+        Component comp = panelPrinc.getComponentAt(panelPrinc.getMousePosition());
+        if(comp.getClass().toString().contains("Archivo")){
+            if (selectedFile != null && selectedFile != comp) {
+                selectedFile.setSeleccionado(false);
+                if (selectedFolder != null) {
+                    selectedFolder.setSelected(false);
+                }
+            }
+            selectedFile = (Archivo) comp;
+        } else if (comp.getClass().toString().contains("Carpeta")) {
+            Carpeta carpeta = (Carpeta) comp;
+            if (carpeta.isSelected()){
+                if(selectedFolder != null && selectedFolder != carpeta){
+                    selectedFolder.setSelected(false);
+                    if(selectedFile != null){
+                        selectedFile.setSeleccionado(false);
+                    }
+                }
+                selectedFolder = carpeta;
+            }else if(carpeta.isOpened()){
+                panelPrinc.removeAll();
+                panelPrinc.revalidate();
+                panelPrinc.repaint();
+                System.out.println("uhmmm");
+                lastFolder = currentFolder;
+                if(selectedFolder != null){
+                    selectedFolder.setOpen(false);
+                }
+                selectedFolder = (Carpeta) comp;
+                currentFolder = (CarpetaObj)currentUser.getCarpetas()
+                    .buscarFila(selectedFolder.getCarpeta().getNombre()).getDato();
+                addFolderstoPanel(currentFolder.getNombre());
+                addFilestoPanel(currentFolder);
+                actualAddress = txtFldAddres.getText()+"/"+currentFolder.getNombre();
+                if(txtFldAddres.getText().equals("/")){
+                    actualAddress = "/"+currentFolder.getNombre();
+                }
+                selectedFolder = null;
+                txtFldAddres.setText(actualAddress);                
+            }
+            
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_panelPrincFocusGained
+
+    private void prevFolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prevFolderActionPerformed
+        if(lastFolder != null){
+            lastFolder = (CarpetaObj)currentUser.getCarpetas()
+                    .buscarFila(currentFolder.getPadre()).getDato();
+            currentFolder = lastFolder;
+                panelPrinc.removeAll();
+                panelPrinc.revalidate();
+                panelPrinc.repaint();
+                addFolderstoPanel(currentFolder.getNombre());
+                addFilestoPanel(currentFolder);
+                
+        }
+    }//GEN-LAST:event_prevFolderActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1206,37 +1194,36 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rsbuttom.RSButtonMetro FileDelBt;
     private rsbuttom.RSButtonMetro UsersBulkLoad;
+    private rsbuttom.RSButtonMetro avlTreeBt;
+    private rsbuttom.RSButtonMetro bitacoraBt;
     private javax.swing.JButton btMenu;
     private javax.swing.JButton btMenuGraph;
     private rsbuttom.RSButtonMetro fileCreateBt;
     private rsbuttom.RSButtonMetro fileModifyBt;
     private rsbuttom.RSButtonMetro filesBulkload;
     private rsbuttom.RSButtonMetro folderCreateBt;
-    private rsbuttom.RSButtonMetro folderCreateBt1;
     private rsbuttom.RSButtonMetro folderDelBt;
     private rsbuttom.RSButtonMetro folderModifyBt;
-    private rsbuttom.RSButtonMetro folderModifyBt1;
-    private rsbuttom.RSButtonMetro folderModifyBt4;
-    private rsbuttom.RSButtonMetro folderModifyBt5;
-    private rsbuttom.RSButtonMetro folderModifyBt6;
+    private rsbuttom.RSButtonMetro grafoBt;
+    private rsbuttom.RSButtonMetro hashTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelUsername;
     private javax.swing.JButton logOutBt;
+    private rsbuttom.RSButtonMetro matrizAdyBt;
     private javax.swing.JPanel panelAdmin;
-    private javax.swing.JPanel panelAdmin1;
+    private javax.swing.JPanel panelHeader;
     private javax.swing.JPanel panelMenu;
-    private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JPanel panelPrinc;
     private javax.swing.JPanel panelReports;
+    private javax.swing.JButton prevFolder;
     private javax.swing.JTextField txtFldAddres;
     // End of variables declaration//GEN-END:variables
 }

@@ -10,12 +10,14 @@ import Estructuras.ListaEnlazada;
 import Estructuras.MatrizAdy;
 import Estructuras.Nodos.Vertice;
 import Estructuras.TablaHash;
+import Interfaz.ImageViewer;
 import Interfaz.LoginFrame;
 import Interfaz.Principal;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.miginfocom.swing.MigLayout;
 import proyecto2.Objetos.ArchivoObj;
 import proyecto2.Objetos.CarpetaObj;
 import proyecto2.Objetos.Usuario;
@@ -25,11 +27,14 @@ public class EDDProyecto2 {
     public static void main(String[] args) {
         /*Principal p = new Principal("paloma");
        p.show();*/
+       // ImageViewer t = new ImageViewer("./Reports/MatrizAdy.png");
+        //t.setVisible(true);
+
         LoginFrame f = new LoginFrame();
         f.setLocationRelativeTo(null);
         f.setVisible(true);
         /*TablaHash tab = new TablaHash();
-       
+        
        tab.insertar(new Usuario("Brandon Alvarez", "12", "what",true));        
        tab.insertar(new Usuario("Antonio Gramajo", "juan", "what",true));
        tab.insertar(new Usuario("Abel Gutierrez", "juan", "what",true));

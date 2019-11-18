@@ -69,6 +69,7 @@ public class Usuario {
                 nombreNodo = nombrePadre + "/" + nombreHijo;
             }
             CarpetaObj nueva = new CarpetaObj(nombreNodo, new ArbolAVL(), nombrePadre);
+            System.out.println("Inserting..:"+nueva.getNombre()+" finalx:"+finalx);
             m.insertar_elemento(finalx, padre, nueva);
             return true;
         }
@@ -80,17 +81,25 @@ public class Usuario {
         Vertice p = m.buscarFila(nombrePadre);
         int hijo = m.cantidadCarpetas(p) + 1;
         int padre = m.numVertice(nombrePadre);
-        CarpetaObj folder = new CarpetaObj(nombreHijo, new ArbolAVL(), nombrePadre);
         int xy = hijo + padre;
-        CarpetaObj c, c2;
+        CarpetaObj c, c2, cx;
+        String test;
         for (int i = xy; i <= m.findDeepestCarpeta(); i++) {
             c = (CarpetaObj) m.buscarFila(i).getDato();
             c2 = new CarpetaObj(c.getNombre(), c.getArchivos(), c.getPadre());
             temp.insert(c2);
-            m.eliminarVertice(c.getNombre());
+            if(c2.getPadre().equals("/")){
+                test = "/"+c2.getNombre();
+            }else{
+                test = c2.getPadre() + "/" + c2.getNombre();
+            }
+            //m.eliminarVertice(c.getNombre());
+            m.eliminarCarpeta(c2.getPadre(), test);
         }
+        
+        CarpetaObj folder = new CarpetaObj(nombreHijo, new ArbolAVL(), nombrePadre);        
         m.crear_Cabeceras(xy, nombreHijo, folder, false);
-        String nombreNodo = "";
+        String nombreNodo;
         if (nombrePadre.equals("/")) {
             nombreNodo = "/" + nombreHijo;
         } else {
