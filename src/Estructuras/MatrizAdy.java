@@ -24,7 +24,7 @@ public class MatrizAdy {
     private int numVertices;
     
     public MatrizAdy(){
-        this.root = new Vertice("root",new CarpetaObj("root", null,  null), -1, -1);
+        this.root = new Vertice("root",new CarpetaObj("root", null,  null, null, -1), -1, -1);
         numVertices = 0;
     }
     

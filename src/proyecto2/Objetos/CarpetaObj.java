@@ -6,6 +6,7 @@
 package proyecto2.Objetos;
 
 import Estructuras.ArbolAVL;
+import Estructuras.ListaEnlazada;
 
 /**
  *
@@ -15,28 +16,45 @@ public class CarpetaObj {
     
     private String nombre;
     private ArbolAVL archivos;
-    private String padre;
-    private int xy;
-    public CarpetaObj(String nombre,  ArbolAVL archivos, String nombrePadre){
+    private CarpetaObj padre;
+    private ListaEnlazada hijos;
+    private int nCarpeta;
+    public CarpetaObj(String nombre,  ArbolAVL archivos, CarpetaObj carpetaPadre, ListaEnlazada hijos,int nCarpeta){
         this.nombre = nombre;
         this.archivos = archivos;
-        this.padre = nombrePadre;
+        this.nCarpeta = nCarpeta;
+        this.padre = carpetaPadre;
+        this.hijos = hijos;
     }
+    
+    
 
     public String getNombre() {
         return nombre;
     }
     
-    public String getPadre(){
+    public CarpetaObj getPadre(){
         return padre;
     }
     
-    public void setPadre(String padre){
+    public void setPadre(CarpetaObj padre){
         this.padre = padre;
     }
     
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    
+    public ListaEnlazada getHijos(){
+        return hijos;
+    }
+    
+    public void setHijos(ListaEnlazada hijos){
+        this.hijos = hijos;
+    }
+    
+    public void addHijo(Object hijo){
+        hijos.insert(hijo);
     }
 
     public ArbolAVL getArchivos() {
@@ -45,6 +63,14 @@ public class CarpetaObj {
 
     public void setArchivos(ArbolAVL archivos) {
         this.archivos = archivos;
+    }
+
+    public int getnCarpeta() {
+        return nCarpeta;
+    }
+
+    public void setnCarpeta(int nCarpeta) {
+        this.nCarpeta = nCarpeta;
     }
 
 }

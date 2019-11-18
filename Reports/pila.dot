@@ -1,4 +1,4 @@
 digraph stack{
     node [shape=record];
-    pila[label="{|18/11/2019 00:47:50\nOperacion: Se compartio el archivo \"woow\" al usuario \"breSt12\"\nUsuario:Admin|18/11/2019 00:47:30\nOperacion: Se compartio el archivo \"woow\" al usuario \"breSt12\"\nUsuario:Admin|18/11/2019 00:47:09\nOperacion: Desde \"/home/brest12/NetBeansProjects/[EDD]Proyecto2/users.csv\" no se pudieron cargar 7 usuarios\nUsuario:Admin|18/11/2019 00:47:07\nOperacion: Se cargaron19 usuarios correctamente desde \"/home/brest12/NetBeansProjects/[EDD]Proyecto2/users.csv\"\nUsuario:Admin|18/11/2019 00:47:01\nOperacion: Se creo un archivo llamado: woow\nUsuario:Admin|18/11/2019 00:46:59\nOperacion: Se creo un archivo llamado: asd.mp3\nUsuario:Admin}"];
+    pila[label="{|18/11/2019 02:10:36\nOperacion: Se elimino la carpeta \"ok\"\nUsuario:Admin|18/11/2019 02:10:22\nOperacion: Se creo una carpeta llamada \"ok\"\nUsuario:Admin|18/11/2019 02:10:20\nOperacion: Se creo un archivo llamado: yeah\nUsuario:Admin}"];
 }

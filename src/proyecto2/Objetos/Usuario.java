@@ -21,7 +21,7 @@ public class Usuario {
     private String password;
     private final Timestamp timestamp;
     private final boolean rol;
-    private MatrizAdy carpetas;
+    private ListaEnlazada carpetas;
 
     public Usuario(String username, String password, Timestamp timestamp, boolean rol) {
         this.username = username;
@@ -32,8 +32,8 @@ public class Usuario {
         }
         this.timestamp = timestamp;
         this.rol = rol;
-        this.carpetas = new MatrizAdy();
-        this.carpetas.crear_Cabeceras(0, "/", new CarpetaObj("/", new ArbolAVL(), null), false);
+        this.carpetas = new ListaEnlazada();
+        this.carpetas.insert(new CarpetaObj("/", new ArbolAVL(), null, new ListaEnlazada(), 0));
     }
 
     public String getUsername() {
@@ -44,75 +44,20 @@ public class Usuario {
         return password;
     }
 
-    public MatrizAdy getCarpetas() {
+    public ListaEnlazada getCarpetas() {
         return carpetas;
     }
 
-    public void addCarpeta(String nombrePadre, String nombreHijo) {
+    public CarpetaObj addCarpeta(CarpetaObj carpetaPadre, String nombreHijo) {
         //Insertar nodo
-        if (!insertInMatriz(nombreHijo, nombrePadre, carpetas, false)) {
-            insertInMiddle(nombreHijo, nombrePadre, carpetas);
-        }
+        int n = carpetas.getSize();
+        CarpetaObj c = new CarpetaObj(nombreHijo, new ArbolAVL(), carpetaPadre, new ListaEnlazada(), n);
+        carpetas.insert(c);
+        return c;
     }
-
-    private boolean insertInMatriz(String nombreHijo, String nombrePadre, MatrizAdy m, boolean rein) {
-        Vertice p = m.buscarFila(nombrePadre);
-        int hijo = m.cantidadCarpetas(p) + 1;
-        int padre = m.numVertice(nombrePadre);
-        CarpetaObj folder = new CarpetaObj(nombreHijo, new ArbolAVL(), nombrePadre);
-        int finalx = m.crear_Cabeceras(hijo + padre, nombreHijo, folder, rein);
-        if (finalx >= 0) {
-            String nombreNodo = "";
-            if (nombrePadre.equals("/")) {
-                nombreNodo = "/" + nombreHijo;
-            } else {
-                nombreNodo = nombrePadre + "/" + nombreHijo;
-            }
-            CarpetaObj nueva = new CarpetaObj(nombreNodo, new ArbolAVL(), nombrePadre);
-            System.out.println("Inserting..:"+nueva.getNombre()+" finalx:"+finalx);
-            m.insertar_elemento(finalx, padre, nueva);
-            return true;
-        }
-        return false;
-    }
-
-    private void insertInMiddle(String nombreHijo, String nombrePadre, MatrizAdy m) {
-        ListaEnlazada temp = new ListaEnlazada();
-        Vertice p = m.buscarFila(nombrePadre);
-        int hijo = m.cantidadCarpetas(p) + 1;
-        int padre = m.numVertice(nombrePadre);
-        int xy = hijo + padre;
-        CarpetaObj c, c2, cx;
-        String test;
-        for (int i = xy; i <= m.findDeepestCarpeta(); i++) {
-            c = (CarpetaObj) m.buscarFila(i).getDato();
-            c2 = new CarpetaObj(c.getNombre(), c.getArchivos(), c.getPadre());
-            temp.insert(c2);
-            if(c2.getPadre().equals("/")){
-                test = "/"+c2.getNombre();
-            }else{
-                test = c2.getPadre() + "/" + c2.getNombre();
-            }
-            //m.eliminarVertice(c.getNombre());
-            m.eliminarCarpeta(c2.getPadre(), test);
-        }
+    
+    public void delCarpeta(CarpetaObj carpetaPadre){
         
-        CarpetaObj folder = new CarpetaObj(nombreHijo, new ArbolAVL(), nombrePadre);        
-        m.crear_Cabeceras(xy, nombreHijo, folder, false);
-        String nombreNodo;
-        if (nombrePadre.equals("/")) {
-            nombreNodo = "/" + nombreHijo;
-        } else {
-            nombreNodo = nombrePadre + "/" + nombreHijo;
-        }
-        CarpetaObj nueva = new CarpetaObj(nombreNodo, new ArbolAVL(), nombrePadre);
-        m.insertar_elemento(xy, padre, nueva);
-        for (int i = 0; i < temp.getSize(); i++) {
-            c2 = temp.obtainCarpeta(i);
-            if (c2 != null) {
-                insertInMatriz(c2.getNombre(), c2.getPadre(), m, true);
-            }
-        }
     }
 
     public String encriptPass(String password) throws NoSuchAlgorithmException {

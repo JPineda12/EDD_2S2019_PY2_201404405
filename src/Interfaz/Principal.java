@@ -56,7 +56,7 @@ import proyecto2.Objetos.UsuarioError;
 public class Principal extends javax.swing.JFrame {
 
     TablaHash users;
-    MatrizAdy carpetas;
+    ListaEnlazada carpetas;
     Usuario currentUser;
     int foldersCount;
     CarpetaObj currentFolder;
@@ -69,7 +69,7 @@ public class Principal extends javax.swing.JFrame {
     Pila bitacora;
     boolean flag;
     int maxcol;
-    public Principal(Usuario username, Boolean admin, TablaHash users, MatrizAdy carpetas, Pila bitacora) {
+    public Principal(Usuario username, Boolean admin, TablaHash users, ListaEnlazada carpetas, Pila bitacora) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.users = users;
@@ -79,7 +79,8 @@ public class Principal extends javax.swing.JFrame {
         foldersCount = 0;
         selectedFile = null;
         selectedFolder = null;
-        currentFolder = (CarpetaObj)(currentUser.getCarpetas().buscarFila(0).getDato());
+        currentFolder = (CarpetaObj)currentUser.getCarpetas().obtainCarpeta(0);
+        System.out.println("COMIENZO: "+currentFolder.getNombre());
         lastFolder = null;
         //panelPrincipal.setLayout(new GridLayout(0,maxcol));
         MigLayout m = new MigLayout("wrap 5");
@@ -94,7 +95,7 @@ public class Principal extends javax.swing.JFrame {
         flag = true;
         actualAddress = "/";
         txtFldAddres.setText(actualAddress);
-        addFolderstoPanel(currentFolder.getNombre());
+        addFolderstoPanel(currentFolder);
         addFilestoPanel(currentFolder);
         
         MigLayout ml = new MigLayout("wrap 1");
@@ -111,26 +112,17 @@ public class Principal extends javax.swing.JFrame {
         panelReports.add(panelAdmin);
     }
     
-    public void addFolderstoPanel(String nombreCarpeta){
-        Vertice aux = carpetas.getRoot().getDown();
-        Vertice col;
+    public void addFolderstoPanel(CarpetaObj carpetaPadre){
+        ListaEnlazada aux = carpetaPadre.getHijos();
         CarpetaObj folder;
-        while (aux != null) {
-            folder = (CarpetaObj) aux.getDato();
-
-            if (nombreCarpeta.equals(folder.getNombre())) {
-                col = aux.getRight();
-                while (col != null) {
-                    String nombre = ((CarpetaObj) col.getUp().getDato()).getNombre();
-                    Carpeta folderButton = new Carpeta(new CarpetaObj(nombre, 
-                            ((CarpetaObj)col.getDato()).getArchivos(),nombre));
-                    panelPrinc.add(folderButton);
-                    panelPrinc.revalidate();
-                    col = col.getRight();
-                }
-                break;
+        for (int i = 0; i < aux.getSize(); i++) {
+            folder = aux.obtainCarpeta(i);
+            if(folder!= null){
+                Carpeta folderButton = new Carpeta(folder);
+                panelPrinc.add(folderButton);
+                panelPrinc.revalidate();
             }
-            aux = aux.getDown();
+
         }
     }
     
@@ -678,18 +670,16 @@ public class Principal extends javax.swing.JFrame {
 
     private void folderDelBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderDelBtActionPerformed
         if(selectedFolder != null){
-            ListaEnlazada hijos = currentUser.getCarpetas().getHijos(selectedFolder.getCarpeta().getNombre());
-            currentUser.getCarpetas().eliminarVertice(selectedFolder.getText());
-            //Borrando hijos de la carpeta
-            String auxSon;
-            for(int i = 0; i < hijos.getSize(); i++){
-                auxSon = hijos.obtainCarpeta(i).getNombre();
-                currentUser.getCarpetas().eliminarVertice(auxSon);
+            boolean sc = currentFolder.getHijos()
+                    .deleteCarpeta(selectedFolder.getCarpeta().getnCarpeta());
+            if(sc){
+                agregarRegistro("Se elimino la carpeta \\\""+selectedFolder.getText()+"\\\"");
+                panelPrinc.remove(selectedFolder);
+                panelPrinc.revalidate();
+                panelPrinc.repaint();
+            }else{
+                System.out.println("fail bro :/");
             }
-            agregarRegistro("Se elimino la carpeta \\\""+selectedFolder.getText()+"\\\"");
-            panelPrinc.remove(selectedFolder);
-            panelPrinc.revalidate();
-            panelPrinc.repaint();  
         }else{
             JOptionPane.showMessageDialog(this, "Seleccionar una carpeta primero");            
         }
@@ -781,16 +771,16 @@ public class Principal extends javax.swing.JFrame {
         String nombre = JOptionPane.showInputDialog("Nombre de carpeta: ");
         if (nombre != null) {
             if(nombre.length() > 0){
-            CarpetaObj c = new CarpetaObj(nombre, new ArbolAVL(), currentFolder.getNombre());                
+            int cn = currentFolder.getHijos().getSize();
+            CarpetaObj c = new CarpetaObj(nombre, new ArbolAVL(), currentFolder, new ListaEnlazada(),cn);                
                 Carpeta folderButton = new Carpeta(c);
-                
                 panelPrinc.add(folderButton);
                 panelPrinc.revalidate();               
                 if (selectedFile != null) {
                     selectedFile.setSeleccionado(false);
                 }
-                currentUser.addCarpeta(currentFolder.getNombre(), c.getNombre());
-                agregarRegistro("Se creo una carpeta llamada \\\""+nombre+"\\\"");
+                currentFolder.addHijo(c);
+                agregarRegistro("Se creo una carpeta llamada \\\""+c.getNombre()+"\\\"");
             }
         }
     }//GEN-LAST:event_folderCreateBtActionPerformed
@@ -810,19 +800,7 @@ public class Principal extends javax.swing.JFrame {
                     + selectedFolder.getText()
                     + "\nNuevo nombre");
             if(nombreNuevo != null && nombreNuevo.length() > 0){
-                MatrizAdy aux = currentUser.getCarpetas();
-                ((CarpetaObj)aux.buscarFila(anterior).getDato()).setNombre(nombreNuevo);
-                String nombreNodo = currentFolder.getNombre();
-                if(nombreNodo.equals("/")){
-                    nombreNodo = "/"+nombreAnterior;
-                    System.out.println(nombreNodo);
-                    ((CarpetaObj)aux.buscarNodo("/",nombreNodo).getDato()).setNombre("/"+nombreNuevo);
-                }else{
-                    nombreNodo += "/"+nombreAnterior;
-                    ((CarpetaObj)aux.buscarNodo(currentFolder.getNombre()
-                            ,nombreNodo).getDato())
-                            .setNombre(currentFolder.getNombre()+"/"+nombreNuevo);
-                }
+                selectedFolder.getCarpeta().setNombre(nombreNuevo);
                 selectedFolder.setText(nombreNuevo);
                 JOptionPane.showMessageDialog(this, "Carpeta Modificada!");
                 agregarRegistro("Se modifico la carpeta \\\""+nombreAnterior+"\\\""
@@ -1026,7 +1004,7 @@ public class Principal extends javax.swing.JFrame {
             }
         }
         panelPrinc.removeAll();
-        addFolderstoPanel(currentFolder.getNombre());
+        addFolderstoPanel(currentFolder);
         addFilestoPanel(currentFolder);
         if(success){
             agregarRegistro("Se agregaron archivos masivamente desde: \\\""+csvFile+"\\\"");
@@ -1061,7 +1039,15 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_hashTableActionPerformed
 
     private void grafoBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grafoBtActionPerformed
-        // TODO add your handling code here:
+        carpetas.graficar();
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ImageViewer img = new ImageViewer("./Reports/Grafo.png");
+        img.setVisible(true); 
     }//GEN-LAST:event_grafoBtActionPerformed
 
     private void bitacoraBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bitacoraBtActionPerformed
@@ -1077,7 +1063,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_bitacoraBtActionPerformed
 
     private void matrizAdyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matrizAdyBtActionPerformed
-        carpetas.graficar();
+        /*carpetas.graficar();
         try {
             Thread.sleep(500);
         } catch (InterruptedException ex) {
@@ -1085,7 +1071,7 @@ public class Principal extends javax.swing.JFrame {
         }
         
         ImageViewer img = new ImageViewer("./Reports/MatrizAdy.png");
-        img.setVisible(true);        
+        img.setVisible(true); */       
     }//GEN-LAST:event_matrizAdyBtActionPerformed
 
     private void avlTreeBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_avlTreeBtActionPerformed
@@ -1189,9 +1175,8 @@ public class Principal extends javax.swing.JFrame {
                     selectedFolder.setOpen(false);
                 }
                 selectedFolder = (Carpeta) comp;
-                currentFolder = (CarpetaObj)currentUser.getCarpetas()
-                    .buscarFila(selectedFolder.getCarpeta().getNombre()).getDato();
-                addFolderstoPanel(currentFolder.getNombre());
+                currentFolder = selectedFolder.getCarpeta();
+                addFolderstoPanel(currentFolder);
                 addFilestoPanel(currentFolder);
                 actualAddress = txtFldAddres.getText()+"/"+currentFolder.getNombre();
                 if(txtFldAddres.getText().equals("/")){
@@ -1206,15 +1191,15 @@ public class Principal extends javax.swing.JFrame {
 
     private void prevFolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prevFolderActionPerformed
         if(lastFolder != null){
-            lastFolder = (CarpetaObj)currentUser.getCarpetas()
-                    .buscarFila(currentFolder.getPadre()).getDato();
             currentFolder = lastFolder;
+            lastFolder = currentFolder.getPadre();
                 panelPrinc.removeAll();
                 panelPrinc.revalidate();
                 panelPrinc.repaint();
-                addFolderstoPanel(currentFolder.getNombre());
+                addFolderstoPanel(currentFolder);
                 addFilestoPanel(currentFolder);
-                
+        }else{
+            System.out.println("you are already in root");
         }
     }//GEN-LAST:event_prevFolderActionPerformed
 
@@ -1246,8 +1231,7 @@ public class Principal extends javax.swing.JFrame {
                 sArchivo.getContenido(),
                  sArchivo.getTimestamp(),
                  tmp.getUsername());
-        boolean suc = ((CarpetaObj) tmp.getCarpetas().buscarFila(0).getDato())
-                .getArchivos().insert(newFile);
+        boolean suc = tmp.getCarpetas().obtainCarpeta(0).getArchivos().insert(sArchivo);
         if (suc) {
             JOptionPane.showMessageDialog(this, "Se compartio el archivo satisfactoriamente con"
                     + " " + tmp.getUsername());

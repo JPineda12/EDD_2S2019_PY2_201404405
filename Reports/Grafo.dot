@@ -1,0 +1,35 @@
+digraph grafo{
+    raiz[label="/\ncarpetas: 3"];
+    raiz->raiz_one;
+    raiz->raiz_dos;
+    raiz->raiz_trees;
+    raiz_one[label="one\ncarpetas: 2"];
+    raiz_one->raiz_one_one;
+    raiz_one->raiz_one_home;
+    raiz_one_one[label="one\ncarpetas: 0"];
+    raiz_one_home[label="home\ncarpetas: 3"];
+    raiz_one_home->raiz_one_home_one;
+    raiz_one_home->raiz_one_home_dos;
+    raiz_one_home->raiz_one_home_trees;
+    raiz_one_home_one[label="one\ncarpetas: 0"];
+    raiz_one_home_dos[label="dos\ncarpetas: 0"];
+    raiz_one_home_trees[label="trees\ncarpetas: 0"];
+    raiz_dos[label="dos\ncarpetas: 2"];
+    raiz_dos->raiz_dos_oktest;
+    raiz_dos->raiz_dos_home;
+    raiz_dos_oktest[label="oktest\ncarpetas: 3"];
+    raiz_dos_oktest->raiz_dos_oktest_one;
+    raiz_dos_oktest->raiz_dos_oktest_dos;
+    raiz_dos_oktest->raiz_dos_oktest_trees;
+    raiz_dos_oktest_one[label="one\ncarpetas: 0"];
+    raiz_dos_oktest_dos[label="dos\ncarpetas: 0"];
+    raiz_dos_oktest_trees[label="trees\ncarpetas: 0"];
+    raiz_dos_home[label="home\ncarpetas: 3"];
+    raiz_dos_home->raiz_dos_home_one;
+    raiz_dos_home->raiz_dos_home_dos;
+    raiz_dos_home->raiz_dos_home_trees;
+    raiz_dos_home_one[label="one\ncarpetas: 0"];
+    raiz_dos_home_dos[label="dos\ncarpetas: 0"];
+    raiz_dos_home_trees[label="trees\ncarpetas: 0"];
+    raiz_trees[label="trees\ncarpetas: 0"];
+}

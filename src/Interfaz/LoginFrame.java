@@ -6,6 +6,7 @@
 package Interfaz;
 
 import Estructuras.ArbolAVL;
+import Estructuras.ListaEnlazada;
 import Estructuras.MatrizAdy;
 import Estructuras.Pila;
 import Estructuras.TablaHash;
@@ -29,7 +30,7 @@ public class LoginFrame extends javax.swing.JFrame {
     boolean editedOnce;
     boolean editedOncepwd;
     TablaHash users;
-    MatrizAdy folders;
+    ListaEnlazada folders;
     Pila bitacora;
     public LoginFrame() {
         initComponents();
