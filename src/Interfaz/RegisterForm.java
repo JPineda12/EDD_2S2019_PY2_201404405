@@ -5,6 +5,7 @@
  */
 package Interfaz;
 
+import Estructuras.Pila;
 import Estructuras.TablaHash;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -26,6 +27,7 @@ public class RegisterForm extends javax.swing.JFrame {
     boolean editedOncepwd;
     boolean editedConfirm;
     TablaHash users;
+    Pila bitacora;
     public RegisterForm() {
         initComponents();
         editedOnce = false;
@@ -33,8 +35,9 @@ public class RegisterForm extends javax.swing.JFrame {
         editedConfirm = false;
         this.setLocationRelativeTo(null);
     }
-    public RegisterForm(TablaHash users){
+    public RegisterForm(TablaHash users, Pila bitacora){
         this.users = users;
+        this.bitacora = bitacora;
         initComponents();
         editedOnce = false;
         editedOncepwd = false;
@@ -287,7 +290,8 @@ public class RegisterForm extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Registered New User!"
                             , "Registered", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
-                    LoginFrame log = new LoginFrame(users);
+                    
+                    LoginFrame log = new LoginFrame(users, bitacora);
                     log.show();
                     log.setLocationRelativeTo(null);
                     JOptionPane.showMessageDialog(null, "User: " + user + " created!",

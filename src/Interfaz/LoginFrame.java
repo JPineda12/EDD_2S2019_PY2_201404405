@@ -7,6 +7,7 @@ package Interfaz;
 
 import Estructuras.ArbolAVL;
 import Estructuras.MatrizAdy;
+import Estructuras.Pila;
 import Estructuras.TablaHash;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -29,17 +30,20 @@ public class LoginFrame extends javax.swing.JFrame {
     boolean editedOncepwd;
     TablaHash users;
     MatrizAdy folders;
+    Pila bitacora;
     public LoginFrame() {
         initComponents();
         editedOnce = false;
         editedOncepwd = false;
         users = new TablaHash();
+        bitacora = new Pila();
         String pass = "Admin";
         Timestamp time = new Timestamp(System.currentTimeMillis());
         users.insertar(new Usuario("Admin", pass, time,true));
     }
-    public LoginFrame(TablaHash users){
+    public LoginFrame(TablaHash users, Pila bitacora){
         this.users = users;
+        this.bitacora = bitacora;
         initComponents();
         editedOnce = false;
         editedOncepwd = false;
@@ -242,7 +246,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 folders = us.getCarpetas();
                 JOptionPane.showMessageDialog(null, "Logged In!",
                          "Success", JOptionPane.INFORMATION_MESSAGE);
-                Principal p = new Principal(us, us.getRol(), users, folders);
+                Principal p = new Principal(us, us.getRol(), users, folders, bitacora);
                 p.setVisible(true);
                 this.setVisible(false);
             }else{
@@ -307,7 +311,7 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jPasswordField1FocusLost
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        RegisterForm reg = new RegisterForm(users);
+        RegisterForm reg = new RegisterForm(users, bitacora);
         reg.show();
         reg.setLocationRelativeTo(null);
         this.dispose();

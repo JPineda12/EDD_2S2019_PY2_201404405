@@ -11,6 +11,7 @@ import Estructuras.MatrizAdy;
 import Estructuras.Nodos.AVLNode;
 import Estructuras.Nodos.NodoLista;
 import Estructuras.Nodos.Vertice;
+import Estructuras.Pila;
 import Estructuras.TablaHash;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -29,6 +30,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
@@ -41,6 +45,7 @@ import javax.swing.JScrollPane;
 import net.miginfocom.swing.MigLayout;
 import proyecto2.Objetos.ArchivoObj;
 import proyecto2.Objetos.CarpetaObj;
+import proyecto2.Objetos.Registro;
 import proyecto2.Objetos.Usuario;
 import proyecto2.Objetos.UsuarioError;
 
@@ -61,14 +66,16 @@ public class Principal extends javax.swing.JFrame {
     Archivo selectedFile;
     Carpeta selectedFolder;
     String actualAddress;
+    Pila bitacora;
     boolean flag;
     int maxcol;
-    public Principal(Usuario username, Boolean admin, TablaHash users, MatrizAdy carpetas) {
+    public Principal(Usuario username, Boolean admin, TablaHash users, MatrizAdy carpetas, Pila bitacora) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.users = users;
         this.carpetas = carpetas;
         this.currentUser = username;
+        this.bitacora = bitacora;
         foldersCount = 0;
         selectedFile = null;
         selectedFolder = null;
@@ -658,6 +665,7 @@ public class Principal extends javax.swing.JFrame {
                 auxSon = hijos.obtainCarpeta(i).getNombre();
                 currentUser.getCarpetas().eliminarVertice(auxSon);
             }
+            agregarRegistro("Se elimino la carpeta \\\""+selectedFolder.getText()+"\\\"");
             panelPrinc.remove(selectedFolder);
             panelPrinc.revalidate();
             panelPrinc.repaint();  
@@ -678,6 +686,7 @@ public class Principal extends javax.swing.JFrame {
                     panelPrinc.add(file);
                     panelPrinc.revalidate();
                     currentFolder.getArchivos().insert(newFile);
+                    agregarRegistro("Se creo un archivo llamado: "+nombre);
                 if (selectedFolder != null) {
                     selectedFolder.setSelected(false);
                 }
@@ -700,6 +709,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_FileDelBtActionPerformed
     
     private void deleteFile(ArchivoObj file){
+        agregarRegistro("Se elimino el archivo \\\""+file.getNombre()+"\\\"");
         currentFolder.getArchivos().remove(file);
         panelPrinc.remove(selectedFile);
         panelPrinc.revalidate();
@@ -722,12 +732,14 @@ public class Principal extends javax.swing.JFrame {
                 JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
         if(op == 0){
             String nombre = JOptionPane.showInputDialog("Nuevo nombre de archivo");
+            agregarRegistro("Se modifico el nombre del archivo \\\""+selectedFile.getNombre()
+            +" su nuevo nombre es: \\\""+nombre+"\\\"");
             file.setNombre(nombre);
             selectedFile.setText(nombre);
-            
         }else if(op == 1){
             ContentViewer cv = new ContentViewer(file);
             cv.setVisible(true);
+            agregarRegistro("Se modifico el contenido del archivo \\\""+selectedFile.realNombre+"\\\"");
         }
     }
     private void btMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenuActionPerformed
@@ -757,10 +769,18 @@ public class Principal extends javax.swing.JFrame {
                     selectedFile.setSeleccionado(false);
                 }
                 currentUser.addCarpeta(currentFolder.getNombre(), c.getNombre());
+                agregarRegistro("Se creo una carpeta llamada \\\""+nombre+"\\\"");
             }
         }
     }//GEN-LAST:event_folderCreateBtActionPerformed
-
+    
+    private void agregarRegistro(String operacion){
+        Date date = new Date();
+        DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        bitacora.push(new Registro(dateFormat.format(date),
+                hourFormat.format(date), operacion , currentUser.getUsername()));
+    }
     private void folderModifyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_folderModifyBtActionPerformed
         if(selectedFolder != null){
             String anterior = selectedFolder.getCarpeta().getNombre();
@@ -784,6 +804,8 @@ public class Principal extends javax.swing.JFrame {
                 }
                 selectedFolder.setText(nombreNuevo);
                 JOptionPane.showMessageDialog(this, "Carpeta Modificada!");
+                agregarRegistro("Se modifico la carpeta \\\""+nombreAnterior+"\\\""
+                        + "su nuevo nombre es \\\""+nombreNuevo+"\\\"");
             }else{
                 JOptionPane.showMessageDialog(this, "Nombre Invalido!");
             }
@@ -799,7 +821,8 @@ public class Principal extends javax.swing.JFrame {
         String nombreArch = "";
         listaErrores = new ListaEnlazada();
         int count = 0;
-        int counterr = 0;  
+        int counterr = 0;
+        String csvFile = "";
         if(f == JFileChooser.APPROVE_OPTION){
             //labelUsername.setText(choose.getSelectedFile());
             nombreArch = choose.getSelectedFile().getName();
@@ -807,7 +830,7 @@ public class Principal extends javax.swing.JFrame {
             int n = 0;
             int colus = 0;
             boolean userIsFirst = false;
-            String csvFile = choose.getSelectedFile().getAbsolutePath();
+            csvFile = choose.getSelectedFile().getAbsolutePath();
             try {
                 br = new BufferedReader(new FileReader(csvFile));
                 String name;
@@ -863,9 +886,11 @@ public class Principal extends javax.swing.JFrame {
             }
         }
         JOptionPane.showMessageDialog(this, "Se cargaron "+count+" usuarios correctamente");
+        agregarRegistro("Se cargaron"+count+" usuarios correctamente desde \\\""+csvFile+"\\\"");
         if (listaErrores.getSize() > 0) {
             int op = JOptionPane.showConfirmDialog(this, counterr+" usuarios no se cargaron"
                     + "\n ¿Desea ver la lista?");
+            agregarRegistro("Desde \\\""+csvFile+"\\\" no se pudieron cargar "+counterr+" usuarios");
             if (op == JOptionPane.YES_OPTION) {
                 FrameErrores err = new FrameErrores(listaErrores, nombreArch);
                 err.setVisible(true);
@@ -897,7 +922,7 @@ public class Principal extends javax.swing.JFrame {
         int opt = JOptionPane.showConfirmDialog(this, "Log out?");
         if(opt == 0){
             this.dispose();
-            LoginFrame lg = new LoginFrame(users);
+            LoginFrame lg = new LoginFrame(users, bitacora);
             lg.setVisible(true);
         }
     }//GEN-LAST:event_logOutBtActionPerformed
@@ -906,12 +931,14 @@ public class Principal extends javax.swing.JFrame {
         JFileChooser choose = new JFileChooser(".");
         BufferedReader br;
         Timestamp time;
+        boolean success = true;
+        String csvFile = "";
         int f = choose.showOpenDialog(null);
         if(f == JFileChooser.APPROVE_OPTION){
             String line;
             int n = 0;
             boolean fileIsFirst = false;
-            String csvFile = choose.getSelectedFile().getAbsolutePath();
+            csvFile = choose.getSelectedFile().getAbsolutePath();
             try {
                 br = new BufferedReader(new FileReader(csvFile));
                 String name;
@@ -928,6 +955,7 @@ public class Principal extends javax.swing.JFrame {
                             fileIsFirst = false;
                         }else{
                             JOptionPane.showMessageDialog(this, "CSV Invalido!");
+                            success = false;
                             break;
                         }
                     }else if(n > 0){
@@ -970,13 +998,18 @@ public class Principal extends javax.swing.JFrame {
                 
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                success = false;
             } catch (IOException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                success = false;
             }
         }
         panelPrinc.removeAll();
         addFolderstoPanel(currentFolder.getNombre());
         addFilestoPanel(currentFolder);
+        if(success){
+            agregarRegistro("Se agregaron archivos masivamente desde: \\\""+csvFile+"\\\"");
+        }
     }//GEN-LAST:event_filesBulkloadActionPerformed
 
     private void btMenuGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMenuGraphActionPerformed
@@ -1011,7 +1044,15 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_grafoBtActionPerformed
 
     private void bitacoraBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bitacoraBtActionPerformed
-        // TODO add your handling code here:
+        bitacora.graficar();
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ImageViewer img = new ImageViewer("./Reports/pila.png");
+        img.setVisible(true); 
     }//GEN-LAST:event_bitacoraBtActionPerformed
 
     private void matrizAdyBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_matrizAdyBtActionPerformed
@@ -1186,7 +1227,7 @@ public class Principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal(null,false, null,null).setVisible(true);
+                new Principal(null,false, null,null,null).setVisible(true);
             }
         });
     }

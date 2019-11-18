@@ -9,17 +9,21 @@ import Estructuras.ArbolAVL;
 import Estructuras.ListaEnlazada;
 import Estructuras.MatrizAdy;
 import Estructuras.Nodos.Vertice;
+import Estructuras.Pila;
 import Estructuras.TablaHash;
 import Interfaz.ImageViewer;
 import Interfaz.LoginFrame;
 import Interfaz.Principal;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.miginfocom.swing.MigLayout;
 import proyecto2.Objetos.ArchivoObj;
 import proyecto2.Objetos.CarpetaObj;
+import proyecto2.Objetos.Registro;
 import proyecto2.Objetos.Usuario;
 
 public class EDDProyecto2 {
@@ -30,6 +34,18 @@ public class EDDProyecto2 {
        // ImageViewer t = new ImageViewer("./Reports/MatrizAdy.png");
         //t.setVisible(true);
 
+        /*Pila st = new Pila();
+        Date date = new Date();
+        DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String operacion = "Se modifico la carpeta \\\"Paloma.exe\\\" su nuevo nombre es \\\"Admin.pija\\\"";
+        st.push(new Registro(dateFormat.format(date),
+                hourFormat.format(date), operacion , "Juan"));
+        date = new Date();
+        operacion = "Se creo el archivo \\\"virus.exe\\\"";
+        st.push(new Registro(dateFormat.format(date),
+                hourFormat.format(date), operacion , "Ramiro"));
+        st.graficar();*/
         LoginFrame f = new LoginFrame();
         f.setLocationRelativeTo(null);
         f.setVisible(true);

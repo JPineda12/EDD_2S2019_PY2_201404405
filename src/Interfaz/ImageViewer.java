@@ -26,6 +26,7 @@ import net.miginfocom.swing.MigLayout;
 public class ImageViewer extends javax.swing.JFrame {
 
     String imgPath;
+    
     public ImageViewer(String imgPath) {
         initComponents();
         this.imgPath = imgPath;
