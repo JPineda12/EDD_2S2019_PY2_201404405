@@ -84,6 +84,7 @@ public class ArbolAVL {
     
     public boolean insert(ArchivoObj arch){
         if(arch == null){
+            System.out.println("-----");
             return false;
         }
         AVLNode newNode = new AVLNode(arch);
@@ -91,6 +92,7 @@ public class ArbolAVL {
             tamanoNodos = 6;
         }
         if(contains(newNode)){
+            System.out.println("xxx");
             return false;
         }else{
             root = insert(root, newNode);

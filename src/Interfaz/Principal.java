@@ -106,6 +106,9 @@ public class Principal extends javax.swing.JFrame {
         panelReports.add(matrizAdyBt);
         panelReports.add(avlTreeBt);
         panelReports.add(bitacoraBt);
+        panelReports.add(lblBulk);
+        panelReports.add(filesBulkload);
+        panelReports.add(panelAdmin);
     }
     
     public void addFolderstoPanel(String nombreCarpeta){
@@ -178,10 +181,7 @@ public class Principal extends javax.swing.JFrame {
         fileCreateBt = new rsbuttom.RSButtonMetro();
         FileDelBt = new rsbuttom.RSButtonMetro();
         fileModifyBt = new rsbuttom.RSButtonMetro();
-        panelAdmin = new javax.swing.JPanel();
-        UsersBulkLoad = new rsbuttom.RSButtonMetro();
-        jLabel6 = new javax.swing.JLabel();
-        filesBulkload = new rsbuttom.RSButtonMetro();
+        fileShareBt = new rsbuttom.RSButtonMetro();
         panelReports = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         grafoBt = new rsbuttom.RSButtonMetro();
@@ -189,6 +189,10 @@ public class Principal extends javax.swing.JFrame {
         bitacoraBt = new rsbuttom.RSButtonMetro();
         matrizAdyBt = new rsbuttom.RSButtonMetro();
         avlTreeBt = new rsbuttom.RSButtonMetro();
+        lblBulk = new javax.swing.JLabel();
+        filesBulkload = new rsbuttom.RSButtonMetro();
+        panelAdmin = new javax.swing.JPanel();
+        UsersBulkLoad = new rsbuttom.RSButtonMetro();
         jScrollPane1 = new javax.swing.JScrollPane();
         panelPrinc = new javax.swing.JPanel();
 
@@ -443,63 +447,22 @@ public class Principal extends javax.swing.JFrame {
         });
         panelMenu.add(fileModifyBt, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 174, 50));
 
-        panelAdmin.setBackground(new java.awt.Color(183, 183, 183));
-
-        UsersBulkLoad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/importcsv.png"))); // NOI18N
-        UsersBulkLoad.setText("USERS LOAD");
-        UsersBulkLoad.setColorNormal(new java.awt.Color(183, 183, 183));
-        UsersBulkLoad.setColorTextHover(new java.awt.Color(58, 58, 58));
-        UsersBulkLoad.setColorTextNormal(new java.awt.Color(58, 58, 58));
-        UsersBulkLoad.setColorTextPressed(new java.awt.Color(58, 58, 58));
-        UsersBulkLoad.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        UsersBulkLoad.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        UsersBulkLoad.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        UsersBulkLoad.setIconTextGap(25);
-        UsersBulkLoad.addActionListener(new java.awt.event.ActionListener() {
+        fileShareBt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/share.png"))); // NOI18N
+        fileShareBt.setText("COMPARTIR");
+        fileShareBt.setColorNormal(new java.awt.Color(183, 183, 183));
+        fileShareBt.setColorTextHover(new java.awt.Color(58, 58, 58));
+        fileShareBt.setColorTextNormal(new java.awt.Color(58, 58, 58));
+        fileShareBt.setColorTextPressed(new java.awt.Color(58, 58, 58));
+        fileShareBt.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        fileShareBt.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        fileShareBt.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        fileShareBt.setIconTextGap(25);
+        fileShareBt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UsersBulkLoadActionPerformed(evt);
+                fileShareBtActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout panelAdminLayout = new javax.swing.GroupLayout(panelAdmin);
-        panelAdmin.setLayout(panelAdminLayout);
-        panelAdminLayout.setHorizontalGroup(
-            panelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelAdminLayout.createSequentialGroup()
-                .addComponent(UsersBulkLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        panelAdminLayout.setVerticalGroup(
-            panelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelAdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(UsersBulkLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        panelMenu.add(panelAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 190, 80));
-
-        jLabel6.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(58, 58, 58));
-        jLabel6.setText("BULK LOAD");
-        panelMenu.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 480, -1, 33));
-
-        filesBulkload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/importcsv.png"))); // NOI18N
-        filesBulkload.setText("FILES LOAD");
-        filesBulkload.setColorNormal(new java.awt.Color(183, 183, 183));
-        filesBulkload.setColorTextHover(new java.awt.Color(58, 58, 58));
-        filesBulkload.setColorTextNormal(new java.awt.Color(58, 58, 58));
-        filesBulkload.setColorTextPressed(new java.awt.Color(58, 58, 58));
-        filesBulkload.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        filesBulkload.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        filesBulkload.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        filesBulkload.setIconTextGap(25);
-        filesBulkload.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                filesBulkloadActionPerformed(evt);
-            }
-        });
-        panelMenu.add(filesBulkload, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 510, 174, 50));
+        panelMenu.add(fileShareBt, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 490, 174, 50));
 
         panelReports.setBackground(new java.awt.Color(183, 183, 183));
         panelReports.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -593,6 +556,64 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         panelReports.add(avlTreeBt, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 174, 50));
+
+        lblBulk.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        lblBulk.setForeground(new java.awt.Color(58, 58, 58));
+        lblBulk.setText("BULK LOAD");
+        panelReports.add(lblBulk, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, -1, 33));
+
+        filesBulkload.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/importcsv.png"))); // NOI18N
+        filesBulkload.setText("FILES LOAD");
+        filesBulkload.setColorNormal(new java.awt.Color(183, 183, 183));
+        filesBulkload.setColorTextHover(new java.awt.Color(58, 58, 58));
+        filesBulkload.setColorTextNormal(new java.awt.Color(58, 58, 58));
+        filesBulkload.setColorTextPressed(new java.awt.Color(58, 58, 58));
+        filesBulkload.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        filesBulkload.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        filesBulkload.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        filesBulkload.setIconTextGap(25);
+        filesBulkload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filesBulkloadActionPerformed(evt);
+            }
+        });
+        panelReports.add(filesBulkload, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 174, 50));
+
+        panelAdmin.setBackground(new java.awt.Color(183, 183, 183));
+
+        UsersBulkLoad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interfaz/Icons/importcsv.png"))); // NOI18N
+        UsersBulkLoad.setText("USERS LOAD");
+        UsersBulkLoad.setColorNormal(new java.awt.Color(183, 183, 183));
+        UsersBulkLoad.setColorTextHover(new java.awt.Color(58, 58, 58));
+        UsersBulkLoad.setColorTextNormal(new java.awt.Color(58, 58, 58));
+        UsersBulkLoad.setColorTextPressed(new java.awt.Color(58, 58, 58));
+        UsersBulkLoad.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        UsersBulkLoad.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        UsersBulkLoad.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        UsersBulkLoad.setIconTextGap(25);
+        UsersBulkLoad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UsersBulkLoadActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelAdminLayout = new javax.swing.GroupLayout(panelAdmin);
+        panelAdmin.setLayout(panelAdminLayout);
+        panelAdminLayout.setHorizontalGroup(
+            panelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAdminLayout.createSequentialGroup()
+                .addComponent(UsersBulkLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelAdminLayout.setVerticalGroup(
+            panelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAdminLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(UsersBulkLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        panelReports.add(panelAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 190, 80));
 
         panelPrinc.setBackground(new java.awt.Color(59, 52, 51));
         panelPrinc.setForeground(new java.awt.Color(36, 40, 41));
@@ -1197,6 +1218,49 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_prevFolderActionPerformed
 
+    private void fileShareBtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileShareBtActionPerformed
+        int op =JOptionPane.showConfirmDialog(this, 
+                "Desea compartir el archivo: "+selectedFile.getNombre());
+        if(op == 0){
+            String shareUser = JOptionPane.showInputDialog("Escriba el nombre del usuario destino:");   
+            if(shareUser != null){
+                Usuario tmp = users.buscarPorNombre(shareUser);
+                if(tmp != null){
+                    if(!shareFile(tmp, selectedFile.getArchivo(), selectedFile.getNombre())){
+                        JOptionPane.showMessageDialog(this, "No se compartio nada!");
+                    }else{
+                        agregarRegistro("Se compartio el archivo \\\""+selectedFile.getNombre()
+                        +"\\\" al usuario \\\""+tmp.getUsername()+"\\\"");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(this, "El usuario no existe!");
+                }
+            }
+            
+        }
+    }//GEN-LAST:event_fileShareBtActionPerformed
+    
+    private boolean shareFile(Usuario shareUser, ArchivoObj sArchivo, String nombreArchivo){
+        Usuario tmp = shareUser;
+        ArchivoObj newFile = new ArchivoObj(nombreArchivo,
+                sArchivo.getContenido(),
+                 sArchivo.getTimestamp(),
+                 tmp.getUsername());
+        boolean suc = ((CarpetaObj) tmp.getCarpetas().buscarFila(0).getDato())
+                .getArchivos().insert(newFile);
+        if (suc) {
+            JOptionPane.showMessageDialog(this, "Se compartio el archivo satisfactoriamente con"
+                    + " " + tmp.getUsername());
+            return true;
+        } else {
+            String nuevoNombre = JOptionPane.showInputDialog("El usuario " + tmp.getUsername()
+                    + " ya tiene un archivo\n con ese nombre.\nEscoja un nuevo nombre");
+            if(nuevoNombre != null){
+                return shareFile(shareUser, sArchivo, nuevoNombre);
+            }
+            return false;
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -1241,6 +1305,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btMenuGraph;
     private rsbuttom.RSButtonMetro fileCreateBt;
     private rsbuttom.RSButtonMetro fileModifyBt;
+    private rsbuttom.RSButtonMetro fileShareBt;
     private rsbuttom.RSButtonMetro filesBulkload;
     private rsbuttom.RSButtonMetro folderCreateBt;
     private rsbuttom.RSButtonMetro folderDelBt;
@@ -1251,12 +1316,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelUsername;
+    private javax.swing.JLabel lblBulk;
     private javax.swing.JButton logOutBt;
     private rsbuttom.RSButtonMetro matrizAdyBt;
     private javax.swing.JPanel panelAdmin;

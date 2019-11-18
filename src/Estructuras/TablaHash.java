@@ -58,6 +58,7 @@ public class TablaHash {
         }
         return indice;
     }
+    
     private int exploracionCuadratica(int indice, int i, int posInicial, boolean flag){
         indice += i*i;
         
