@@ -53,8 +53,8 @@ public class CarpetaObj {
         this.hijos = hijos;
     }
     
-    public void addHijo(Object hijo){
-        hijos.insert(hijo);
+    public boolean addHijo(Object hijo){
+        return hijos.insert(hijo);
     }
 
     public ArbolAVL getArchivos() {

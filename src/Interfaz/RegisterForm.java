@@ -393,7 +393,7 @@ public class RegisterForm extends javax.swing.JFrame {
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         this.dispose();
-        LoginFrame log = new LoginFrame();
+        LoginFrame log = new LoginFrame(users, bitacora);
         log.show();
         log.setLocationRelativeTo(null);
     }//GEN-LAST:event_CancelButtonActionPerformed

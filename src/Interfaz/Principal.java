@@ -110,6 +110,9 @@ public class Principal extends javax.swing.JFrame {
         panelReports.add(lblBulk);
         panelReports.add(filesBulkload);
         panelReports.add(panelAdmin);
+        
+        //Later to fix the address text field
+        txtFldAddres.setVisible(false);
     }
     
     public void addFolderstoPanel(CarpetaObj carpetaPadre){
@@ -774,13 +777,17 @@ public class Principal extends javax.swing.JFrame {
             int cn = currentFolder.getHijos().getSize();
             CarpetaObj c = new CarpetaObj(nombre, new ArbolAVL(), currentFolder, new ListaEnlazada(),cn);                
                 Carpeta folderButton = new Carpeta(c);
-                panelPrinc.add(folderButton);
-                panelPrinc.revalidate();               
-                if (selectedFile != null) {
-                    selectedFile.setSeleccionado(false);
+                if(currentFolder.addHijo(c)){
+                    panelPrinc.add(folderButton);
+                    panelPrinc.revalidate();               
+                    if (selectedFile != null) {
+                        selectedFile.setSeleccionado(false);
+                    }
+                    agregarRegistro("Se creo una carpeta llamada \\\""+c.getNombre()+"\\\"");
+                }else{
+                    JOptionPane.showMessageDialog(this, "Ya existe una carpeta con ese nombre!");
                 }
-                currentFolder.addHijo(c);
-                agregarRegistro("Se creo una carpeta llamada \\\""+c.getNombre()+"\\\"");
+
             }
         }
     }//GEN-LAST:event_folderCreateBtActionPerformed
