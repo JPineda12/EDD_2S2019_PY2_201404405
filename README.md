@@ -1,6 +1,15 @@
-# EDD_2S2019_PY1_201404405
+# EDD_2S2019_PY2_201404405
 Juan Antonio Pineda Espino - Proyecto 2 - Estructuras de Datos 
 
+------------------------------------------------------------------------------
+**Proyecto:** EDD Drive\
+**Tema:** Listas, Arboles, Grafos, Tabla Hash.
+------------------------------------------------------------------------------
+
+ ### COMO CORRER PROGRAMA
+ ```bash
+java -jar _EDD_Proyecto2.jar
+```
 ### Requirements 
 
 - [x] Funcionalidad General
@@ -31,7 +40,7 @@ Juan Antonio Pineda Espino - Proyecto 2 - Estructuras de Datos
 - [x] Bitacora
 - [x] Reportes
 	- [x] Reporte usuario (hash table)
-	- [x] Reporte carpetas (grafo)
+	- [x] Reporte carpetas (grafo buggy)
 	- [x] Reporte carpetas (matriz ady)
-	- [x] Reportes archivos (AVL
+	- [x] Reportes archivos (AVL)
 
