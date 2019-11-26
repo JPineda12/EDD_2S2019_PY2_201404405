@@ -1,0 +1,8 @@
+Archivo,Contenido
+Main.py,"""from requests import get, exceptions def check_internet_connection():"""
+Lista.py,"""class Node: def __init__(self, dataval=None): self.dataval = dataval self.nextval = None"""
+Pila.py,""" print(esto es una pila en python)"""
+Arbol.py,"""  print(Arbol en python)"""
+ABB.py,"""list.headval.nextval = e2  # Link second Node to third node"""
+Zerial.py,""" list.listprint()"""
+README.md,""" Esta es la documentacion de mi practica 1 de EDD"""

@@ -1,0 +1,13 @@
+digraph grafo{
+    raiz[label="/\ncarpetas: 1"];
+    raiz->raiz_lmao;
+    raiz_lmao[label="lmao\ncarpetas: 1"];
+    raiz_lmao->raiz_lmao_super;
+    raiz_lmao_super[label="super\ncarpetas: 2"];
+    raiz_lmao_super->raiz_lmao_super_deep;
+    raiz_lmao_super->raiz_lmao_super_a;
+    raiz_lmao_super_deep[label="deep\ncarpetas: 1"];
+    raiz_lmao_super_deep->raiz_lmao_super_deep_omg;
+    raiz_lmao_super_deep_omg[label="omg\ncarpetas: 0"];
+    raiz_lmao_super_a[label="a\ncarpetas: 0"];
+}

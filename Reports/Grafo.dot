@@ -1,13 +1,11 @@
 digraph grafo{
-    raiz[label="/\ncarpetas: 1"];
-    raiz->raiz_lmao;
-    raiz_lmao[label="lmao\ncarpetas: 1"];
-    raiz_lmao->raiz_lmao_super;
-    raiz_lmao_super[label="super\ncarpetas: 2"];
-    raiz_lmao_super->raiz_lmao_super_deep;
-    raiz_lmao_super->raiz_lmao_super_a;
-    raiz_lmao_super_deep[label="deep\ncarpetas: 1"];
-    raiz_lmao_super_deep->raiz_lmao_super_deep_omg;
-    raiz_lmao_super_deep_omg[label="omg\ncarpetas: 0"];
-    raiz_lmao_super_a[label="a\ncarpetas: 0"];
+    raiz[label="/\ncarpetas: 2"];
+    raiz->raiz_uno;
+    raiz->raiz_dos;
+    raiz_uno[label="uno\ncarpetas: 1"];
+    raiz_uno->raiz_uno_Hulu;
+    raiz_uno_Hulu[label="Hulu\ncarpetas: 0"];
+    raiz_dos[label="dos\ncarpetas: 1"];
+    raiz_dos->raiz_dos_Music;
+    raiz_dos_Music[label="Music\ncarpetas: 0"];
 }

@@ -1,0 +1,53 @@
+digraph Matrix{
+    node [shape=box]
+    graph [ranksep="0.5", nodesep="0.6"];
+    /* Group 0 para alinear verticalmente RAIZ*/ 
+    root[label = "root", width = 1.5, style = filled, fillcolor = coral, group = 0];
+
+    //Filas
+    Fila0 [label = "/" width = 1.5 style = filled, fillcolor = bisque1, group = 0];
+    Fila1 [label = "asdsj" width = 1.5 style = filled, fillcolor = bisque1, group = 0];
+    Fila2 [label = "shit" width = 1.5 style = filled, fillcolor = bisque1, group = 0];
+
+  //Enlaces de filas
+    Fila0->Fila1
+    Fila1->Fila2
+
+  //Columnas
+    Column0[label ="/" width = 1.5 style = filled, fillcolor = pink2, group = 1];
+    Column1[label ="asdsj" width = 1.5 style = filled, fillcolor = pink2, group = 2];
+    Column2[label ="shit" width = 1.5 style = filled, fillcolor = pink2, group = 3];
+
+
+    //Enlaces de columnas
+    Column0->Column1
+    Column1->Column2
+
+  //Alinear Raiz con columnas
+    {rank = same; root; Column0; Column1; Column2;};
+
+      //Enlaces Raiz con primera fila y column
+    root->Column0;
+    root->Fila0;
+    //(^<---------------------- F I L A   0---------------------->
+    N1_F0 [label = "/asdsj" width = 1.5 group = 2 style = filled, fillcolor = lavenderblush1];
+
+    //(^<---------------------- F I L A   1---------------------->
+    N2_F1 [label = "asdsj/shit" width = 1.5 group = 3 style = filled, fillcolor = lavenderblush1];
+
+    //(^<---------------------- F I L A   2---------------------->
+
+    //E N L A C E S  F I L A   0
+    Column1->N1_F0;
+    Fila0->N1_F0;
+    {rank = same; Fila0; N1_F0; };
+
+    //E N L A C E S  F I L A   1
+    Column2->N2_F1;
+    Fila1->N2_F1;
+    {rank = same; Fila1; N2_F1; };
+
+    //E N L A C E S  F I L A   2
+    {rank = same; Fila2; };
+
+}

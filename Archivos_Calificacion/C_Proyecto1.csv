@@ -1,0 +1,6 @@
+Archivo,Contenido
+main.java,"""public void main() { system.out.println(hola); }"""
+parser.java,""" archivo parser """
+lexer.java,""" archivo lex"""
+l.lex,""" archivo para generar analizador lexico"""
+y.cup,""" archivo para generar el parser"""

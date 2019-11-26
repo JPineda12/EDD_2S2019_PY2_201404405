@@ -1,0 +1,51 @@
+digraph AVLTree {
+    rankdir=TB;
+    graph [pad=".25", ranksep="1.0", nodesep="1"];
+    node [shape=record, style = rounded, color = forestgreen];
+    node [width = 6, height = 1.5, fixedsize="true"];
+    //Nodes and links creation
+     ndchuchitor[label="<left> | Nombre: chuchito.r\nContenido: give me cookie please\nBf: 1\nAltura: 4\nTimestamp: 2019-11-18 18:32:41.981\nPropietario: barcelona | <right>"];
+     //Links ndchuchitor
+     ndchuchitor:left->ndMusicthis
+     ndchuchitor:right->ndrandomjava
+     ndMusicthis[label="<left> | Nombre: Music.this\nContenido: Lmao Crazy nigg\nBf: 0\nAltura: 2\nTimestamp: 2019-11-18 18:32:41.978\nPropietario: barcelona | <right>"];
+     //Links ndMusicthis
+     ndMusicthis:left->ndCancion1
+     ndMusicthis:right->ndNuevoexe
+     ndCancion1[label="<left> | Nombre: Cancion1\nContenido: Weird stuff\nBf: 1\nAltura: 1\nTimestamp: 2019-11-18 18:32:41.977\nPropietario: barcelona | <right>"];
+     //Links ndCancion1
+     ndCancion1:right->ndMainpy
+     ndMainpy[label="<left> | Nombre: Main.py\nContenido: Cadena chida\nBf: 0\nAltura: 0\nTimestamp: 2019-11-18 18:32:41.985\nPropietario: barcelona | <right>"];
+     //Links ndMainpy
+     ndNuevoexe[label="<left> | Nombre: Nuevo.exe\nContenido: hola este es un nuevo archivo amigos hxkahfxa\nBf: 0\nAltura: 1\nTimestamp: 2019-11-18 18:32:44.026\nPropietario: barcelona | <right>"];
+     //Links ndNuevoexe
+     ndNuevoexe:left->ndNsyncexe
+     ndNuevoexe:right->ndasnaebsa
+     ndNsyncexe[label="<left> | Nombre: Nsync.exe\nContenido: lol music \nBf: 0\nAltura: 0\nTimestamp: 2019-11-18 18:32:41.984\nPropietario: barcelona | <right>"];
+     //Links ndNsyncexe
+     ndasnaebsa[label="<left> | Nombre: asnaeb.sa\nContenido: saaaaandorms\nBf: 0\nAltura: 0\nTimestamp: 2019-11-18 18:32:41.983\nPropietario: barcelona | <right>"];
+     //Links ndasnaebsa
+     ndrandomjava[label="<left> | Nombre: random.java\nContenido: Lol string bro\nBf: -1\nAltura: 3\nTimestamp: 2019-11-18 18:32:41.978\nPropietario: barcelona | <right>"];
+     //Links ndrandomjava
+     ndrandomjava:left->ndnenaexe
+     ndrandomjava:right->ndwmp3
+     ndnenaexe[label="<left> | Nombre: nena.exe\nContenido: what should I put here haha\nBf: -1\nAltura: 2\nTimestamp: 2019-11-18 18:32:41.98\nPropietario: barcelona | <right>"];
+     //Links ndnenaexe
+     ndnenaexe:left->ndjugaes
+     ndnenaexe:right->ndpiernagh
+     ndjugaes[label="<left> | Nombre: juga.es\nContenido: bet on me\nBf: 0\nAltura: 1\nTimestamp: 2019-11-18 18:32:41.984\nPropietario: barcelona | <right>"];
+     //Links ndjugaes
+     ndjugaes:left->ndjamonthis
+     ndjugaes:right->ndlelelepy
+     ndjamonthis[label="<left> | Nombre: jamon.this\nContenido: this is some good jam\nBf: 0\nAltura: 0\nTimestamp: 2019-11-18 18:32:41.985\nPropietario: barcelona | <right>"];
+     //Links ndjamonthis
+     ndlelelepy[label="<left> | Nombre: lelele.py\nContenido: hahaha\nBf: 0\nAltura: 0\nTimestamp: 2019-11-18 18:32:41.982\nPropietario: barcelona | <right>"];
+     //Links ndlelelepy
+     ndpiernagh[label="<left> | Nombre: pierna.gh\nContenido: I want a bag\nBf: 0\nAltura: 0\nTimestamp: 2019-11-18 18:32:41.981\nPropietario: barcelona | <right>"];
+     //Links ndpiernagh
+     ndwmp3[label="<left> | Nombre: w.mp3\nContenido: rodolfjasr\nBf: -1\nAltura: 1\nTimestamp: 2019-11-18 18:32:41.979\nPropietario: barcelona | <right>"];
+     //Links ndwmp3
+     ndwmp3:left->ndtextext
+     ndtextext[label="<left> | Nombre: tex.text\nContenido: incress\nBf: 0\nAltura: 0\nTimestamp: 2019-11-18 18:32:41.98\nPropietario: barcelona | <right>"];
+     //Links ndtextext
+}

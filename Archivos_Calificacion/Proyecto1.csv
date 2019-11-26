@@ -1,0 +1,7 @@
+Archivo,Contenido
+1_nodo.h,"""struct nodo { int *s; int *p;};  nodo();"""
+2_nodo.c,"""#include nodo.h"""
+3_lista.h,"""#include nodo.h // este es el header de la lista"""
+4_lista.c,""" // lista sin implementacion """
+5_gitignore.git,"""/src"""
+6_main.c,"""#include nodo.h  #include lista.h  int main(){ return 0;}"""
